@@ -7,17 +7,20 @@ import { sites } from '@/data/mock';
 const navItems = [
   { href: '/admin', label: 'Dashboard', icon: '📊' },
   { href: '/admin/stories', label: 'Stories', icon: '📝', badge: '3' },
+  { href: '/admin/layout-builder', label: 'Layout Builder', icon: '🧱' },
   { href: '/admin/media', label: 'Media Library', icon: '📸' },
   { href: '/admin/budget', label: 'Editorial Budget', icon: '📋' },
   { href: '/admin/analytics', label: 'Analytics', icon: '📈' },
+  { href: '/admin/ai-rewriter', label: 'AI Rewriter', icon: '✍️' },
   { href: '/admin/newsletters', label: 'Newsletters', icon: '✉️' },
   { href: '/admin/social', label: 'Social Media', icon: '📱' },
   { href: '/admin/forms', label: 'Forms & Submissions', icon: '📝' },
-  { href: '/admin/ads', label: 'Advertising', icon: '💰' },
+  { href: '/admin/ads', label: 'Advertising & GAM', icon: '💰' },
   { href: '/admin/subscribers', label: 'Subscribers', icon: '👥' },
   { href: '/admin/e-edition', label: 'E-Edition', icon: '📰' },
   { href: '/admin/sites', label: 'Sites & Domains', icon: '🌐' },
   { href: '/admin/seo', label: 'SEO & AI', icon: '🤖' },
+  { href: '/admin/import', label: 'Import Content', icon: '📥' },
   { href: '/admin/settings', label: 'Settings', icon: '⚙️' },
 ];
 
