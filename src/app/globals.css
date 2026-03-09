@@ -1,0 +1,134 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,800;1,400;1,600&family=Source+Sans+3:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500&display=swap');
+
+:root {
+  --font-display: 'Playfair Display', Georgia, serif;
+  --font-body: 'Source Sans 3', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+  --brand-primary: #1e3a5f;
+  --brand-accent: #c0392b;
+  --brand-gold: #d4a843;
+  --surface: #fafafa;
+  --ink: #1a1a1a;
+}
+
+* { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--font-body);
+  color: var(--ink);
+  background: var(--surface);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-display);
+}
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #c5c5c5; border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: #a0a0a0; }
+
+/* Paywall overlay */
+.paywall-blur {
+  filter: blur(4px);
+  user-select: none;
+  pointer-events: none;
+}
+
+/* Article body styles */
+.article-body p {
+  font-size: 1.125rem;
+  line-height: 1.8;
+  margin-bottom: 1.25rem;
+  color: #2d2d2d;
+}
+
+.article-body h2 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin: 2rem 0 1rem;
+}
+
+.article-body blockquote {
+  border-left: 3px solid var(--brand-accent);
+  padding-left: 1.25rem;
+  margin: 1.5rem 0;
+  font-style: italic;
+  color: #555;
+}
+
+.article-body img {
+  width: 100%;
+  border-radius: 4px;
+  margin: 1.5rem 0;
+}
+
+/* Admin sidebar */
+.admin-sidebar {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255,255,255,0.2) transparent;
+}
+
+/* Breaking news ticker */
+@keyframes ticker {
+  0% { transform: translateX(100%); }
+  100% { transform: translateX(-100%); }
+}
+.ticker-scroll {
+  animation: ticker 30s linear infinite;
+}
+
+/* Status badges */
+.badge-published { background: #d4edda; color: #155724; }
+.badge-draft { background: #fff3cd; color: #856404; }
+.badge-review { background: #cce5ff; color: #004085; }
+.badge-scheduled { background: #e2d5f1; color: #4a2080; }
+
+/* Kanban board */
+.kanban-column {
+  min-height: 400px;
+}
+
+/* Registration wall modal */
+.reg-wall-overlay {
+  backdrop-filter: blur(8px);
+  background: rgba(0,0,0,0.5);
+}
+
+/* TipTap editor */
+.ProseMirror {
+  min-height: 300px;
+  outline: none;
+  padding: 1rem;
+}
+.ProseMirror p.is-editor-empty:first-child::before {
+  content: attr(data-placeholder);
+  float: left;
+  color: #adb5bd;
+  pointer-events: none;
+  height: 0;
+}
+
+/* Analytics cards */
+.stat-card {
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+.stat-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+}
+
+/* Print styles */
+@media print {
+  .no-print { display: none !important; }
+  .article-body { font-size: 12pt; }
+}
