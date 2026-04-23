@@ -5,10 +5,9 @@ import PublicHeader from '@/components/public/Header';
 import Footer from '@/components/public/Footer';
 import RegistrationWall from '@/components/public/RegistrationWall';
 import Link from 'next/link';
-import { use } from 'react';
 
 export default function ArticlePage({ params }) {
-  const { slug } = use(params);
+  const { slug } = params;
   const story = stories.find(s => s.slug === slug) || stories[0];
   const [showPaywall, setShowPaywall] = useState(false);
   const [showRegWall, setShowRegWall] = useState(false);

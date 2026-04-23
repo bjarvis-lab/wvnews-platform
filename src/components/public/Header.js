@@ -2,6 +2,7 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { sections } from '@/data/mock';
+import Logo from './Logo';
 
 export default function PublicHeader() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -18,6 +19,8 @@ export default function PublicHeader() {
             <span className="text-white/60">Clarksburg, WV · 47°F ☁️</span>
           </div>
           <div className="flex items-center gap-4">
+            <Link href="/p" className="text-white/80 hover:text-gold-400 transition-colors">Publications</Link>
+            <Link href="/contests" className="text-white/80 hover:text-gold-400 transition-colors">Contests</Link>
             <Link href="/e-edition" className="text-white/80 hover:text-gold-400 transition-colors">E-Edition</Link>
             <Link href="/subscribe" className="text-gold-400 font-semibold hover:text-gold-300 transition-colors">Subscribe</Link>
             <Link href="/account" className="text-white/80 hover:text-gold-400 transition-colors">Sign In</Link>
@@ -40,14 +43,9 @@ export default function PublicHeader() {
           </button>
 
           {/* Logo */}
-          <Link href="/" className="flex items-center gap-2">
-            <div className="w-10 h-10 bg-brand-950 rounded-lg flex items-center justify-center">
-              <span className="text-white font-display font-bold text-sm">WV</span>
-            </div>
-            <div className="hidden sm:block">
-              <div className="font-display text-2xl font-bold text-brand-950 leading-none tracking-tight">WVNews</div>
-              <div className="text-[10px] text-ink-500 uppercase tracking-[0.2em]">West Virginia&apos;s News Leader</div>
-            </div>
+          <Link href="/" aria-label="WV News home" className="flex items-center">
+            <Logo height={44} variant="full" className="hidden sm:block" />
+            <Logo height={40} variant="icon" className="sm:hidden rounded-full" />
           </Link>
 
           {/* Desktop Nav */}

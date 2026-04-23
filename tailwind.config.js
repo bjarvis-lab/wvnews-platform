@@ -4,23 +4,34 @@ module.exports = {
   theme: {
     extend: {
       colors: {
+        // WV News brand — navy blue from the wordmark + banner.
+        // Primary (logo color) lives at 900/950; lighter tints scale up from there.
         brand: {
-          50: '#f0f4ff',
-          100: '#dbe4ff',
-          200: '#bac8ff',
-          300: '#91a7ff',
-          400: '#748ffc',
-          500: '#5c7cfa',
-          600: '#4c6ef5',
-          700: '#4263eb',
-          800: '#3b5bdb',
-          900: '#364fc7',
-          950: '#1e3a5f',
+          50: '#f3f6fb',
+          100: '#e5ecf7',
+          200: '#c7d4ec',
+          300: '#9cb0e0',
+          400: '#7a95d6',
+          500: '#5572b8',
+          600: '#3b5594',
+          700: '#2b4079',
+          800: '#1f2f5f',
+          900: '#1a2c5b',
+          950: '#0f1d3d',
         },
+        // WV News old gold — the warm amber gradient in the logo mark.
+        // 400 is the primary "old gold"; gradient uses 300→500 for the circle fill.
         gold: {
-          400: '#fcc419',
-          500: '#fab005',
-          600: '#f59f00',
+          50: '#fdf6e8',
+          100: '#faeacc',
+          200: '#f5d99a',
+          300: '#e8c179',
+          400: '#d4a84c',
+          500: '#c08f2e',
+          600: '#a07620',
+          700: '#7e5a18',
+          800: '#5d4212',
+          900: '#3e2c0c',
         },
         ink: {
           50: '#f8f9fa',

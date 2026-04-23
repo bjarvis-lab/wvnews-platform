@@ -3,10 +3,9 @@ import { stories, sections } from '@/data/mock';
 import PublicHeader from '@/components/public/Header';
 import Footer from '@/components/public/Footer';
 import Link from 'next/link';
-import { use } from 'react';
 
 export default function SectionPage({ params }) {
-  const { slug } = use(params);
+  const { slug } = params;
   const section = sections.find(s => s.slug === slug) || sections[0];
   const sectionStories = stories.filter(s =>
     s.section === section.id || s.secondarySections?.includes(section.id)

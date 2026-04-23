@@ -3,6 +3,7 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { sites } from '@/data/mock';
+import Logo from '@/components/public/Logo';
 
 const navItems = [
   { href: '/admin', label: 'Dashboard', icon: '📊' },
@@ -15,6 +16,7 @@ const navItems = [
   { href: '/admin/newsletters', label: 'Newsletters', icon: '✉️' },
   { href: '/admin/social', label: 'Social Media', icon: '📱' },
   { href: '/admin/forms', label: 'Forms & Submissions', icon: '📝' },
+  { href: '/admin/contests', label: 'Contests', icon: '🏆' },
   { href: '/admin/ads', label: 'Advertising & GAM', icon: '💰' },
   { href: '/admin/subscribers', label: 'Subscribers', icon: '👥' },
   { href: '/admin/e-edition', label: 'E-Edition', icon: '📰' },
@@ -33,15 +35,15 @@ export default function AdminLayout({ children }) {
     <div className="flex h-screen bg-ink-50 overflow-hidden">
       {/* Sidebar */}
       <aside className={`admin-sidebar ${collapsed ? 'w-16' : 'w-60'} bg-brand-950 text-white flex flex-col transition-all duration-200 flex-shrink-0`}>
-        {/* Logo */}
+        {/* Logo — use the circle icon against dark navy sidebar (navy wordmark would disappear) */}
         <div className="h-14 flex items-center px-4 border-b border-white/10">
-          {!collapsed && (
+          {collapsed ? (
+            <Logo height={28} variant="icon" className="rounded-full" />
+          ) : (
             <div className="flex items-center gap-2">
-              <div className="w-8 h-8 bg-white/10 rounded flex items-center justify-center">
-                <span className="text-white font-display font-bold text-xs">WV</span>
-              </div>
+              <Logo height={32} variant="icon" className="rounded-full" />
               <div>
-                <div className="text-sm font-bold leading-none">WPP Admin</div>
+                <div className="text-sm font-bold leading-none text-white">WPP Admin</div>
                 <div className="text-[10px] text-white/50">Publishing Platform</div>
               </div>
             </div>
