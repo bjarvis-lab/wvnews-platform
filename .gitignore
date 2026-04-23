@@ -6,3 +6,11 @@ out/
 .env.production.local
 *.tsbuildinfo
 .vercel
+
+# Credentials — defense in depth so an accidental copy never ends up staged
+*-firebase-adminsdk-*.json
+*serviceAccount*.json
+*service-account*.json
+*.pem
+*.key
+secrets/
