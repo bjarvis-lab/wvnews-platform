@@ -2,6 +2,7 @@ import './globals.css';
 import { Suspense } from 'react';
 import Script from 'next/script';
 import BreakingNewsRibbon from '@/components/public/BreakingNewsRibbon';
+import GA4Tracker from '@/components/public/GA4Tracker';
 import { GAM_IS_LIVE } from '@/lib/gam-config';
 
 export const metadata = {
@@ -38,6 +39,12 @@ export default function RootLayout({ children }) {
         )}
       </head>
       <body className="min-h-screen bg-[#fafafa]">
+        {/* GA4 — loads + fires page_view only on public routes (admin is
+            excluded inside the component so internal traffic doesn't skew
+            public-site stats). */}
+        <Suspense>
+          <GA4Tracker />
+        </Suspense>
         {/* Renders only on public routes; reads breaking stories from Firestore */}
         <Suspense>
           <BreakingNewsRibbon />

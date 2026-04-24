@@ -1,5 +1,5 @@
 'use client';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import PublicHeader from '@/components/public/Header';
 import Footer from '@/components/public/Footer';
@@ -22,6 +22,24 @@ export default function ArticleBody({ story, section, sections, related, section
     access: story.accessLevel || 'free',
     storyId: story.id || '',
   };
+
+  // GA4 — fire a dimensional article_view event so reporter dashboards can
+  // attribute pageviews to the author. Requires the author/section/etc
+  // registered as custom dimensions in GA4 → Admin → Custom definitions.
+  useEffect(() => {
+    if (typeof window.gtag !== 'function') return;
+    window.gtag('event', 'article_view', {
+      author: story.author?.name || 'staff',
+      author_email: story.author?.email || '',
+      section: story.section || 'news',
+      story_id: story.id || '',
+      story_slug: story.slug || '',
+      publication: adSite,
+      breaking: story.breaking ? 'yes' : 'no',
+      access_level: story.accessLevel || 'free',
+      published_at: story.publishedAt || '',
+    });
+  }, [story.id, story.slug, adSite, story.author?.name, story.author?.email, story.section, story.breaking, story.accessLevel, story.publishedAt]);
 
   const publishDate = story.publishedAt
     ? new Date(story.publishedAt).toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })

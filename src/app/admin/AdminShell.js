@@ -7,29 +7,7 @@ import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { sites } from '@/data/mock';
 import Logo from '@/components/public/Logo';
-
-const navItems = [
-  { href: '/admin', label: 'Dashboard', icon: '📊' },
-  { href: '/admin/stories', label: 'Stories', icon: '📝', badge: '3' },
-  { href: '/admin/mediadesk', label: 'Media Desk', icon: '📡' },
-  { href: '/admin/layout-builder', label: 'Layout Builder', icon: '🧱' },
-  { href: '/admin/media', label: 'Media Library', icon: '📸' },
-  { href: '/admin/budget', label: 'Editorial Budget', icon: '📋' },
-  { href: '/admin/analytics', label: 'Analytics', icon: '📈' },
-  { href: '/admin/ai-rewriter', label: 'AI Rewriter', icon: '✍️' },
-  { href: '/admin/newsletters', label: 'Newsletters', icon: '✉️' },
-  { href: '/admin/social', label: 'Social Media', icon: '📱' },
-  { href: '/admin/forms', label: 'Forms & Submissions', icon: '📝' },
-  { href: '/admin/pricing', label: 'Self-Serve Pricing', icon: '💵' },
-  { href: '/admin/contests', label: 'Contests', icon: '🏆' },
-  { href: '/admin/ads', label: 'Advertising & GAM', icon: '💰' },
-  { href: '/admin/subscribers', label: 'Subscribers', icon: '👥' },
-  { href: '/admin/e-edition', label: 'E-Edition', icon: '📰' },
-  { href: '/admin/sites', label: 'Sites & Domains', icon: '🌐' },
-  { href: '/admin/seo', label: 'SEO & AI', icon: '🤖' },
-  { href: '/admin/import', label: 'Import Content', icon: '📥' },
-  { href: '/admin/settings', label: 'Settings', icon: '⚙️' },
-];
+import { visibleNavItems } from '@/lib/permissions';
 
 export default function AdminShell({ user, children }) {
   const pathname = usePathname();
@@ -37,6 +15,16 @@ export default function AdminShell({ user, children }) {
   const [collapsed, setCollapsed] = useState(false);
   const [currentSite, setCurrentSite] = useState('wvnews');
   const [signingOut, setSigningOut] = useState(false);
+
+  // Nav items filtered by the signed-in user's effective permissions. The
+  // stories badge keeps its legacy "3" count for now until the dashboard
+  // wires up real draft counts.
+  const navItems = visibleNavItems(user).map(item => ({
+    href: item.href,
+    label: item.label,
+    icon: item.icon,
+    ...(item.key === 'stories' ? { badge: '3' } : {}),
+  }));
 
   const initials = (user?.name || user?.email || 'U')
     .split(/\s+/).slice(0, 2).map(s => s[0]?.toUpperCase()).join('');
