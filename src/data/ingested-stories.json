@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-04-24T17:59:53.002Z",
+  "fetchedAt": "2026-04-24T18:57:45.373Z",
   "source": "wvnews.com RSS + section HTML backfill",
   "target": 10,
   "siteCounts": {
@@ -24,14 +24,14 @@
   "stories": {
     "exponent": [
       {
-        "id": "32df50e8-d7b1-4b1d-995d-55b6590ca1c1",
-        "slug": "emmanuel-christian-school-and-hope-gas-plant-tree-at-new-north-view-campus",
-        "title": "Emmanuel Christian School and Hope Gas plant tree at new North View campus",
+        "id": "5c5b4733-70ae-4e23-8215-e7ef00471e5f",
+        "slug": "harrison-county-government-offices-unable-to-provide-some-services-due-to-network-issue-public-told",
+        "title": "Harrison County government offices unable to provide some services due to network issue, public told to call in advance",
         "description": "",
         "pubDate": null,
         "author": "",
         "image": null,
-        "sourceUrl": "https://www.wvnews.com/theet/news/local/emmanuel-christian-school-and-hope-gas-plant-tree-at-new-north-view-campus/article_32df50e8-d7b1-4b1d-995d-55b6590ca1c1.html",
+        "sourceUrl": "https://www.wvnews.com/theet/news/harrison-county-government-offices-unable-to-provide-some-services-due-to-network-issue-public-told/article_5c5b4733-70ae-4e23-8215-e7ef00471e5f.html",
         "prefix": "theet",
         "source": "section"
       },
@@ -60,6 +60,18 @@
         "source": "section"
       },
       {
+        "id": "32df50e8-d7b1-4b1d-995d-55b6590ca1c1",
+        "slug": "emmanuel-christian-school-and-hope-gas-plant-tree-at-new-north-view-campus",
+        "title": "Emmanuel Christian School and Hope Gas plant tree at new North View campus",
+        "description": "",
+        "pubDate": null,
+        "author": "",
+        "image": null,
+        "sourceUrl": "https://www.wvnews.com/theet/news/local/emmanuel-christian-school-and-hope-gas-plant-tree-at-new-north-view-campus/article_32df50e8-d7b1-4b1d-995d-55b6590ca1c1.html",
+        "prefix": "theet",
+        "source": "section"
+      },
+      {
         "id": "3717c398-f209-4bc8-a54b-1fae0c4e4edb",
         "slug": "clarksburg-city-council-questions-opioid-settlement-spending-on-proposed-community-center-architectural-drawings",
         "title": "Clarksburg city council questions opioid settlement spending on proposed community center architectural drawings",
@@ -68,18 +80,6 @@
         "author": "",
         "image": null,
         "sourceUrl": "https://www.wvnews.com/theet/news/clarksburg-city-council-questions-opioid-settlement-spending-on-proposed-community-center-architectural-drawings/article_3717c398-f209-4bc8-a54b-1fae0c4e4edb.html",
-        "prefix": "theet",
-        "source": "section"
-      },
-      {
-        "id": "4165b714-b6eb-4e92-b2f8-8491e50aacb4",
-        "slug": "clarksburgs-inaugural-fairy-ren-faire-postponed-to-may-9-due-to-weather",
-        "title": "Clarksburg's inaugural Fairy Ren Faire postponed to May 9 due to weather",
-        "description": "",
-        "pubDate": null,
-        "author": "",
-        "image": null,
-        "sourceUrl": "https://www.wvnews.com/theet/news/local/clarksburgs-inaugural-fairy-ren-faire-postponed-to-may-9-due-to-weather/article_4165b714-b6eb-4e92-b2f8-8491e50aacb4.html",
         "prefix": "theet",
         "source": "section"
       },
@@ -120,6 +120,18 @@
         "source": "section"
       },
       {
+        "id": "4165b714-b6eb-4e92-b2f8-8491e50aacb4",
+        "slug": "clarksburgs-inaugural-fairy-ren-faire-postponed-to-may-9-due-to-weather",
+        "title": "Clarksburg's inaugural Fairy Ren Faire postponed to May 9 due to weather",
+        "description": "",
+        "pubDate": null,
+        "author": "",
+        "image": null,
+        "sourceUrl": "https://www.wvnews.com/theet/news/local/clarksburgs-inaugural-fairy-ren-faire-postponed-to-may-9-due-to-weather/article_4165b714-b6eb-4e92-b2f8-8491e50aacb4.html",
+        "prefix": "theet",
+        "source": "section"
+      },
+      {
         "id": "fc23d255-4f76-4c6b-b5a8-3a99b79e1ae0",
         "slug": "harrison-county-commission-candidate-mickey-petitto",
         "title": "Harrison County Commission candidate: Mickey Petitto",
@@ -128,18 +140,6 @@
         "author": "",
         "image": null,
         "sourceUrl": "https://www.wvnews.com/theet/news/harrison-county-commission-candidate-mickey-petitto/article_fc23d255-4f76-4c6b-b5a8-3a99b79e1ae0.html",
-        "prefix": "theet",
-        "source": "section"
-      },
-      {
-        "id": "9d5622f8-dea8-4d4c-bc57-d8959291e4c3",
-        "slug": "calendar-of-events-for-friday",
-        "title": "Calendar of Events for Friday",
-        "description": "",
-        "pubDate": null,
-        "author": "",
-        "image": null,
-        "sourceUrl": "https://www.wvnews.com/theet/calendar/calendar-of-events-for-friday/article_9d5622f8-dea8-4d4c-bc57-d8959291e4c3.html",
         "prefix": "theet",
         "source": "section"
       }
@@ -562,6 +562,30 @@
     ],
     "jackson": [
       {
+        "id": "239b7669-0032-4b44-b74c-921252513bee",
+        "slug": "gilmore-elementary-fundraiser-raises-nearly-4-400-for-new-playground-equipment",
+        "title": "Gilmore Elementary fundraiser raises nearly $4,400 for new playground equipment",
+        "description": "",
+        "pubDate": null,
+        "author": "",
+        "image": null,
+        "sourceUrl": "https://www.wvnews.com/jacksonnews/gilmore-elementary-fundraiser-raises-nearly-4-400-for-new-playground-equipment/article_239b7669-0032-4b44-b74c-921252513bee.html",
+        "prefix": "jacksonnews",
+        "source": "section"
+      },
+      {
+        "id": "0fd7adcb-15a6-4108-ab26-f99f08912f98",
+        "slug": "ravenswood-youth-bags-21-pound-gobbler-during-west-virginia-spring-turkey-season",
+        "title": "Ravenswood youth bags 21-pound gobbler during West Virginia spring turkey season",
+        "description": "",
+        "pubDate": null,
+        "author": "",
+        "image": null,
+        "sourceUrl": "https://www.wvnews.com/jacksonnews/ravenswood-youth-bags-21-pound-gobbler-during-west-virginia-spring-turkey-season/article_0fd7adcb-15a6-4108-ab26-f99f08912f98.html",
+        "prefix": "jacksonnews",
+        "source": "section"
+      },
+      {
         "id": "86fe1f5c-b24a-4a6d-8446-3952439f1f11",
         "slug": "ravenswood-native-finishes-as-top-american-in-paris-marathon",
         "title": "Ravenswood native finishes as top American in Paris Marathon",
@@ -654,30 +678,6 @@
         "author": "",
         "image": null,
         "sourceUrl": "https://www.wvnews.com/jacksonnews/olympic-champion-scott-hamilton-to-headline-jccf-benefit-dinner/article_6c7560cb-2707-4b1e-98b7-b1998aa91480.html",
-        "prefix": "jacksonnews",
-        "source": "section"
-      },
-      {
-        "id": "d08d5203-5052-4099-b9ea-3e41414e96f5",
-        "slug": "ripley-senior-news",
-        "title": "Ripley Senior News",
-        "description": "",
-        "pubDate": null,
-        "author": "",
-        "image": null,
-        "sourceUrl": "https://www.wvnews.com/jacksonnews/ripley-senior-news/article_d08d5203-5052-4099-b9ea-3e41414e96f5.html",
-        "prefix": "jacksonnews",
-        "source": "section"
-      },
-      {
-        "id": "660e33d1-2852-4020-ad7a-e804e4b30e97",
-        "slug": "red-devil-baseball-team-hits-500-mark-on-the-season",
-        "title": "Red Devil baseball team hits .500 mark on the season",
-        "description": "",
-        "pubDate": null,
-        "author": "",
-        "image": null,
-        "sourceUrl": "https://www.wvnews.com/jacksonnews/red-devil-baseball-team-hits-500-mark-on-the-season/article_660e33d1-2852-4020-ad7a-e804e4b30e97.html",
         "prefix": "jacksonnews",
         "source": "section"
       }
@@ -1173,6 +1173,18 @@
     ],
     "rivercities": [
       {
+        "id": "e14a8bbb-8a49-49b3-aad3-3d4f2dd42cef",
+        "slug": "gallia-commissioners-approve-cdbg-application-for-clearview-estates-wastewater-project",
+        "title": "Gallia commissioners approve CDBG application for Clearview Estates wastewater project",
+        "description": "",
+        "pubDate": null,
+        "author": "",
+        "image": null,
+        "sourceUrl": "https://www.wvnews.com/rivercities/gallia-commissioners-approve-cdbg-application-for-clearview-estates-wastewater-project/article_e14a8bbb-8a49-49b3-aad3-3d4f2dd42cef.html",
+        "prefix": "rivercities",
+        "source": "section"
+      },
+      {
         "id": "ae3ff41a-0948-4eea-a9d1-27f093a982bf",
         "slug": "river-valley-science-teacher-presents-research-classroom-innovations-at-national-conference-in-california",
         "title": "River Valley science teacher presents research, classroom innovations at national conference in California",
@@ -1197,18 +1209,6 @@
         "source": "section"
       },
       {
-        "id": "d0d7712c-bb72-4231-9181-5f0e3ec9611c",
-        "slug": "meigs-health-matters-preventing-cervical-cancer",
-        "title": "Meigs Health Matters: Preventing cervical cancer",
-        "description": "",
-        "pubDate": null,
-        "author": "",
-        "image": null,
-        "sourceUrl": "https://www.wvnews.com/rivercities/news/meigs-health-matters-preventing-cervical-cancer/article_d0d7712c-bb72-4231-9181-5f0e3ec9611c.html",
-        "prefix": "rivercities",
-        "source": "section"
-      },
-      {
         "id": "25efab15-9eb1-41d8-96a1-977958d97150",
         "slug": "eastern-softball-overpowers-belpre-in-dominant-tvc-hocking-victory",
         "title": "Eastern softball overpowers Belpre in dominant TVC Hocking victory",
@@ -1229,6 +1229,18 @@
         "author": "",
         "image": null,
         "sourceUrl": "https://www.wvnews.com/rivercities/gallipolis/sports/river-cities-high-school-sports-schedule-for-april-24-29/article_1338a2da-c1be-4989-9490-04e1b6ff84a2.html",
+        "prefix": "rivercities",
+        "source": "section"
+      },
+      {
+        "id": "d0d7712c-bb72-4231-9181-5f0e3ec9611c",
+        "slug": "meigs-health-matters-preventing-cervical-cancer",
+        "title": "Meigs Health Matters: Preventing cervical cancer",
+        "description": "",
+        "pubDate": null,
+        "author": "",
+        "image": null,
+        "sourceUrl": "https://www.wvnews.com/rivercities/news/meigs-health-matters-preventing-cervical-cancer/article_d0d7712c-bb72-4231-9181-5f0e3ec9611c.html",
         "prefix": "rivercities",
         "source": "section"
       },
@@ -1279,25 +1291,13 @@
         "sourceUrl": "https://www.wvnews.com/rivercities/mason-county-commission-announces-levy-rollback-for-taxpayers/article_65dc5bcc-d6ff-42dd-8ab5-1be091e1be19.html",
         "prefix": "rivercities",
         "source": "section"
-      },
-      {
-        "id": "6b4a715c-e9ab-4bfd-8bd2-e4d295c97dbf",
-        "slug": "mason-county-family-resource-network-discusses-outreach-prevention-efforts-during-april-meeting-in-point-pleasant",
-        "title": "Mason County Family Resource Network discusses outreach, prevention efforts during April meeting in Point Pleasant",
-        "description": "",
-        "pubDate": null,
-        "author": "",
-        "image": null,
-        "sourceUrl": "https://www.wvnews.com/rivercities/mason-county-family-resource-network-discusses-outreach-prevention-efforts-during-april-meeting-in-point-pleasant/article_6b4a715c-e9ab-4bfd-8bd2-e4d295c97dbf.html",
-        "prefix": "rivercities",
-        "source": "section"
       }
     ],
     "spencer": [
       {
         "id": "d8a160d6-a7b5-499a-8446-503948e7797e",
         "slug": "james-minney-highlights-finances-trust-and-student-opportunities-in-board-campaign",
-        "title": "James Minney Highlights Finances, Trust and Student Opportunities in Board Campaign",
+        "title": "James Minney highlights finances, trust and student opportunities in board campaign",
         "description": "",
         "pubDate": null,
         "author": "",
@@ -1417,6 +1417,54 @@
     ],
     "mineral": [
       {
+        "id": "04198592-f6a3-4178-9735-fed7302ee721",
+        "slug": "cumberland-theatre-continues-38th-season-with-annie",
+        "title": "Cumberland Theatre continues 38th season with Annie",
+        "description": "",
+        "pubDate": null,
+        "author": "",
+        "image": null,
+        "sourceUrl": "https://www.wvnews.com/mineralnews/cumberland-theatre-continues-38th-season-with-annie/article_04198592-f6a3-4178-9735-fed7302ee721.html",
+        "prefix": "mineralnews",
+        "source": "section"
+      },
+      {
+        "id": "6ca4d7a6-780c-4bb0-b916-41adefe2978b",
+        "slug": "governor-signs-landmark-rural-health-legislation-secures-199-million-for-statewide-transformation",
+        "title": "Governor Signs Landmark Rural Health Legislation, Secures $199 Million for Statewide Transformation",
+        "description": "",
+        "pubDate": null,
+        "author": "",
+        "image": null,
+        "sourceUrl": "https://www.wvnews.com/mineralnews/governor-signs-landmark-rural-health-legislation-secures-199-million-for-statewide-transformation/article_6ca4d7a6-780c-4bb0-b916-41adefe2978b.html",
+        "prefix": "mineralnews",
+        "source": "section"
+      },
+      {
+        "id": "98272916-b245-4cef-9b2d-decaa4db90cf",
+        "slug": "local-businesses-support-cycle-the-savage",
+        "title": "Local businesses support Cycle the Savage",
+        "description": "",
+        "pubDate": null,
+        "author": "",
+        "image": null,
+        "sourceUrl": "https://www.wvnews.com/mineralnews/local-businesses-support-cycle-the-savage/article_98272916-b245-4cef-9b2d-decaa4db90cf.html",
+        "prefix": "mineralnews",
+        "source": "section"
+      },
+      {
+        "id": "42183a03-4dd3-4616-b6da-5a07248ddc98",
+        "slug": "frankfort-high-school-announces-honor-roll",
+        "title": "Frankfort High School announces honor roll",
+        "description": "",
+        "pubDate": null,
+        "author": "",
+        "image": null,
+        "sourceUrl": "https://www.wvnews.com/mineralnews/frankfort-high-school-announces-honor-roll/article_42183a03-4dd3-4616-b6da-5a07248ddc98.html",
+        "prefix": "mineralnews",
+        "source": "section"
+      },
+      {
         "id": "8c197b31-f4d8-40f3-9686-3ade5756f903",
         "slug": "richard-rick-estill",
         "title": "Richard \"Rick\" Estill",
@@ -1485,54 +1533,6 @@
         "author": "",
         "image": null,
         "sourceUrl": "https://www.wvnews.com/mineralnews/transmission-project-draws-mounting-opposition/article_c0f2db9c-f14b-4cb0-8d3d-d4af34defbc2.html",
-        "prefix": "mineralnews",
-        "source": "section"
-      },
-      {
-        "id": "5a259d4b-a278-4ec2-a030-3973da73ccad",
-        "slug": "a-lasting-legacy-honoring-the-memory-of-don-kingery-teacher-and-coach",
-        "title": "A Lasting Legacy: Honoring the memory of Don Kingery, teacher and coach",
-        "description": "",
-        "pubDate": null,
-        "author": "",
-        "image": null,
-        "sourceUrl": "https://www.wvnews.com/mineralnews/a-lasting-legacy-honoring-the-memory-of-don-kingery-teacher-and-coach/article_5a259d4b-a278-4ec2-a030-3973da73ccad.html",
-        "prefix": "mineralnews",
-        "source": "section"
-      },
-      {
-        "id": "22f7d948-aa17-4bc3-954e-759ecb9b7020",
-        "slug": "mineral-county-honors-28-seniors-at-achievement-awards-program",
-        "title": "Mineral County honors 28 seniors at Achievement Awards program",
-        "description": "",
-        "pubDate": null,
-        "author": "",
-        "image": null,
-        "sourceUrl": "https://www.wvnews.com/mineralnews/mineral-county-honors-28-seniors-at-achievement-awards-program/article_22f7d948-aa17-4bc3-954e-759ecb9b7020.html",
-        "prefix": "mineralnews",
-        "source": "section"
-      },
-      {
-        "id": "3cdb58ef-cfd2-4959-b299-874e36061a38",
-        "slug": "3-on-republican-ballot-for-w-va-senate-district-14",
-        "title": "3 on Republican ballot for W.Va. Senate District 14",
-        "description": "",
-        "pubDate": null,
-        "author": "",
-        "image": null,
-        "sourceUrl": "https://www.wvnews.com/mineralnews/3-on-republican-ballot-for-w-va-senate-district-14/article_3cdb58ef-cfd2-4959-b299-874e36061a38.html",
-        "prefix": "mineralnews",
-        "source": "section"
-      },
-      {
-        "id": "90e36d2f-d6bb-4219-8720-d6025a11c558",
-        "slug": "early-voting-begins-april-29-mineral-voters-will-go-to-former-clerks-office",
-        "title": "Early voting begins April 29; Mineral voters will go to former clerk's office",
-        "description": "",
-        "pubDate": null,
-        "author": "",
-        "image": null,
-        "sourceUrl": "https://www.wvnews.com/mineralnews/early-voting-begins-april-29-mineral-voters-will-go-to-former-clerks-office/article_90e36d2f-d6bb-4219-8720-d6025a11c558.html",
         "prefix": "mineralnews",
         "source": "section"
       }
