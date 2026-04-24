@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-04-24T18:57:45.373Z",
+  "fetchedAt": "2026-04-24T19:49:43.446Z",
   "source": "wvnews.com RSS + section HTML backfill",
   "target": 10,
   "siteCounts": {
@@ -48,18 +48,6 @@
         "source": "section"
       },
       {
-        "id": "51be89b7-3b8f-44ad-be02-ae211bb99f84",
-        "slug": "bridgeport-middle-students-make-west-virginia-history-with-national-investwrite-wins",
-        "title": "Bridgeport Middle students make West Virginia history with national InvestWrite wins",
-        "description": "",
-        "pubDate": null,
-        "author": "",
-        "image": null,
-        "sourceUrl": "https://www.wvnews.com/theet/news/bridgeport-middle-students-make-west-virginia-history-with-national-investwrite-wins/article_51be89b7-3b8f-44ad-be02-ae211bb99f84.html",
-        "prefix": "theet",
-        "source": "section"
-      },
-      {
         "id": "32df50e8-d7b1-4b1d-995d-55b6590ca1c1",
         "slug": "emmanuel-christian-school-and-hope-gas-plant-tree-at-new-north-view-campus",
         "title": "Emmanuel Christian School and Hope Gas plant tree at new North View campus",
@@ -68,6 +56,18 @@
         "author": "",
         "image": null,
         "sourceUrl": "https://www.wvnews.com/theet/news/local/emmanuel-christian-school-and-hope-gas-plant-tree-at-new-north-view-campus/article_32df50e8-d7b1-4b1d-995d-55b6590ca1c1.html",
+        "prefix": "theet",
+        "source": "section"
+      },
+      {
+        "id": "51be89b7-3b8f-44ad-be02-ae211bb99f84",
+        "slug": "bridgeport-middle-students-make-west-virginia-history-with-national-investwrite-wins",
+        "title": "Bridgeport Middle students make West Virginia history with national InvestWrite wins",
+        "description": "",
+        "pubDate": null,
+        "author": "",
+        "image": null,
+        "sourceUrl": "https://www.wvnews.com/theet/news/bridgeport-middle-students-make-west-virginia-history-with-national-investwrite-wins/article_51be89b7-3b8f-44ad-be02-ae211bb99f84.html",
         "prefix": "theet",
         "source": "section"
       },
@@ -108,18 +108,6 @@
         "source": "section"
       },
       {
-        "id": "c8dac5b8-2d4f-43b1-9e24-b7fed650bba7",
-        "slug": "harrison-county-commission-candidate-martin-howe",
-        "title": "Harrison County Commission candidate: Martin Howe",
-        "description": "",
-        "pubDate": null,
-        "author": "",
-        "image": null,
-        "sourceUrl": "https://www.wvnews.com/theet/news/harrison-county-commission-candidate-martin-howe/article_c8dac5b8-2d4f-43b1-9e24-b7fed650bba7.html",
-        "prefix": "theet",
-        "source": "section"
-      },
-      {
         "id": "4165b714-b6eb-4e92-b2f8-8491e50aacb4",
         "slug": "clarksburgs-inaugural-fairy-ren-faire-postponed-to-may-9-due-to-weather",
         "title": "Clarksburg's inaugural Fairy Ren Faire postponed to May 9 due to weather",
@@ -128,6 +116,18 @@
         "author": "",
         "image": null,
         "sourceUrl": "https://www.wvnews.com/theet/news/local/clarksburgs-inaugural-fairy-ren-faire-postponed-to-may-9-due-to-weather/article_4165b714-b6eb-4e92-b2f8-8491e50aacb4.html",
+        "prefix": "theet",
+        "source": "section"
+      },
+      {
+        "id": "c8dac5b8-2d4f-43b1-9e24-b7fed650bba7",
+        "slug": "harrison-county-commission-candidate-martin-howe",
+        "title": "Harrison County Commission candidate: Martin Howe",
+        "description": "",
+        "pubDate": null,
+        "author": "",
+        "image": null,
+        "sourceUrl": "https://www.wvnews.com/theet/news/harrison-county-commission-candidate-martin-howe/article_c8dac5b8-2d4f-43b1-9e24-b7fed650bba7.html",
         "prefix": "theet",
         "source": "section"
       },
@@ -1087,18 +1087,6 @@
         "source": "section"
       },
       {
-        "id": "73a62021-6205-4087-b66d-aa00b7795904",
-        "slug": "delineators-constricting-palatine-park-road-removed-though-local-officials-deny-responsibility",
-        "title": "Delineators constricting Palatine Park road removed, though local officials deny responsibility",
-        "description": "",
-        "pubDate": null,
-        "author": "",
-        "image": null,
-        "sourceUrl": "https://www.wvnews.com/fairmontnews/news/delineators-constricting-palatine-park-road-removed-though-local-officials-deny-responsibility/article_73a62021-6205-4087-b66d-aa00b7795904.html",
-        "prefix": "fairmontnews",
-        "source": "section"
-      },
-      {
         "id": "261274ae-3bf0-4e21-a5ac-ef7c3504bb14",
         "slug": "country-church-project-st-peter-the-fisherman-archives-preserve-fairmont-s-immigrant-history-through-sacramental",
         "title": "Country Church Project: St. Peter the Fisherman archives preserve Fairmont’s immigrant history through sacramental records",
@@ -1107,6 +1095,18 @@
         "author": "",
         "image": null,
         "sourceUrl": "https://www.wvnews.com/fairmontnews/news/local/country-church-project-st-peter-the-fisherman-archives-preserve-fairmont-s-immigrant-history-through-sacramental/article_261274ae-3bf0-4e21-a5ac-ef7c3504bb14.html",
+        "prefix": "fairmontnews",
+        "source": "section"
+      },
+      {
+        "id": "73a62021-6205-4087-b66d-aa00b7795904",
+        "slug": "delineators-constricting-palatine-park-road-removed-though-local-officials-deny-responsibility",
+        "title": "Delineators constricting Palatine Park road removed, though local officials deny responsibility",
+        "description": "",
+        "pubDate": null,
+        "author": "",
+        "image": null,
+        "sourceUrl": "https://www.wvnews.com/fairmontnews/news/delineators-constricting-palatine-park-road-removed-though-local-officials-deny-responsibility/article_73a62021-6205-4087-b66d-aa00b7795904.html",
         "prefix": "fairmontnews",
         "source": "section"
       },
@@ -1209,6 +1209,18 @@
         "source": "section"
       },
       {
+        "id": "fabc45cc-8d30-4356-8dfe-a08149038bf2",
+        "slug": "ethan-edwards-throws-perfect-game-as-eastern-shuts-out-belpre-11-0",
+        "title": "Ethan Edwards throws perfect game as Eastern shuts out Belpre 11-0",
+        "description": "",
+        "pubDate": null,
+        "author": "",
+        "image": null,
+        "sourceUrl": "https://www.wvnews.com/rivercities/pomeroy/sports/ethan-edwards-throws-perfect-game-as-eastern-shuts-out-belpre-11-0/article_fabc45cc-8d30-4356-8dfe-a08149038bf2.html",
+        "prefix": "rivercities",
+        "source": "section"
+      },
+      {
         "id": "25efab15-9eb1-41d8-96a1-977958d97150",
         "slug": "eastern-softball-overpowers-belpre-in-dominant-tvc-hocking-victory",
         "title": "Eastern softball overpowers Belpre in dominant TVC Hocking victory",
@@ -1277,18 +1289,6 @@
         "author": "",
         "image": null,
         "sourceUrl": "https://www.wvnews.com/rivercities/rutland-council-confirms-street-commissioner-debates-civic-center-fees-and-improvements/article_971fc552-b44a-466f-bdbc-8c8199018809.html",
-        "prefix": "rivercities",
-        "source": "section"
-      },
-      {
-        "id": "65dc5bcc-d6ff-42dd-8ab5-1be091e1be19",
-        "slug": "mason-county-commission-announces-levy-rollback-for-taxpayers",
-        "title": "Mason County Commission announces levy rollback for taxpayers",
-        "description": "",
-        "pubDate": null,
-        "author": "",
-        "image": null,
-        "sourceUrl": "https://www.wvnews.com/rivercities/mason-county-commission-announces-levy-rollback-for-taxpayers/article_65dc5bcc-d6ff-42dd-8ab5-1be091e1be19.html",
         "prefix": "rivercities",
         "source": "section"
       }
@@ -1417,6 +1417,66 @@
     ],
     "mineral": [
       {
+        "id": "898c60e3-aca5-4d83-8792-d512afd2e6e8",
+        "slug": "governor-morrisey-signs-hope-scholarship-reform-legislation",
+        "title": "Governor Morrisey Signs HOPE Scholarship Reform Legislation",
+        "description": "",
+        "pubDate": null,
+        "author": "",
+        "image": null,
+        "sourceUrl": "https://www.wvnews.com/mineralnews/governor-morrisey-signs-hope-scholarship-reform-legislation/article_898c60e3-aca5-4d83-8792-d512afd2e6e8.html",
+        "prefix": "mineralnews",
+        "source": "section"
+      },
+      {
+        "id": "7964520d-fc0c-4b70-8368-b42cd83eb78f",
+        "slug": "frostburg-state-university-s-chamber-orchestra-presents-celestial-journey",
+        "title": "Frostburg State University’s Chamber Orchestra Presents “Celestial Journey”",
+        "description": "",
+        "pubDate": null,
+        "author": "",
+        "image": null,
+        "sourceUrl": "https://www.wvnews.com/mineralnews/frostburg-state-university-s-chamber-orchestra-presents-celestial-journey/article_7964520d-fc0c-4b70-8368-b42cd83eb78f.html",
+        "prefix": "mineralnews",
+        "source": "section"
+      },
+      {
+        "id": "6924f1f5-6f51-4e58-90ca-7fbf73c915e4",
+        "slug": "wv-secretary-of-state-kris-warner-reports-on-registered-voters",
+        "title": "WV Secretary of State Kris Warner reports on registered voters",
+        "description": "",
+        "pubDate": null,
+        "author": "",
+        "image": null,
+        "sourceUrl": "https://www.wvnews.com/mineralnews/wv-secretary-of-state-kris-warner-reports-on-registered-voters/article_6924f1f5-6f51-4e58-90ca-7fbf73c915e4.html",
+        "prefix": "mineralnews",
+        "source": "section"
+      },
+      {
+        "id": "16a3a1ca-a959-4ea1-a20d-65cb922c605a",
+        "slug": "ferleman-gallery-presents-the-secrets-that-structure-holds-a-solo-exhibition-by-allan-gorman",
+        "title": "Ferleman Gallery Presents The Secrets That Structure Holds A Solo Exhibition by Allan Gorman",
+        "description": "",
+        "pubDate": null,
+        "author": "",
+        "image": null,
+        "sourceUrl": "https://www.wvnews.com/mineralnews/ferleman-gallery-presents-the-secrets-that-structure-holds-a-solo-exhibition-by-allan-gorman/article_16a3a1ca-a959-4ea1-a20d-65cb922c605a.html",
+        "prefix": "mineralnews",
+        "source": "section"
+      },
+      {
+        "id": "eb30d359-0b48-43c4-9834-4f85841cb1b5",
+        "slug": "photo-gallery-2026-katharine-church-award-program",
+        "title": "Photo Gallery: 2026 Katharine Church Award program",
+        "description": "",
+        "pubDate": null,
+        "author": "",
+        "image": null,
+        "sourceUrl": "https://www.wvnews.com/mineralnews/photo-gallery-2026-katharine-church-award-program/article_eb30d359-0b48-43c4-9834-4f85841cb1b5.html",
+        "prefix": "mineralnews",
+        "source": "section"
+      },
+      {
         "id": "04198592-f6a3-4178-9735-fed7302ee721",
         "slug": "cumberland-theatre-continues-38th-season-with-annie",
         "title": "Cumberland Theatre continues 38th season with Annie",
@@ -1465,74 +1525,14 @@
         "source": "section"
       },
       {
-        "id": "8c197b31-f4d8-40f3-9686-3ade5756f903",
-        "slug": "richard-rick-estill",
-        "title": "Richard \"Rick\" Estill",
+        "id": "18e6a903-8d76-466b-94a9-1263d2865189",
+        "slug": "whats-happening",
+        "title": "What's Happening",
         "description": "",
         "pubDate": null,
         "author": "",
         "image": null,
-        "sourceUrl": "https://www.wvnews.com/mineralnews/obits/richard-rick-estill/article_8c197b31-f4d8-40f3-9686-3ade5756f903.html",
-        "prefix": "mineralnews",
-        "source": "section"
-      },
-      {
-        "id": "23319ea0-e48e-4f04-b093-228e488473f1",
-        "slug": "westernport-commissioners-approve-demo-for-former-town-hall",
-        "title": "Westernport commissioners approve demo for former town hall",
-        "description": "",
-        "pubDate": null,
-        "author": "",
-        "image": null,
-        "sourceUrl": "https://www.wvnews.com/mineralnews/westernport-commissioners-approve-demo-for-former-town-hall/article_23319ea0-e48e-4f04-b093-228e488473f1.html",
-        "prefix": "mineralnews",
-        "source": "section"
-      },
-      {
-        "id": "fdba7943-bd06-488e-a0f2-faf939f3cd92",
-        "slug": "senate-district-14-republican-candidates-talk-about-priorities",
-        "title": "Senate District 14 Republican candidates talk about priorities",
-        "description": "",
-        "pubDate": null,
-        "author": "",
-        "image": null,
-        "sourceUrl": "https://www.wvnews.com/mineralnews/senate-district-14-republican-candidates-talk-about-priorities/article_fdba7943-bd06-488e-a0f2-faf939f3cd92.html",
-        "prefix": "mineralnews",
-        "source": "section"
-      },
-      {
-        "id": "0bd044e4-2406-4d26-841c-b24ca96b46b4",
-        "slug": "candidate-for-westernport-council-switches-to-run-for-mayor-still-only-2-on-ballot",
-        "title": "Candidate for Westernport council switches to run for mayor; still only 2 on ballot",
-        "description": "",
-        "pubDate": null,
-        "author": "",
-        "image": null,
-        "sourceUrl": "https://www.wvnews.com/mineralnews/candidate-for-westernport-council-switches-to-run-for-mayor-still-only-2-on-ballot/article_0bd044e4-2406-4d26-841c-b24ca96b46b4.html",
-        "prefix": "mineralnews",
-        "source": "section"
-      },
-      {
-        "id": "4e8a40e9-d22e-4e1b-bd67-ad7e98787ffa",
-        "slug": "everett-smith-qualifies-for-junior-world-shooting-championships-in-germany",
-        "title": "Everett Smith qualifies for Junior World Shooting Championships in Germany",
-        "description": "",
-        "pubDate": null,
-        "author": "",
-        "image": null,
-        "sourceUrl": "https://www.wvnews.com/mineralnews/everett-smith-qualifies-for-junior-world-shooting-championships-in-germany/article_4e8a40e9-d22e-4e1b-bd67-ad7e98787ffa.html",
-        "prefix": "mineralnews",
-        "source": "section"
-      },
-      {
-        "id": "c0f2db9c-f14b-4cb0-8d3d-d4af34defbc2",
-        "slug": "transmission-project-draws-mounting-opposition",
-        "title": "Transmission project draws mounting opposition",
-        "description": "",
-        "pubDate": null,
-        "author": "",
-        "image": null,
-        "sourceUrl": "https://www.wvnews.com/mineralnews/transmission-project-draws-mounting-opposition/article_c0f2db9c-f14b-4cb0-8d3d-d4af34defbc2.html",
+        "sourceUrl": "https://www.wvnews.com/mineralnews/whats-happening/article_18e6a903-8d76-466b-94a9-1263d2865189.html",
         "prefix": "mineralnews",
         "source": "section"
       }
@@ -1571,18 +1571,6 @@
         "author": "",
         "image": null,
         "sourceUrl": "https://www.wvnews.com/westondemocrat/news/lewis-county-calendar-of-events/article_956e4133-023f-4b9b-bd9f-d2ac001af1a8.html",
-        "prefix": "westondemocrat",
-        "source": "section"
-      },
-      {
-        "id": "86215f6f-6be8-436c-bacb-d1a17a31c9da",
-        "slug": "mon-stonewall-jackson-memorial-hospital-expands-breast-care-with-new-biopsy-service",
-        "title": "Mon Stonewall Jackson Memorial Hospital expands breast care with new biopsy service",
-        "description": "",
-        "pubDate": null,
-        "author": "",
-        "image": null,
-        "sourceUrl": "https://www.wvnews.com/westondemocrat/news/mon-stonewall-jackson-memorial-hospital-expands-breast-care-with-new-biopsy-service/article_86215f6f-6be8-436c-bacb-d1a17a31c9da.html",
         "prefix": "westondemocrat",
         "source": "section"
       },
@@ -1655,6 +1643,18 @@
         "author": "",
         "image": null,
         "sourceUrl": "https://www.wvnews.com/westondemocrat/sports/local/lewis-county-track-and-field-shines-at-buckhannon-quad-and-mountaineer-showcase/article_b2dda42f-4f2d-450c-ba71-ebf2f922b5b4.html",
+        "prefix": "westondemocrat",
+        "source": "section"
+      },
+      {
+        "id": "800910a6-7b6f-4de5-8831-d82ebea7125f",
+        "slug": "lewis-county-baseball-stuns-no-2-gilmer-county-in-12-inning-marathon",
+        "title": "Lewis County Baseball Stuns No. 2 Gilmer County in 12-Inning Marathon",
+        "description": "",
+        "pubDate": null,
+        "author": "",
+        "image": null,
+        "sourceUrl": "https://www.wvnews.com/westondemocrat/sports/local/lewis-county-baseball-stuns-no-2-gilmer-county-in-12-inning-marathon/article_800910a6-7b6f-4de5-8831-d82ebea7125f.html",
         "prefix": "westondemocrat",
         "source": "section"
       }
