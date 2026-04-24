@@ -159,20 +159,62 @@ async function suggestTopics() {
   return { ideas: data?.ideas || [] };
 }
 
-// generateFullStory — accepts a reporter's brief and returns a complete
-// draft: headline, deck, body HTML, tags, primary section.
+// generateFullStory — accepts a reporter's brief plus optional structured
+// facts (word target, quotes to include, sources, must-mention items, tone)
+// and returns a complete draft. Uses Sonnet for quality.
 //
-// The brief can include: notes, quotes, bullet points, a rough outline, or
-// just a sentence ("There's a water-main break on Main Street in Clarksburg
-// affecting 400 homes").
-async function generateFullStory({ brief, section }) {
-  const hint = section ? `\n\nPrimary section: ${section}` : '';
+// The prompt explicitly targets a word count and forbids one-paragraph
+// cop-outs, while still refusing to invent facts. When the reporter hands
+// in rich structured inputs (quotes, numbers, named sources), Claude has
+// more material to work with and the draft reflects that.
+async function generateFullStory({
+  brief,
+  section,
+  wordLimit,
+  quotes = [],
+  sources = [],
+  mustInclude = [],
+  tone = 'hard news',
+}) {
+  const target = Number.isFinite(wordLimit) && wordLimit > 50 ? Math.min(wordLimit, 1500) : 600;
+  const lower = Math.max(target - 100, 200);
+  const upper = target + 100;
+
+  // Build a structured input block. Empty sections are omitted so the prompt
+  // stays focused.
+  const parts = [];
+  parts.push(`BRIEF:\n${brief}`);
+  if (quotes.length) {
+    parts.push(`DIRECT QUOTES TO USE (use each verbatim inside quotation marks, attribute to the given speaker):\n${quotes.map(q => typeof q === 'string' ? `- ${q}` : `- "${q.quote}" — ${q.speaker || 'speaker unspecified'}`).join('\n')}`);
+  }
+  if (sources.length) {
+    parts.push(`NAMED SOURCES TO CITE:\n${sources.map(s => `- ${s}`).join('\n')}`);
+  }
+  if (mustInclude.length) {
+    parts.push(`FACTS THAT MUST APPEAR:\n${mustInclude.map(s => `- ${s}`).join('\n')}`);
+  }
+  if (section) parts.push(`PRIMARY SECTION: ${section}`);
+  parts.push(`TONE: ${tone}`);
+  parts.push(`LENGTH TARGET: approximately ${target} words (acceptable range: ${lower}–${upper}). Do NOT return a single paragraph or bullet outline. Write complete paragraphs and cover the story fully.`);
+
   const { data } = await callClaude({
     model: DRAFT_MODEL,
-    system: `You are a seasoned newspaper reporter writing for WV News (West Virginia). You write in AP style: clear, specific, active voice, attribution, third-person. The lede answers what/where/when/who. Paragraphs are short (1–3 sentences). Use proper HTML tags (<p>, <h2>, <blockquote>) in the body field — no markdown. Never invent quotes or facts the brief doesn't provide; if information is missing, write around it with phrases like "according to the agency" rather than fabricating sources or numbers. Return strict JSON.`,
-    user: `Write a full news article draft from this reporter brief.${hint}\n\nBRIEF:\n${brief}\n\nReturn JSON in this exact shape:\n{\n  "headline": "concrete, under 80 chars",\n  "seoHeadline": "SEO-friendly version of headline",\n  "deck": "one-sentence subheadline, 20-30 words",\n  "body": "<p>Full article body in HTML. 4–8 paragraphs.</p>",\n  "tags": ["tag1", "tag2", ...],\n  "section": "news|sports|business|politics|community|education|crime|lifestyle",\n  "aiDisclaimer": "one-line note the reporter should verify before publishing"\n}`,
+    system: `You are a seasoned newspaper reporter writing for WV News (West Virginia). AP style: clear, specific, active voice, attribution, third-person. The lede answers what/where/when/who up top. Paragraphs are short (1–3 sentences each). Use proper HTML tags in the body field (<p>, <h2>, <blockquote>, <ul>, <li>) — no markdown.
+
+FACT DISCIPLINE (hard rules):
+- Never invent direct quotes, specific numbers, dates, or named sources the brief doesn't supply.
+- If a fact is missing, hedge naturally ("according to officials", "a spokesperson said") rather than fabricating a name.
+- If the brief gives you a quote or stat, use it verbatim.
+
+LENGTH DISCIPLINE (also hard):
+- Hit the length target. Don't return one-sentence summaries or outlines.
+- If the brief is thin, write what can be factually written and then add contextual paragraphs (background, significance, what's next) WITHOUT inventing facts.
+- Never stop after one paragraph unless explicitly asked to.
+
+Return strict JSON.`,
+    user: `Write a full news article draft. Follow the length target precisely.\n\n${parts.join('\n\n')}\n\nReturn JSON in this exact shape. The body must be complete multi-paragraph HTML:\n{\n  "headline": "concrete, specific, under 80 chars",\n  "seoHeadline": "SEO-friendly version of headline",\n  "deck": "one-sentence subheadline, 20-30 words",\n  "body": "<p>First paragraph (the lede).</p><p>Second paragraph (context / nut graf).</p><p>Additional paragraphs continuing the story. Multiple paragraphs. Quotes if provided.</p><p>Closing with what's next or where to learn more.</p>",\n  "wordCount": number_of_words_in_body,\n  "tags": ["tag1", "tag2", ...],\n  "section": "news|sports|business|politics|community|education|crime|lifestyle",\n  "aiDisclaimer": "one-line note for the reporter — flag any facts that may need verification"\n}`,
     json: true,
-    maxTokens: 2500,
+    maxTokens: 4000,
   });
   if (!data) return { error: 'Draft generation returned no valid JSON' };
   return {
@@ -180,6 +222,7 @@ async function generateFullStory({ brief, section }) {
     seoHeadline: data.seoHeadline || '',
     deck: data.deck || '',
     body: data.body || '',
+    wordCount: data.wordCount || 0,
     tags: data.tags || [],
     section: data.section || 'news',
     aiDisclaimer: data.aiDisclaimer || 'AI-drafted — verify facts, quotes, and numbers before publishing.',
@@ -270,7 +313,7 @@ export async function POST(request) {
   }
   try {
     const body = await request.json();
-    const { action, story, brief, section } = body;
+    const { action, story, brief, section, wordLimit, quotes, sources, mustInclude, tone } = body;
 
     const handler = HANDLERS[action];
     if (!handler) {
@@ -286,7 +329,7 @@ export async function POST(request) {
       if (!brief || brief.trim().length < 10) {
         return NextResponse.json({ error: 'Brief is too short — describe your story in a sentence or more' }, { status: 400 });
       }
-      result = await handler({ brief, section });
+      result = await handler({ brief, section, wordLimit, quotes, sources, mustInclude, tone });
     } else {
       if (!story || (!story.headline && !story.body)) {
         return NextResponse.json({ error: 'Story needs at least a headline or body' }, { status: 400 });

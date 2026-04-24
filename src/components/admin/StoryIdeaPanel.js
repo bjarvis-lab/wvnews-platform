@@ -23,6 +23,15 @@ export default function StoryIdeaPanel({ section, onGenerated, onDismiss }) {
   const [error, setError] = useState(null);
   const [collapsed, setCollapsed] = useState(false);
 
+  // Advanced inputs — collapsed by default. A thin brief + a few structured
+  // facts produces much better output than a thin brief alone.
+  const [advOpen, setAdvOpen] = useState(false);
+  const [wordLimit, setWordLimit] = useState(600);
+  const [tone, setTone] = useState('hard news');
+  const [quotesText, setQuotesText] = useState('');
+  const [sourcesText, setSourcesText] = useState('');
+  const [mustIncludeText, setMustIncludeText] = useState('');
+
   async function suggest() {
     setError(null); setLoading('suggest');
     try {
@@ -39,6 +48,11 @@ export default function StoryIdeaPanel({ section, onGenerated, onDismiss }) {
     } finally { setLoading(null); }
   }
 
+  // Each textarea is parsed as a newline-separated list of items.
+  function parseList(text) {
+    return text.split('\n').map(s => s.trim()).filter(Boolean);
+  }
+
   async function generate() {
     if (brief.trim().length < 10) {
       setError('Describe your story in at least a sentence before generating.');
@@ -49,7 +63,16 @@ export default function StoryIdeaPanel({ section, onGenerated, onDismiss }) {
       const res = await fetch('/api/ai', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ action: 'generateFullStory', brief, section }),
+        body: JSON.stringify({
+          action: 'generateFullStory',
+          brief,
+          section,
+          wordLimit: Number(wordLimit) || undefined,
+          tone,
+          quotes: parseList(quotesText),
+          sources: parseList(sourcesText),
+          mustInclude: parseList(mustIncludeText),
+        }),
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || 'Generation failed');
@@ -104,13 +127,85 @@ export default function StoryIdeaPanel({ section, onGenerated, onDismiss }) {
             The more specific your notes (names, numbers, quotes), the better the draft. Claude won&apos;t invent sources.
           </span>
         </label>
+
+        {/* Advanced options — quick-access fields that materially improve the draft */}
+        <div className="mt-3">
+          <button
+            type="button"
+            onClick={() => setAdvOpen(!advOpen)}
+            className="text-xs font-semibold text-brand-700 hover:underline"
+          >
+            {advOpen ? '▾' : '▸'} Advanced options (length, quotes, sources, tone)
+          </button>
+          {advOpen && (
+            <div className="mt-2 p-3 bg-white border border-brand-100 rounded-lg grid grid-cols-1 md:grid-cols-2 gap-3">
+              <label className="block">
+                <span className="text-[11px] font-semibold text-ink-700 uppercase tracking-wider">Target word count</span>
+                <input
+                  type="number"
+                  min="200"
+                  max="1500"
+                  step="50"
+                  value={wordLimit}
+                  onChange={e => setWordLimit(e.target.value)}
+                  className="mt-1 w-full px-3 py-2 border border-ink-200 rounded text-sm"
+                />
+                <span className="text-[10px] text-ink-500">Range 200–1500. Default 600 (standard news story).</span>
+              </label>
+              <label className="block">
+                <span className="text-[11px] font-semibold text-ink-700 uppercase tracking-wider">Tone</span>
+                <select value={tone} onChange={e => setTone(e.target.value)} className="mt-1 w-full px-3 py-2 border border-ink-200 rounded text-sm bg-white">
+                  <option>hard news</option>
+                  <option>breaking</option>
+                  <option>feature</option>
+                  <option>analysis</option>
+                  <option>obituary-style</option>
+                  <option>sports game story</option>
+                  <option>business</option>
+                </select>
+              </label>
+              <label className="block md:col-span-2">
+                <span className="text-[11px] font-semibold text-ink-700 uppercase tracking-wider">Direct quotes to include (one per line)</span>
+                <textarea
+                  rows={3}
+                  value={quotesText}
+                  onChange={e => setQuotesText(e.target.value)}
+                  placeholder='"This is the biggest investment in our county in 20 years." — Commissioner John Smith'
+                  className="mt-1 w-full px-3 py-2 border border-ink-200 rounded text-sm font-mono"
+                />
+                <span className="text-[10px] text-ink-500">Each quote will appear verbatim with the speaker you list.</span>
+              </label>
+              <label className="block">
+                <span className="text-[11px] font-semibold text-ink-700 uppercase tracking-wider">Named sources (one per line)</span>
+                <textarea
+                  rows={3}
+                  value={sourcesText}
+                  onChange={e => setSourcesText(e.target.value)}
+                  placeholder={'John Smith, Harrison County Commissioner\nWV Dept. of Transportation\nShinnston Public Works'}
+                  className="mt-1 w-full px-3 py-2 border border-ink-200 rounded text-sm"
+                />
+              </label>
+              <label className="block">
+                <span className="text-[11px] font-semibold text-ink-700 uppercase tracking-wider">Facts that must appear (one per line)</span>
+                <textarea
+                  rows={3}
+                  value={mustIncludeText}
+                  onChange={e => setMustIncludeText(e.target.value)}
+                  placeholder={'3,400 homes affected\nProject starts June 1\n$1.2M budget'}
+                  className="mt-1 w-full px-3 py-2 border border-ink-200 rounded text-sm"
+                />
+              </label>
+            </div>
+          )}
+        </div>
+
         <div className="flex flex-wrap gap-2 mt-3">
           <button
             onClick={generate}
             disabled={loading !== null || brief.trim().length < 10}
             className="px-4 py-2 bg-brand-700 text-white text-sm font-semibold rounded-lg hover:bg-brand-600 disabled:opacity-50"
           >
-            {loading === 'generate' ? '⏳ Writing draft (15–30s)…' : '✨ Generate Full Draft'}
+            {loading === 'generate' ? '⏳ Writing draft (15–40s)…' : `✨ Generate ~${wordLimit}-word Draft`}
           </button>
           <button
             onClick={suggest}
