@@ -15,11 +15,17 @@ import {
 // comma-separated strings from a simple text input.
 function parseForm(data) {
   const list = (v) => (typeof v === 'string' ? v.split(',').map(s => s.trim()).filter(Boolean) : []);
+  const hasWeb = data.get('hasWeb') !== 'false'; // default true
+  const hasPrint = data.get('hasPrint') === 'true';
   return {
     headline: data.get('headline')?.toString() || '',
     seoHeadline: data.get('seoHeadline')?.toString() || '',
     deck: data.get('deck')?.toString() || '',
-    body: data.get('body')?.toString() || '',
+    // Primary body: web. If only print exists, body may be sent as printBody.
+    webBody: data.get('webBody')?.toString() ?? data.get('body')?.toString() ?? '',
+    printBody: data.get('printBody')?.toString() || '',
+    hasWeb,
+    hasPrint,
     section: data.get('section')?.toString() || 'news',
     secondarySections: list(data.get('secondarySections')?.toString()),
     sites: list(data.get('sites')?.toString()),

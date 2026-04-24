@@ -384,7 +384,11 @@ const EMPTY = {
   headline: '',
   seoHeadline: '',
   deck: '',
-  body: '',
+  // Two bodies — reporters edit one or both depending on story type
+  webBody: '',
+  printBody: '',
+  hasWeb: true,
+  hasPrint: false,
   section: 'news',
   secondarySections: [],
   sites: ['wvnews'],
@@ -405,7 +409,19 @@ function StoryEditorModal({ story, sections, sites, onClose }) {
   const [action, setAction] = useState(null);
   const [error, setError] = useState(null);
 
-  const initial = story ? { ...EMPTY, ...story } : EMPTY;
+  // Migrate any legacy story that still has only `body`: treat it as webBody.
+  const migrated = story
+    ? {
+        ...EMPTY,
+        ...story,
+        webBody: story.webBody ?? story.body ?? '',
+        printBody: story.printBody ?? '',
+        hasWeb: story.hasWeb ?? true,
+        hasPrint: story.hasPrint ?? false,
+      }
+    : EMPTY;
+  const initial = migrated;
+  const [activeVersion, setActiveVersion] = useState('web'); // 'web' | 'print'
   const [form, setForm] = useState(initial);
 
   const isEditing = !!story?.id;
@@ -427,7 +443,10 @@ function StoryEditorModal({ story, sections, sites, onClose }) {
     fd.set('headline', form.headline);
     fd.set('seoHeadline', form.seoHeadline || '');
     fd.set('deck', form.deck || '');
-    fd.set('body', form.body || '');
+    fd.set('webBody', form.webBody || '');
+    fd.set('printBody', form.printBody || '');
+    fd.set('hasWeb', form.hasWeb !== false ? 'true' : 'false');
+    fd.set('hasPrint', form.hasPrint ? 'true' : 'false');
     fd.set('section', form.section || 'news');
     fd.set('secondarySections', (form.secondarySections || []).join(','));
     fd.set('sites', (form.sites || []).join(','));
@@ -490,7 +509,8 @@ function StoryEditorModal({ story, sections, sites, onClose }) {
           story: {
             headline: form.headline,
             deck: form.deck,
-            body: form.body,
+            // Most actions operate on the currently-active version
+            body: activeVersion === 'print' ? form.printBody : form.webBody,
             tags: form.tags,
             image: form.image,
           },
@@ -516,6 +536,30 @@ function StoryEditorModal({ story, sections, sites, onClose }) {
           if (data.alt) update({ image: { ...(form.image || {}), alt: data.alt } });
           else if (data.note) setAiError(data.note);
           break;
+        case 'optimizeSeo':
+          // Show a preview popup before we overwrite the body
+          if (data.optimizedBody) {
+            setAiPopup({
+              action: 'optimizeSeo',
+              data: {
+                before: activeVersion === 'print' ? form.printBody : form.webBody,
+                after: data.optimizedBody,
+                onApply: () => {
+                  update(activeVersion === 'print'
+                    ? { printBody: data.optimizedBody }
+                    : { webBody: data.optimizedBody });
+                  setAiPopup(null);
+                },
+              },
+            });
+          }
+          break;
+        case 'expandForPrint':
+          if (data.printBody) {
+            update({ printBody: data.printBody, hasPrint: true });
+            setActiveVersion('print');
+          }
+          break;
         case 'headlines':
         case 'social':
         case 'links':
@@ -530,6 +574,7 @@ function StoryEditorModal({ story, sections, sites, onClose }) {
   }
 
   const AI_BUTTONS = [
+    { action: 'optimizeSeo', label: '✨ SEO & AISEO Fix', hint: 'Rewrite body for SEO — preserves every quote, number, date, and proper noun.', primary: true },
     { action: 'summary', label: 'Generate Deck', hint: 'Writes the subheadline under your headline.' },
     { action: 'headlines', label: 'Suggest Headlines', hint: 'Five alternates to pick from.' },
     { action: 'meta', label: 'Write Meta Description', hint: 'Fills the SEO meta description field.' },
@@ -587,7 +632,10 @@ function StoryEditorModal({ story, sections, sites, onClose }) {
                     headline: draft.headline || form.headline,
                     seoHeadline: draft.seoHeadline || form.seoHeadline,
                     deck: draft.deck || form.deck,
-                    body: draft.body || form.body,
+                    // AI draft lands in the web version by default — reporters
+                    // edit it live there, then convert to print when ready.
+                    webBody: draft.body || form.webBody,
+                    hasWeb: true,
                     tags: (draft.tags && draft.tags.length) ? draft.tags : form.tags,
                     section: draft.section || form.section,
                   });
@@ -608,7 +656,80 @@ function StoryEditorModal({ story, sections, sites, onClose }) {
               onChange={e => update({ deck: e.target.value })}
               className="w-full text-base text-ink-600 outline-none placeholder-ink-300"
             />
-            <StoryEditor initialContent={form.body} onChange={html => update({ body: html })} autoFocus={false} />
+
+            {/* Version tabs — web / print */}
+            <div className="flex items-center gap-1 border-b border-ink-200 -mb-px">
+              <VersionTab
+                active={activeVersion === 'web'}
+                onClick={() => setActiveVersion('web')}
+                exists={form.hasWeb}
+                onToggle={() => update({ hasWeb: !form.hasWeb })}
+                icon="💻"
+                label="Web"
+                statusDot={form.webBody ? 'bg-emerald-500' : 'bg-ink-300'}
+              />
+              <VersionTab
+                active={activeVersion === 'print'}
+                onClick={() => { update({ hasPrint: true }); setActiveVersion('print'); }}
+                exists={form.hasPrint}
+                onToggle={() => update({ hasPrint: !form.hasPrint })}
+                icon="🗞️"
+                label="Print"
+                statusDot={form.printBody ? 'bg-emerald-500' : 'bg-ink-300'}
+              />
+              <div className="ml-auto flex items-center gap-2 pb-2">
+                {activeVersion === 'web' && form.webBody && !form.printBody && (
+                  <button
+                    type="button"
+                    onClick={() => ai('expandForPrint')}
+                    disabled={aiLoading !== null}
+                    className="px-3 py-1.5 text-xs font-semibold text-brand-700 hover:bg-brand-50 rounded border border-brand-200 disabled:opacity-50"
+                  >
+                    {aiLoading === 'expandForPrint' ? '⏳ Converting…' : '✨ AI: Convert to Print'}
+                  </button>
+                )}
+                {activeVersion === 'web' && form.webBody && form.printBody && (
+                  <span className="text-[11px] text-ink-500">Print version exists — edit on Print tab.</span>
+                )}
+                {activeVersion === 'print' && !form.printBody && form.webBody && (
+                  <button
+                    type="button"
+                    onClick={() => update({ printBody: form.webBody })}
+                    className="px-3 py-1.5 text-xs font-semibold text-ink-700 hover:bg-ink-100 rounded border border-ink-200"
+                  >
+                    Copy from Web
+                  </button>
+                )}
+              </div>
+            </div>
+
+            {activeVersion === 'web' ? (
+              <>
+                {form.hasWeb ? (
+                  <StoryEditor
+                    key="web-editor"
+                    initialContent={form.webBody}
+                    onChange={html => update({ webBody: html })}
+                    autoFocus={false}
+                  />
+                ) : (
+                  <DisabledVersionPlaceholder label="Web version" onEnable={() => update({ hasWeb: true })} />
+                )}
+              </>
+            ) : (
+              <>
+                {form.hasPrint ? (
+                  <StoryEditor
+                    key="print-editor"
+                    initialContent={form.printBody}
+                    onChange={html => update({ printBody: html })}
+                    autoFocus={false}
+                  />
+                ) : (
+                  <DisabledVersionPlaceholder label="Print version" onEnable={() => update({ hasPrint: true })} />
+                )}
+              </>
+            )}
 
             {/* AI Writing Assistant */}
             <div className="bg-brand-50 rounded-lg p-4 border border-brand-100">
@@ -823,13 +944,16 @@ function StoryEditorModal({ story, sections, sites, onClose }) {
 
 function AiSuggestionPopup({ action, data, onApplyHeadline, onClose }) {
   const title =
-    action === 'headlines' ? 'Headline Suggestions' :
-    action === 'social'    ? 'Social Posts' :
-                             'Internal Link Suggestions';
+    action === 'headlines'   ? 'Headline Suggestions' :
+    action === 'social'      ? 'Social Posts' :
+    action === 'optimizeSeo' ? 'SEO & AISEO Rewrite — Review Before Applying' :
+                               'Internal Link Suggestions';
+
+  const isWide = action === 'optimizeSeo';
 
   return (
     <div className="fixed inset-0 z-[60] bg-black/60 flex items-center justify-center p-4" onClick={onClose}>
-      <div className="bg-white rounded-xl shadow-2xl w-full max-w-2xl" onClick={e => e.stopPropagation()}>
+      <div className={`bg-white rounded-xl shadow-2xl w-full ${isWide ? 'max-w-6xl' : 'max-w-2xl'}`} onClick={e => e.stopPropagation()}>
         <div className="flex items-center justify-between px-5 py-4 border-b border-ink-100">
           <div className="flex items-center gap-2">
             <span>🤖</span>
@@ -838,7 +962,35 @@ function AiSuggestionPopup({ action, data, onApplyHeadline, onClose }) {
           <button onClick={onClose} className="p-2 text-ink-400 hover:text-ink-700">✕</button>
         </div>
 
-        <div className="p-5 space-y-3 max-h-[70vh] overflow-y-auto">
+        <div className="p-5 space-y-3 max-h-[75vh] overflow-y-auto">
+          {action === 'optimizeSeo' && (
+            <>
+              <p className="text-xs text-ink-500 mb-2">
+                Claude was instructed to preserve every quote, number, date, and proper noun — still, scan the diff before applying.
+              </p>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <div className="text-[11px] font-bold uppercase tracking-wider text-ink-600 mb-1">Before</div>
+                  <div className="prose prose-sm max-w-none border border-ink-200 rounded-lg p-4 bg-ink-50/50 h-[55vh] overflow-y-auto"
+                       dangerouslySetInnerHTML={{ __html: data.before || '<em>(empty)</em>' }} />
+                </div>
+                <div>
+                  <div className="text-[11px] font-bold uppercase tracking-wider text-emerald-700 mb-1">After — SEO + AISEO optimized</div>
+                  <div className="prose prose-sm max-w-none border border-emerald-200 rounded-lg p-4 bg-emerald-50/30 h-[55vh] overflow-y-auto"
+                       dangerouslySetInnerHTML={{ __html: data.after || '<em>(empty)</em>' }} />
+                </div>
+              </div>
+              <div className="flex justify-end gap-2 pt-3 border-t border-ink-100">
+                <button onClick={onClose} className="px-4 py-2 text-sm font-semibold text-ink-700 hover:bg-ink-100 rounded">
+                  Cancel — keep original
+                </button>
+                <button onClick={() => data.onApply?.()} className="px-4 py-2 bg-brand-700 text-white text-sm font-semibold rounded hover:bg-brand-600">
+                  Apply rewrite
+                </button>
+              </div>
+            </>
+          )}
+
           {action === 'headlines' && (
             <>
               <p className="text-xs text-ink-500 mb-2">Click one to apply as your headline.</p>
@@ -928,3 +1080,46 @@ function FilterField({ label, children }) {
     </div>
   );
 }
+
+function VersionTab({ active, onClick, exists, onToggle, icon, label, statusDot }) {
+  return (
+    <div
+      className={`flex items-center gap-2 px-4 py-2.5 border-b-2 cursor-pointer transition-colors ${
+        active ? 'border-brand-700 text-brand-900' : 'border-transparent text-ink-500 hover:text-ink-900'
+      }`}
+    >
+      <button type="button" onClick={onClick} className="flex items-center gap-2 font-semibold text-sm">
+        <span>{icon}</span>
+        <span>{label}</span>
+        {exists && <span className={`w-1.5 h-1.5 rounded-full ${statusDot}`} />}
+      </button>
+      <label className="flex items-center gap-1 text-[11px] text-ink-500 cursor-pointer" title={`${exists ? 'Remove' : 'Add'} ${label.toLowerCase()} version`}>
+        <input
+          type="checkbox"
+          checked={!!exists}
+          onChange={onToggle}
+          className="w-3 h-3"
+          onClick={e => e.stopPropagation()}
+        />
+      </label>
+    </div>
+  );
+}
+
+function DisabledVersionPlaceholder({ label, onEnable }) {
+  return (
+    <div className="border-2 border-dashed border-ink-200 rounded-lg min-h-[400px] flex flex-col items-center justify-center text-center p-10">
+      <div className="text-4xl mb-2">📄</div>
+      <div className="font-display text-lg font-semibold text-ink-700">No {label.toLowerCase()} yet</div>
+      <p className="text-sm text-ink-500 mt-1 max-w-md">
+        {label === 'Web version'
+          ? 'This story won\'t show on the website. Enable to start writing.'
+          : 'This story won\'t be sent to print. Enable to start a print version, or use AI: Convert to Print from the Web tab.'}
+      </p>
+      <button type="button" onClick={onEnable} className="mt-4 px-4 py-2 bg-brand-700 text-white text-sm font-semibold rounded-lg hover:bg-brand-600">
+        Enable {label}
+      </button>
+    </div>
+  );
+}
+

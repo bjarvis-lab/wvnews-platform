@@ -186,9 +186,82 @@ async function generateFullStory({ brief, section }) {
   };
 }
 
+// ---------- Version-specific rewriters ----------
+
+// optimizeSeo — rewrite the web body for SEO + AI-search without touching
+// facts. Hard constraint: don't change anything inside quotation marks, any
+// number, any date, any proper noun. Claude restructures + tightens around
+// those preserved anchors.
+async function optimizeSeo(story) {
+  const body = htmlToPlainText(story.body || '').slice(0, MAX_BODY_CHARS);
+  if (!body) return { optimizedBody: '' };
+
+  const { text } = await callClaude({
+    model: DRAFT_MODEL, // Sonnet for faithful rewrites
+    system: `You are an SEO + AI-search (AISEO) editor for a West Virginia news site. You rewrite news-article body text for better search visibility (Google + Perplexity + ChatGPT + Google AI Overviews) without altering facts.
+
+HARD RULES — do not break:
+- Do NOT change anything inside quotation marks. Quotes are sacred.
+- Do NOT change any number, percentage, dollar amount, or date.
+- Do NOT change any proper noun (people, places, agencies, companies).
+- Do NOT add facts, quotes, sources, or stats not in the original.
+- Do NOT remove facts from the original.
+
+WHAT YOU CAN IMPROVE:
+- Lede clarity: answer who/what/where/when up top.
+- Short paragraphs (1–3 sentences) with <p> tags.
+- Use <h2> for major section breaks (2–4 max).
+- Tighten transition sentences and filler.
+- Replace vague phrases with specific ones (keeping proper nouns intact).
+- Natural topic-keyword placement, no keyword stuffing.
+- Entity-rich first paragraph (full names, org, location).
+
+OUTPUT: return the rewritten body as clean HTML. Use only <p>, <h2>, <h3>, <blockquote>, <ul>, <li>, <a>. No markdown. No preamble. No explanation. Just the HTML.`,
+    user: `Rewrite the following article body for SEO and AI search, preserving every quote, number, date, and proper noun.\n\nHeadline (for context, do not include in output): ${story.headline || '(none)'}\n\nORIGINAL BODY:\n${body}`,
+    maxTokens: 2500,
+  });
+  return { optimizedBody: text };
+}
+
+// expandForPrint — take the web version (often a running-update ledger-style
+// story) and produce a longer, polished, print-ready version. Unlike the SEO
+// rewriter, this one CAN add connective tissue, context, and narrative
+// structure — but still cannot invent quotes/sources/numbers.
+async function expandForPrint(story) {
+  const body = htmlToPlainText(story.body || '').slice(0, MAX_BODY_CHARS);
+  if (!body) return { printBody: '' };
+
+  const { text } = await callClaude({
+    model: DRAFT_MODEL,
+    system: `You are a newspaper editor converting a running web article into a polished print-ready version for next-day publication.
+
+WHAT YOU CAN DO:
+- Expand transitions and narrative flow.
+- Add context paragraphs that tie facts together.
+- Reorder sections for print coherence (print readers see the whole story at once, not in real-time updates).
+- Remove live-update timestamps (e.g. "11:45 AM UPDATE:") and consolidate facts into a unified timeline.
+- Write a stronger opening paragraph for print (print readers are often casual).
+- Suggest a 2–3 sentence "nut graf" after the lede explaining why this matters.
+
+HARD RULES:
+- Do NOT change any direct quote, number, date, or proper noun from the original.
+- Do NOT invent new quotes, sources, or facts.
+- Do NOT shorten if the web version is already terse.
+
+OUTPUT: return the print body as clean HTML. Use only <p>, <h2>, <h3>, <blockquote>, <ul>, <li>. No markdown, preamble, or explanation.`,
+    user: `Convert this web-updated article into a polished print version. Preserve every fact, quote, number, date, and proper noun.\n\nHeadline: ${story.headline || '(none)'}\n\nWEB VERSION:\n${body}`,
+    maxTokens: 3000,
+  });
+  return { printBody: text };
+}
+
 // ---------- Dispatcher ----------
 
-const HANDLERS = { summary, headlines, meta, tags, alt, social, links, suggestTopics, generateFullStory };
+const HANDLERS = {
+  summary, headlines, meta, tags, alt, social, links,
+  suggestTopics, generateFullStory,
+  optimizeSeo, expandForPrint,
+};
 
 export async function POST(request) {
   const user = await getSessionUser();

@@ -82,7 +82,8 @@ export default function ArticleBody({ story, section, sections, related, section
 
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
           <article className="lg:col-span-3 article-body">
-            <div className="prose prose-lg max-w-none" dangerouslySetInnerHTML={{ __html: story.body || '' }} />
+            {/* Prefer the web-specific body; fall back to legacy `body`. */}
+            <div className="prose prose-lg max-w-none" dangerouslySetInnerHTML={{ __html: story.webBody || story.body || '' }} />
 
             {story.tags?.length > 0 && (
               <div className="mt-8 pt-4 border-t border-ink-200">

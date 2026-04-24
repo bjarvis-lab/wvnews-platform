@@ -155,9 +155,20 @@ export async function getRecentBySite(siteId, { limit = 10 } = {}) {
 
 // Create a new native story. Accepts form fields + explicit publish flag.
 // Returns { id, slug } of the created doc.
+//
+// The `body` field is kept for backward compat (some older data lives there).
+// New writes put web content in `webBody` and print content in `printBody`.
+// If the caller only provides one, we mirror it into `body` so the public
+// article route can keep its existing fallback logic working.
 export async function createNativeStory(input, { publish = false } = {}) {
   const slug = ensureSlug(input.headline, `draft-${Date.now()}`);
   const now = FieldValue.serverTimestamp();
+
+  // Accept either new-style (webBody/printBody) or legacy (body) input.
+  const webBody = input.webBody ?? (input.hasWeb !== false ? input.body || '' : '');
+  const printBody = input.printBody ?? (input.hasPrint ? input.body || '' : '');
+  const hasWeb = input.hasWeb !== false; // default true
+  const hasPrint = !!input.hasPrint;
 
   const doc = {
     source: 'native',
@@ -165,7 +176,17 @@ export async function createNativeStory(input, { publish = false } = {}) {
     headline: input.headline?.trim() || 'Untitled',
     seoHeadline: input.seoHeadline?.trim() || '',
     deck: input.deck?.trim() || '',
-    body: input.body || '',
+
+    // Versions
+    hasWeb,
+    hasPrint,
+    webBody,
+    printBody,
+    body: webBody || printBody || '', // legacy fallback for any consumer still reading .body
+
+    webStatus: publish && hasWeb ? 'published' : 'draft',
+    printStatus: hasPrint ? 'draft' : null,
+
     section: input.section || 'news',
     secondarySections: input.secondarySections || [],
     sites: input.sites?.length ? input.sites : ['wvnews'],
@@ -175,8 +196,11 @@ export async function createNativeStory(input, { publish = false } = {}) {
     tags: input.tags || [],
     featured: !!input.featured,
     breaking: !!input.breaking,
+
+    // Top-level status remains the web lifecycle (primary view on the site)
     status: publish ? 'published' : 'draft',
     publishedAt: publish ? Timestamp.now() : null,
+    updateLog: [],
     createdAt: now,
     updatedAt: now,
     stats: { views: 0, uniqueReaders: 0, socialShares: 0 },
@@ -188,16 +212,41 @@ export async function createNativeStory(input, { publish = false } = {}) {
 
 export async function updateStory(id, patch, { publish = null } = {}) {
   const update = { ...patch, updatedAt: FieldValue.serverTimestamp() };
+
+  // Keep `body` in sync with whichever version the app treats as primary
+  // (web first, then print). Older code paths that read `.body` directly
+  // continue to see a sensible value.
+  if (patch.webBody !== undefined || patch.printBody !== undefined) {
+    update.body = (patch.webBody || patch.printBody || '');
+  }
+
   if (publish === true) {
     update.status = 'published';
+    update.webStatus = 'published';
     update.publishedAt = update.publishedAt || Timestamp.now();
   } else if (publish === false) {
     update.status = 'draft';
+    update.webStatus = 'draft';
   }
   if (patch.headline && !patch.slug) {
     update.slug = ensureSlug(patch.headline, id);
   }
   await db.collection(COL).doc(id).update(update);
+  return { id };
+}
+
+// Append an entry to the running update log on a story. Used when a reporter
+// makes notable changes to a live web story so readers can see when it was
+// last revised.
+export async function appendUpdateLog(id, { note, by }) {
+  await db.collection(COL).doc(id).update({
+    updateLog: FieldValue.arrayUnion({
+      at: Timestamp.now(),
+      by: by || 'staff',
+      note: note || 'Updated',
+    }),
+    updatedAt: FieldValue.serverTimestamp(),
+  });
   return { id };
 }
 
