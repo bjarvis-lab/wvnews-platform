@@ -1,12 +1,10 @@
-// Ingest recent stories from wvnews.com into src/data/ingested-stories.json.
+// Ingest recent stories from wvnews.com. Two passes (RSS → section backfill).
+// Writes output to TWO sinks:
+//   1) src/data/ingested-stories.json — legacy consumers (keeps working)
+//   2) Firestore `stories` collection with source='ingested' — new canonical store
 //
-// Two passes:
-//   1) RSS — /search/?f=rss returns ~100 latest cross-publication items.
-//      Articles are bucketed by URL-prefix (e.g. /theet/, /rivercities/).
-//   2) Section backfill — any publication with fewer than TARGET_PER_SITE
-//      items after pass 1 gets its section page scraped for additional cards.
-//
-// Keeps stories deduped by article ID and sorted newest-first.
+// The Firestore write is best-effort: if credentials aren't available the
+// script still writes the JSON so local dev without Firebase keeps working.
 // Run: node scripts/ingest-wvnews.mjs
 
 import { writeFileSync, mkdirSync } from 'node:fs';
@@ -187,6 +185,75 @@ async function main() {
   writeFileSync(OUT, JSON.stringify(out, null, 2));
   console.log(`[done] wrote ${OUT}`);
   console.log('[done] counts:', out.siteCounts);
+
+  // Second sink: Firestore. Non-fatal if Firebase credentials aren't present.
+  await writeToFirestore(merged);
+}
+
+async function writeToFirestore(bySite) {
+  const hasCreds =
+    process.env.GOOGLE_APPLICATION_CREDENTIALS ||
+    process.env.FIREBASE_SERVICE_ACCOUNT_KEY;
+  if (!hasCreds) {
+    console.log('[firestore] skipped — no GOOGLE_APPLICATION_CREDENTIALS / FIREBASE_SERVICE_ACCOUNT_KEY set');
+    return;
+  }
+  try {
+    const { initializeApp, cert, applicationDefault, getApps } = await import('firebase-admin/app');
+    const { getFirestore, Timestamp, FieldValue } = await import('firebase-admin/firestore');
+
+    if (!getApps().length) {
+      const inline = process.env.FIREBASE_SERVICE_ACCOUNT_KEY;
+      const credential = inline
+        ? cert(typeof inline === 'string' ? JSON.parse(inline) : inline)
+        : applicationDefault();
+      initializeApp({ credential, projectId: process.env.FIREBASE_PROJECT_ID || 'wvnews-crm' });
+    }
+    const db = getFirestore();
+
+    // Batch writes — Firestore caps batches at 500 ops, so we chunk.
+    const all = [];
+    for (const [siteId, rows] of Object.entries(bySite)) {
+      for (const r of rows) all.push({ siteId, row: r });
+    }
+    console.log(`[firestore] upserting ${all.length} ingested stories…`);
+
+    let upserted = 0;
+    for (let i = 0; i < all.length; i += 400) {
+      const batch = db.batch();
+      const chunk = all.slice(i, i + 400);
+      for (const { siteId, row } of chunk) {
+        const ref = db.collection('stories').doc(`ingested_${row.id}`);
+        batch.set(ref, {
+          source: 'ingested',
+          slug: row.slug,
+          headline: row.title,
+          deck: row.description || '',
+          body: '',
+          section: 'news',
+          secondarySections: [],
+          sites: [siteId],
+          accessLevel: 'free',
+          author: { name: row.author || 'From staff reports', role: '', avatar: '' },
+          image: row.image ? { url: row.image, alt: '' } : null,
+          tags: [],
+          featured: false,
+          breaking: false,
+          status: 'published',
+          sourceUrl: row.sourceUrl,
+          sourcePrefix: row.prefix || null,
+          ingestSource: row.source || 'rss',
+          publishedAt: row.pubDate ? Timestamp.fromDate(new Date(row.pubDate)) : Timestamp.now(),
+          updatedAt: FieldValue.serverTimestamp(),
+        }, { merge: true });
+      }
+      await batch.commit();
+      upserted += chunk.length;
+    }
+    console.log(`[firestore] upserted ${upserted} stories`);
+  } catch (e) {
+    console.warn('[firestore] write failed (non-fatal):', e.message);
+  }
 }
 
 main().catch(e => { console.error(e); process.exit(1); });
