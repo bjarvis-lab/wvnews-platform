@@ -67,3 +67,23 @@ export async function listStaleSources({ hours = 24 } = {}) {
   // For MVP, skip this and add later.
   return [];
 }
+
+// Clusters — detected stories that ≥2 signals cover. Surfaced in the
+// Media Desk as "Trending" / "Breaking" sections at the top.
+export async function listClusters({ limit = 30, breakingOnly = false, trendingOnly = false } = {}) {
+  let q = db.collection('mediaClusters').orderBy('lastSeenAt', 'desc').limit(limit * 2);
+  const snap = await q.get();
+  let rows = snap.docs.map(serialize);
+  if (breakingOnly) rows = rows.filter(r => r.isBreaking);
+  if (trendingOnly) rows = rows.filter(r => r.isTrending || r.isBreaking);
+  return rows.slice(0, limit);
+}
+
+// Pull the full signal docs for a cluster (for expansion UI).
+export async function getClusterMembers(clusterId) {
+  const cluster = (await db.collection('mediaClusters').doc(clusterId).get()).data();
+  if (!cluster?.memberSignalIds?.length) return [];
+  const refs = cluster.memberSignalIds.map(id => db.collection('mediaSignals').doc(id));
+  const docs = await db.getAll(...refs);
+  return docs.filter(d => d.exists).map(serialize);
+}

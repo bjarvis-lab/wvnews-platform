@@ -33,11 +33,15 @@ const KIND_META = {
   'google-news': { label: 'Google News', icon: '🔎', tone: 'bg-gold-100 text-gold-900' },
 };
 
-export default function MediaDeskClient({ signals, stats, collectorStats }) {
+export default function MediaDeskClient({ signals, clusters = [], stats, collectorStats, clusterStats }) {
   const [search, setSearch] = useState('');
   const [kindFilter, setKindFilter] = useState('all');
   const [sourceFilter, setSourceFilter] = useState('all');
   const [topicFilter, setTopicFilter] = useState('all');
+  const [expandedCluster, setExpandedCluster] = useState(null);
+
+  const trending = clusters.filter(c => c.isTrending || c.isBreaking);
+  const breaking = clusters.filter(c => c.isBreaking);
 
   const allKinds = useMemo(() => {
     const set = new Set(signals.map(s => s.kind).filter(Boolean));
@@ -89,6 +93,60 @@ export default function MediaDeskClient({ signals, stats, collectorStats }) {
           />
         </div>
       </div>
+
+      {/* Breaking — red alert bar, top of page */}
+      {breaking.length > 0 && (
+        <div className="bg-gradient-to-r from-red-600 to-red-700 text-white rounded-xl p-5 shadow-lg">
+          <div className="flex items-center gap-2 mb-3">
+            <span className="animate-pulse text-xl">●</span>
+            <span className="font-bold uppercase tracking-widest text-sm">Breaking across WV</span>
+            <span className="ml-auto text-xs opacity-80">{breaking.length} {breaking.length === 1 ? 'story' : 'stories'}</span>
+          </div>
+          <div className="space-y-2">
+            {breaking.map(c => (
+              <ClusterRow
+                key={c.id}
+                cluster={c}
+                expanded={expandedCluster === c.id}
+                onToggle={() => setExpandedCluster(expandedCluster === c.id ? null : c.id)}
+                variant="breaking"
+              />
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* Trending — gold accent */}
+      {trending.filter(c => !c.isBreaking).length > 0 && (
+        <div className="bg-white border border-gold-300 rounded-xl p-5">
+          <div className="flex items-center gap-2 mb-3">
+            <span className="text-xl">🔥</span>
+            <span className="font-bold text-ink-900 tracking-wider text-sm uppercase">Trending across WV</span>
+            <span className="text-xs text-ink-500">≥3 sources, &lt;2 hours</span>
+            <span className="ml-auto text-xs text-ink-500">
+              {clusterStats?.runAt ? `clustered ${fmtAgo(clusterStats.runAt)}` : 'clusterer hasn\'t run yet'}
+            </span>
+          </div>
+          <div className="space-y-2">
+            {trending.filter(c => !c.isBreaking).map(c => (
+              <ClusterRow
+                key={c.id}
+                cluster={c}
+                expanded={expandedCluster === c.id}
+                onToggle={() => setExpandedCluster(expandedCluster === c.id ? null : c.id)}
+                variant="trending"
+              />
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* Cluster empty state prompt */}
+      {clusters.length === 0 && signals.length > 20 && (
+        <div className="bg-ink-50 border border-ink-200 rounded-xl px-4 py-3 text-xs text-ink-600">
+          💡 <strong>No clusters detected yet.</strong> The clusterer runs on each GitHub Action cron; trending + breaking sections will appear here as stories spread across sources.
+        </div>
+      )}
 
       {/* Controls */}
       <div className="flex flex-wrap items-center gap-3 p-4 bg-white rounded-xl border border-ink-200">
@@ -146,6 +204,89 @@ function Stat({ label, value, hint, tone }) {
       <div className="text-[10px] font-semibold text-ink-500 uppercase tracking-wider">{label}</div>
       <div className="text-xl font-bold text-ink-900 mt-0.5">{value}</div>
       {hint && <div className="text-[10px] text-ink-500">{hint}</div>}
+    </div>
+  );
+}
+
+function ClusterRow({ cluster, expanded, onToggle, variant = 'trending' }) {
+  const isBreaking = variant === 'breaking';
+  const toneText   = isBreaking ? 'text-white' : 'text-ink-900';
+  const toneMuted  = isBreaking ? 'text-white/75' : 'text-ink-600';
+  const toneBorder = isBreaking ? 'border-white/20 bg-white/5' : 'border-ink-200 bg-white';
+  const toneBadge  = isBreaking ? 'bg-white/20 text-white' : 'bg-gold-100 text-gold-900';
+
+  return (
+    <div className={`rounded-lg border ${toneBorder} overflow-hidden`}>
+      <button
+        type="button"
+        onClick={onToggle}
+        className="w-full text-left p-3 hover:bg-white/5 transition-colors"
+      >
+        <div className="flex items-start gap-3">
+          <div className="flex-1 min-w-0">
+            <div className="flex items-center gap-2 mb-1 flex-wrap">
+              <span className={`px-2 py-0.5 text-[10px] font-bold rounded uppercase tracking-wider ${toneBadge}`}>
+                {cluster.uniqueDomainCount} sources
+              </span>
+              {cluster.hasOfficial && (
+                <span className={`px-2 py-0.5 text-[10px] font-bold rounded uppercase tracking-wider ${toneBadge}`}>
+                  official
+                </span>
+              )}
+              {cluster.beat && (
+                <span className={`text-[10px] font-semibold ${toneMuted} uppercase tracking-wider`}>
+                  {cluster.beat}
+                </span>
+              )}
+              {cluster.keyPlace && (
+                <span className={`text-[10px] font-semibold ${toneMuted}`}>
+                  · {cluster.keyPlace}
+                </span>
+              )}
+              <span className={`ml-auto text-[10px] ${toneMuted} whitespace-nowrap`}>
+                newest {fmtAgo(cluster.lastSeenAt)}
+              </span>
+            </div>
+            <div className={`font-display font-bold leading-snug ${toneText}`}>
+              {cluster.primaryTitle}
+            </div>
+            {cluster.summary && (
+              <div className={`text-sm mt-1 ${toneMuted}`}>{cluster.summary}</div>
+            )}
+            <div className={`text-[10px] mt-1 ${toneMuted}`}>
+              {(cluster.uniqueDomains || []).slice(0, 6).join(' · ')}
+              {cluster.uniqueDomains?.length > 6 && ` · +${cluster.uniqueDomains.length - 6} more`}
+            </div>
+          </div>
+          <span className={`text-sm ${toneMuted} pt-1`}>{expanded ? '▾' : '▸'}</span>
+        </div>
+      </button>
+
+      {expanded && (
+        <div className={`border-t ${isBreaking ? 'border-white/20' : 'border-ink-200'} p-3 space-y-1 ${isBreaking ? 'bg-white/5' : 'bg-ink-50/60'}`}>
+          <div className={`text-[10px] font-semibold uppercase tracking-wider ${toneMuted} mb-2`}>
+            {cluster.memberCount} sources covering this
+          </div>
+          <ClusterMembers clusterId={cluster.id} variant={variant} />
+        </div>
+      )}
+    </div>
+  );
+}
+
+function ClusterMembers({ clusterId, variant }) {
+  // Fetch the full member signal list for this cluster on demand.
+  const [members, setMembers] = useState(null);
+  const [error, setError] = useState(null);
+
+  // We don't have a client API for this yet — use the /api route we'll
+  // add later, or pull from a prop. For now: TODO placeholder that
+  // surfaces a link out to Firestore for debugging.
+  return (
+    <div className={variant === 'breaking' ? 'text-white/75' : 'text-ink-600'}>
+      <span className="text-xs italic">
+        Click any source chip above to see what each outlet is saying. Full member list will expand here once the member-fetch API lands.
+      </span>
     </div>
   );
 }

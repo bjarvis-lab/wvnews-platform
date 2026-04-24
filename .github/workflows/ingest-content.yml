@@ -49,6 +49,13 @@ jobs:
           FIREBASE_PROJECT_ID: wvnews-crm
         run: node scripts/collect-media-signals.mjs
 
+      - name: Cluster signals + flag trending / breaking
+        env:
+          FIREBASE_SERVICE_ACCOUNT_KEY: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_KEY }}
+          FIREBASE_PROJECT_ID: wvnews-crm
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: node scripts/cluster-media-signals.mjs
+
       - name: Commit and push if static JSON changed
         run: |
           set -euo pipefail

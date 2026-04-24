@@ -59,13 +59,20 @@ function decode(s) {
 }
 
 // Parse a standard RSS 2.0 or Atom feed. Returns an array of { title, link,
-// description, pubDate, author } — whichever fields are present.
+// description, pubDate, author, sourceDomain } — whichever fields are present.
+// Google News RSS items embed the original outlet as <source url="...">Name</source>,
+// which we use downstream for clustering uniqueness.
 function parseFeed(xml) {
   const items = extractAll(xml, 'item').concat(extractAll(xml, 'entry'));
   return items.map(raw => {
-    // Atom vs RSS: <entry><link href="..."/> vs <item><link>...</link>
     let link = decode(extract(raw, 'link'));
     if (!link || link.startsWith('<')) link = extractAttr(raw, 'link', 'href');
+
+    const sourceUrl = extractAttr(raw, 'source', 'url');
+    const sourceName = decode(extract(raw, 'source'));
+    let sourceDomain = null;
+    try { if (sourceUrl) sourceDomain = new URL(sourceUrl).hostname.replace(/^www\./, ''); } catch {}
+
     return {
       title:       decode(extract(raw, 'title')),
       link,
@@ -73,6 +80,9 @@ function parseFeed(xml) {
       pubDate:     decode(extract(raw, 'pubDate') || extract(raw, 'published') || extract(raw, 'updated')),
       author:      decode(extract(raw, 'dc:creator') || extract(raw, 'author')),
       imageUrl:    extractAttr(raw, 'enclosure', 'url') || extractAttr(raw, 'media:content', 'url') || extractAttr(raw, 'media:thumbnail', 'url'),
+      sourceUrl,
+      sourceName,   // e.g. "WOWK-TV" from a Google News item
+      sourceDomain, // e.g. "wowktv.com"
     };
   }).filter(it => it.title && it.link);
 }
@@ -136,8 +146,11 @@ async function collectGoogleNews(queries, upsert) {
           title: item.title,
           summary: item.description?.slice(0, 400) || '',
           publishedAt: item.pubDate || null,
-          sourceId: `google-news:${q.topic}`,
-          sourceName: `Google News — ${q.topic}`,
+          // Prefer the actual publisher Google News identifies (e.g. wowktv.com)
+          // so clustering can count unique outlets correctly.
+          sourceId: item.sourceDomain ? `gnews:${item.sourceDomain}` : `google-news:${q.topic}`,
+          sourceName: item.sourceName || `Google News — ${q.topic}`,
+          domain: item.sourceDomain || null,
           kind: 'google-news',
           topic: q.topic,
           googleNewsQuery: q.query,
