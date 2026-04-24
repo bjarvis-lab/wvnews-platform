@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-04-24T17:17:19.947Z",
+  "fetchedAt": "2026-04-24T17:59:53.002Z",
   "source": "wvnews.com RSS + section HTML backfill",
   "target": 10,
   "siteCounts": {
@@ -24,6 +24,18 @@
   "stories": {
     "exponent": [
       {
+        "id": "32df50e8-d7b1-4b1d-995d-55b6590ca1c1",
+        "slug": "emmanuel-christian-school-and-hope-gas-plant-tree-at-new-north-view-campus",
+        "title": "Emmanuel Christian School and Hope Gas plant tree at new North View campus",
+        "description": "",
+        "pubDate": null,
+        "author": "",
+        "image": null,
+        "sourceUrl": "https://www.wvnews.com/theet/news/local/emmanuel-christian-school-and-hope-gas-plant-tree-at-new-north-view-campus/article_32df50e8-d7b1-4b1d-995d-55b6590ca1c1.html",
+        "prefix": "theet",
+        "source": "section"
+      },
+      {
         "id": "d75920f8-1dca-4a7c-ba5c-baf38db28087",
         "slug": "harrison-county-to-alter-ballot-in-general-election-due-to-passing-of-circuit-clerk-albert",
         "title": "Harrison County to alter ballot in General Election due to passing of Circuit Clerk Albert Marano",
@@ -32,18 +44,6 @@
         "author": "",
         "image": null,
         "sourceUrl": "https://www.wvnews.com/theet/news/harrison-county-to-alter-ballot-in-general-election-due-to-passing-of-circuit-clerk-albert/article_d75920f8-1dca-4a7c-ba5c-baf38db28087.html",
-        "prefix": "theet",
-        "source": "section"
-      },
-      {
-        "id": "4165b714-b6eb-4e92-b2f8-8491e50aacb4",
-        "slug": "clarksburgs-inaugural-fairy-ren-faire-postponed-to-may-9-due-to-weather",
-        "title": "Clarksburg's inaugural Fairy Ren Faire postponed to May 9 due to weather",
-        "description": "",
-        "pubDate": null,
-        "author": "",
-        "image": null,
-        "sourceUrl": "https://www.wvnews.com/theet/news/local/clarksburgs-inaugural-fairy-ren-faire-postponed-to-may-9-due-to-weather/article_4165b714-b6eb-4e92-b2f8-8491e50aacb4.html",
         "prefix": "theet",
         "source": "section"
       },
@@ -68,6 +68,18 @@
         "author": "",
         "image": null,
         "sourceUrl": "https://www.wvnews.com/theet/news/clarksburg-city-council-questions-opioid-settlement-spending-on-proposed-community-center-architectural-drawings/article_3717c398-f209-4bc8-a54b-1fae0c4e4edb.html",
+        "prefix": "theet",
+        "source": "section"
+      },
+      {
+        "id": "4165b714-b6eb-4e92-b2f8-8491e50aacb4",
+        "slug": "clarksburgs-inaugural-fairy-ren-faire-postponed-to-may-9-due-to-weather",
+        "title": "Clarksburg's inaugural Fairy Ren Faire postponed to May 9 due to weather",
+        "description": "",
+        "pubDate": null,
+        "author": "",
+        "image": null,
+        "sourceUrl": "https://www.wvnews.com/theet/news/local/clarksburgs-inaugural-fairy-ren-faire-postponed-to-may-9-due-to-weather/article_4165b714-b6eb-4e92-b2f8-8491e50aacb4.html",
         "prefix": "theet",
         "source": "section"
       },
@@ -128,18 +140,6 @@
         "author": "",
         "image": null,
         "sourceUrl": "https://www.wvnews.com/theet/calendar/calendar-of-events-for-friday/article_9d5622f8-dea8-4d4c-bc57-d8959291e4c3.html",
-        "prefix": "theet",
-        "source": "section"
-      },
-      {
-        "id": "f6b573d9-5ae2-4af9-abd5-d1755d22ab67",
-        "slug": "harrison-county-commission-candidate-susan-thomas",
-        "title": "Harrison County Commission candidate: Susan Thomas",
-        "description": "",
-        "pubDate": null,
-        "author": "",
-        "image": null,
-        "sourceUrl": "https://www.wvnews.com/theet/news/harrison-county-commission-candidate-susan-thomas/article_f6b573d9-5ae2-4af9-abd5-d1755d22ab67.html",
         "prefix": "theet",
         "source": "section"
       }
@@ -562,6 +562,42 @@
     ],
     "jackson": [
       {
+        "id": "86fe1f5c-b24a-4a6d-8446-3952439f1f11",
+        "slug": "ravenswood-native-finishes-as-top-american-in-paris-marathon",
+        "title": "Ravenswood native finishes as top American in Paris Marathon",
+        "description": "",
+        "pubDate": null,
+        "author": "",
+        "image": null,
+        "sourceUrl": "https://www.wvnews.com/jacksonnews/ravenswood-native-finishes-as-top-american-in-paris-marathon/article_86fe1f5c-b24a-4a6d-8446-3952439f1f11.html",
+        "prefix": "jacksonnews",
+        "source": "section"
+      },
+      {
+        "id": "9c4afb45-2d6b-4305-bde9-e5b65ded1c9f",
+        "slug": "ravenswood-city-council-approves-first-reading-of-sewer-bond-ordinances",
+        "title": "Ravenswood City Council approves first reading of sewer bond ordinances",
+        "description": "",
+        "pubDate": null,
+        "author": "",
+        "image": null,
+        "sourceUrl": "https://www.wvnews.com/jacksonnews/ravenswood-city-council-approves-first-reading-of-sewer-bond-ordinances/article_9c4afb45-2d6b-4305-bde9-e5b65ded1c9f.html",
+        "prefix": "jacksonnews",
+        "source": "section"
+      },
+      {
+        "id": "572c80a6-fa4e-4e0f-952d-3238b7d3ce84",
+        "slug": "ravenswood-breaks-ground-on-new-riverfront-welcome-center-and-smokehouse-restaurant",
+        "title": "Ravenswood breaks ground on new riverfront welcome center and smokehouse restaurant",
+        "description": "",
+        "pubDate": null,
+        "author": "",
+        "image": null,
+        "sourceUrl": "https://www.wvnews.com/jacksonnews/ravenswood-breaks-ground-on-new-riverfront-welcome-center-and-smokehouse-restaurant/article_572c80a6-fa4e-4e0f-952d-3238b7d3ce84.html",
+        "prefix": "jacksonnews",
+        "source": "section"
+      },
+      {
         "id": "85e1afa3-6999-49a8-a944-9ee886bf380d",
         "slug": "dar-chapter-s-america-250-spotlight",
         "title": "DAR chapter’s America 250! spotlight",
@@ -630,42 +666,6 @@
         "author": "",
         "image": null,
         "sourceUrl": "https://www.wvnews.com/jacksonnews/ripley-senior-news/article_d08d5203-5052-4099-b9ea-3e41414e96f5.html",
-        "prefix": "jacksonnews",
-        "source": "section"
-      },
-      {
-        "id": "3b60d460-14e7-4a15-b509-880b1591ebf2",
-        "slug": "wvu-researchers-develop-revolutionary-nanomaterial-to-boost-energy-oxygen-production-for-ai-facilities-space-exploration",
-        "title": "WVU researchers develop \"revolutionary\" nanomaterial to boost energy, oxygen production for AI facilities, space exploration",
-        "description": "",
-        "pubDate": null,
-        "author": "",
-        "image": null,
-        "sourceUrl": "https://www.wvnews.com/jacksonnews/wvu-researchers-develop-revolutionary-nanomaterial-to-boost-energy-oxygen-production-for-ai-facilities-space-exploration/article_3b60d460-14e7-4a15-b509-880b1591ebf2.html",
-        "prefix": "jacksonnews",
-        "source": "section"
-      },
-      {
-        "id": "e8c7ed32-4996-4e6a-ae34-b7f64692f63f",
-        "slug": "viking-baseball-team-falls-on-the-road-at-nicholas-county",
-        "title": "Viking baseball team falls on the road at Nicholas County.",
-        "description": "",
-        "pubDate": null,
-        "author": "",
-        "image": null,
-        "sourceUrl": "https://www.wvnews.com/jacksonnews/viking-baseball-team-falls-on-the-road-at-nicholas-county/article_e8c7ed32-4996-4e6a-ae34-b7f64692f63f.html",
-        "prefix": "jacksonnews",
-        "source": "section"
-      },
-      {
-        "id": "bb9c7d3c-bdde-41ad-93ec-a9b865b4a456",
-        "slug": "gilmer-county-cruises-to-big-win-over-devilettes-on-diamond",
-        "title": "Gilmer County cruises to big win over Devilettes on diamond",
-        "description": "",
-        "pubDate": null,
-        "author": "",
-        "image": null,
-        "sourceUrl": "https://www.wvnews.com/jacksonnews/gilmer-county-cruises-to-big-win-over-devilettes-on-diamond/article_bb9c7d3c-bdde-41ad-93ec-a9b865b4a456.html",
         "prefix": "jacksonnews",
         "source": "section"
       },
@@ -1453,18 +1453,6 @@
         "source": "section"
       },
       {
-        "id": "c0f2db9c-f14b-4cb0-8d3d-d4af34defbc2",
-        "slug": "transmission-project-draws-mounting-opposition",
-        "title": "Transmission project draws mounting opposition",
-        "description": "",
-        "pubDate": null,
-        "author": "",
-        "image": null,
-        "sourceUrl": "https://www.wvnews.com/mineralnews/transmission-project-draws-mounting-opposition/article_c0f2db9c-f14b-4cb0-8d3d-d4af34defbc2.html",
-        "prefix": "mineralnews",
-        "source": "section"
-      },
-      {
         "id": "0bd044e4-2406-4d26-841c-b24ca96b46b4",
         "slug": "candidate-for-westernport-council-switches-to-run-for-mayor-still-only-2-on-ballot",
         "title": "Candidate for Westernport council switches to run for mayor; still only 2 on ballot",
@@ -1473,6 +1461,30 @@
         "author": "",
         "image": null,
         "sourceUrl": "https://www.wvnews.com/mineralnews/candidate-for-westernport-council-switches-to-run-for-mayor-still-only-2-on-ballot/article_0bd044e4-2406-4d26-841c-b24ca96b46b4.html",
+        "prefix": "mineralnews",
+        "source": "section"
+      },
+      {
+        "id": "4e8a40e9-d22e-4e1b-bd67-ad7e98787ffa",
+        "slug": "everett-smith-qualifies-for-junior-world-shooting-championships-in-germany",
+        "title": "Everett Smith qualifies for Junior World Shooting Championships in Germany",
+        "description": "",
+        "pubDate": null,
+        "author": "",
+        "image": null,
+        "sourceUrl": "https://www.wvnews.com/mineralnews/everett-smith-qualifies-for-junior-world-shooting-championships-in-germany/article_4e8a40e9-d22e-4e1b-bd67-ad7e98787ffa.html",
+        "prefix": "mineralnews",
+        "source": "section"
+      },
+      {
+        "id": "c0f2db9c-f14b-4cb0-8d3d-d4af34defbc2",
+        "slug": "transmission-project-draws-mounting-opposition",
+        "title": "Transmission project draws mounting opposition",
+        "description": "",
+        "pubDate": null,
+        "author": "",
+        "image": null,
+        "sourceUrl": "https://www.wvnews.com/mineralnews/transmission-project-draws-mounting-opposition/article_c0f2db9c-f14b-4cb0-8d3d-d4af34defbc2.html",
         "prefix": "mineralnews",
         "source": "section"
       },
@@ -1497,18 +1509,6 @@
         "author": "",
         "image": null,
         "sourceUrl": "https://www.wvnews.com/mineralnews/mineral-county-honors-28-seniors-at-achievement-awards-program/article_22f7d948-aa17-4bc3-954e-759ecb9b7020.html",
-        "prefix": "mineralnews",
-        "source": "section"
-      },
-      {
-        "id": "4e8a40e9-d22e-4e1b-bd67-ad7e98787ffa",
-        "slug": "everett-smith-qualifies-for-junior-world-shooting-championships-in-germany",
-        "title": "Everett Smith qualifies for Junior World Shooting Championships in Germany",
-        "description": "",
-        "pubDate": null,
-        "author": "",
-        "image": null,
-        "sourceUrl": "https://www.wvnews.com/mineralnews/everett-smith-qualifies-for-junior-world-shooting-championships-in-germany/article_4e8a40e9-d22e-4e1b-bd67-ad7e98787ffa.html",
         "prefix": "mineralnews",
         "source": "section"
       },
