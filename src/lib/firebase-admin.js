@@ -13,13 +13,34 @@ import { getApps, initializeApp, cert, applicationDefault } from 'firebase-admin
 import { getFirestore } from 'firebase-admin/firestore';
 import { getStorage } from 'firebase-admin/storage';
 
+// Normalize an env-supplied service-account JSON. The common Vercel pitfall is
+// that the private_key field arrives with literal "\n" sequences (two chars)
+// instead of actual newline characters — the Firebase cert parser rejects it
+// with "Invalid PEM formatted message". This function repairs that case.
+function parseServiceAccount(raw) {
+  let s = raw.trim();
+  // Some tools wrap the whole thing in outer single or double quotes.
+  if ((s.startsWith('"') && s.endsWith('"')) || (s.startsWith("'") && s.endsWith("'"))) {
+    s = s.slice(1, -1);
+  }
+  let obj;
+  try {
+    obj = JSON.parse(s);
+  } catch (e) {
+    throw new Error(`FIREBASE_SERVICE_ACCOUNT_KEY is not valid JSON: ${e.message}`);
+  }
+  if (obj.private_key && obj.private_key.includes('\\n') && !obj.private_key.includes('\n')) {
+    obj.private_key = obj.private_key.replace(/\\n/g, '\n');
+  }
+  return obj;
+}
+
 function getCredential() {
   const inlineKey = process.env.FIREBASE_SERVICE_ACCOUNT_KEY;
   if (inlineKey) {
-    const parsed = typeof inlineKey === 'string' ? JSON.parse(inlineKey) : inlineKey;
+    const parsed = typeof inlineKey === 'string' ? parseServiceAccount(inlineKey) : inlineKey;
     return cert(parsed);
   }
-  // Falls back to GOOGLE_APPLICATION_CREDENTIALS file path.
   return applicationDefault();
 }
 
