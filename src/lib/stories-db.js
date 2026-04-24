@@ -78,6 +78,33 @@ export async function getRecentBySection(sectionId, { limit = 10 } = {}) {
   return snap.docs.map(serializeStory);
 }
 
+// Published native stories ordered newest-first. We over-fetch and filter
+// in-memory to avoid Firestore's composite-index requirement on
+// (source, updatedAt). Once native content passes a few hundred docs,
+// switch to a real composite index at:
+//   Firebase Console → Firestore → Indexes → + Add Index
+//   Collection: stories   Fields: source (Asc) + updatedAt (Desc)
+//
+// Pulling up to 500 docs per request on the shared collection is fine at
+// current scale (1 native + ~150 ingested).
+export async function listPublishedStories({ limit = 40 } = {}) {
+  const snap = await db.collection('stories')
+    .orderBy('updatedAt', 'desc')
+    .limit(500)
+    .get();
+  return snap.docs
+    .map(serializeStory)
+    .filter(s => s.source === 'native' && s.status === 'published')
+    .slice(0, limit);
+}
+
+export async function listPublishedBySection(sectionId, { limit = 30 } = {}) {
+  const rows = await listPublishedStories({ limit: 200 });
+  return rows
+    .filter(s => s.section === sectionId || (s.secondarySections || []).includes(sectionId))
+    .slice(0, limit);
+}
+
 export async function getBreakingStories({ limit = 5 } = {}) {
   // Fetch the most recently-updated published stories and filter to the
   // breaking ones in app code — same approach as listStories() for avoiding
