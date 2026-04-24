@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-04-24T19:49:43.446Z",
+  "fetchedAt": "2026-04-24T20:37:00.437Z",
   "source": "wvnews.com RSS + section HTML backfill",
   "target": 10,
   "siteCounts": {
@@ -25,13 +25,13 @@
     "exponent": [
       {
         "id": "5c5b4733-70ae-4e23-8215-e7ef00471e5f",
-        "slug": "harrison-county-government-offices-unable-to-provide-some-services-due-to-network-issue-public-told",
-        "title": "Harrison County government offices unable to provide some services due to network issue, public told to call in advance",
+        "slug": "services-stymied-at-harrison-county-government-offices-as-staff-deal-with-cybersecurity-attack",
+        "title": "Services stymied at Harrison County government offices as staff deal with cybersecurity attack",
         "description": "",
         "pubDate": null,
         "author": "",
         "image": null,
-        "sourceUrl": "https://www.wvnews.com/theet/news/harrison-county-government-offices-unable-to-provide-some-services-due-to-network-issue-public-told/article_5c5b4733-70ae-4e23-8215-e7ef00471e5f.html",
+        "sourceUrl": "https://www.wvnews.com/theet/news/services-stymied-at-harrison-county-government-offices-as-staff-deal-with-cybersecurity-attack/article_5c5b4733-70ae-4e23-8215-e7ef00471e5f.html",
         "prefix": "theet",
         "source": "section"
       },
@@ -318,6 +318,18 @@
     ],
     "bluegold": [
       {
+        "id": "089ba28a-f38e-4fd1-85de-be471dbd0d0e",
+        "slug": "akheem-mesidors-selection-in-the-nfl-draft-is-another-reminder-of-wvu-footballs-decline",
+        "title": "Akheem Mesidor's selection in the NFL draft is another reminder of WVU football's decline",
+        "description": "",
+        "pubDate": null,
+        "author": "",
+        "image": null,
+        "sourceUrl": "https://www.wvnews.com/bluegoldnews/akheem-mesidors-selection-in-the-nfl-draft-is-another-reminder-of-wvu-footballs-decline/article_089ba28a-f38e-4fd1-85de-be471dbd0d0e.html",
+        "prefix": "bluegoldnews",
+        "source": "section"
+      },
+      {
         "id": "7b72e3dd-1c9e-4254-b733-eb3e273a4856",
         "slug": "standings-metrics-point-in-different-directions-as-wvu-heads-to-cincinnati-for-a-weekend-series",
         "title": "Standings, metrics point in different directions as WVU heads to Cincinnati for a weekend series",
@@ -424,21 +436,21 @@
         "sourceUrl": "https://www.wvnews.com/bluegoldnews/five-wvu-players-on-midseason-baseball-award-watch-lists/article_b8a37f40-cd0e-4b0b-921e-e99b1bdd2230.html",
         "prefix": "bluegoldnews",
         "source": "section"
-      },
+      }
+    ],
+    "recorddelta": [
       {
-        "id": "924fb820-04d1-4498-acb6-efd981f7bc52",
-        "slug": "could-football-follow-the-crown-s-nil-lead",
-        "title": "Could football follow the Crown’s NIL lead?",
+        "id": "b03f8d94-3bec-49b9-a0d3-9265ba3eafd7",
+        "slug": "buckhannon-upshur-high-school-students-commit-to-military-service-at-signing-ceremony",
+        "title": "Buckhannon-Upshur High School students commit to military service at signing ceremony",
         "description": "",
         "pubDate": null,
         "author": "",
         "image": null,
-        "sourceUrl": "https://www.wvnews.com/bluegoldnews/could-football-follow-the-crown-s-nil-lead/article_924fb820-04d1-4498-acb6-efd981f7bc52.html",
-        "prefix": "bluegoldnews",
+        "sourceUrl": "https://www.wvnews.com/recorddelta/news/buckhannon-upshur-high-school-students-commit-to-military-service-at-signing-ceremony/article_b03f8d94-3bec-49b9-a0d3-9265ba3eafd7.html",
+        "prefix": "recorddelta",
         "source": "section"
-      }
-    ],
-    "recorddelta": [
+      },
       {
         "id": "990b71db-018c-4c75-97f6-51fd810d7662",
         "slug": "buckhannon-financial-adviser-lisa-cain-qualifies-for-edward-jones-impact-conference",
@@ -488,14 +500,14 @@
         "source": "section"
       },
       {
-        "id": "dd3be4f4-9e4c-4914-91b6-dc5b23edb5c9",
-        "slug": "buckhannon-native-mr-understood-to-release-new-album-honoring-hometown",
-        "title": "Buckhannon native 'Mr. Understood' to Release New Album Honoring Hometown",
+        "id": "95129daa-b1fe-4749-98d1-a77ba4da9531",
+        "slug": "west-virginia-wesleyan-womens-tennis-battles-in-loss-to-slippery-rock-5-2",
+        "title": "West Virginia Wesleyan women's tennis battles in loss to Slippery Rock, 5-2",
         "description": "",
         "pubDate": null,
         "author": "",
         "image": null,
-        "sourceUrl": "https://www.wvnews.com/recorddelta/news/buckhannon-native-mr-understood-to-release-new-album-honoring-hometown/article_dd3be4f4-9e4c-4914-91b6-dc5b23edb5c9.html",
+        "sourceUrl": "https://www.wvnews.com/recorddelta/sports/west-virginia-wesleyan-womens-tennis-battles-in-loss-to-slippery-rock-5-2/article_95129daa-b1fe-4749-98d1-a77ba4da9531.html",
         "prefix": "recorddelta",
         "source": "section"
       },
@@ -536,31 +548,55 @@
         "source": "section"
       },
       {
-        "id": "b49d6c5e-54eb-4e82-81cb-d4fd70fc9705",
-        "slug": "a-west-virginia-delicacy-upshur-county-public-library-holds-31st-annual-ramp-dinner",
-        "title": "'A West Virginia delicacy': Upshur County Public Library holds 31st annual ramp dinner",
+        "id": "dd3be4f4-9e4c-4914-91b6-dc5b23edb5c9",
+        "slug": "buckhannon-native-mr-understood-to-release-new-album-honoring-hometown",
+        "title": "Buckhannon native 'Mr. Understood' to Release New Album Honoring Hometown",
         "description": "",
         "pubDate": null,
         "author": "",
         "image": null,
-        "sourceUrl": "https://www.wvnews.com/recorddelta/news/a-west-virginia-delicacy-upshur-county-public-library-holds-31st-annual-ramp-dinner/article_b49d6c5e-54eb-4e82-81cb-d4fd70fc9705.html",
-        "prefix": "recorddelta",
-        "source": "section"
-      },
-      {
-        "id": "1e64c56c-8335-4f92-b2fe-473d044769c9",
-        "slug": "west-virginia-wesleyan-college-annual-spring-weekend-slated-for-april-24-26",
-        "title": "West Virginia Wesleyan College annual Spring Weekend slated for April 24-26",
-        "description": "",
-        "pubDate": null,
-        "author": "",
-        "image": null,
-        "sourceUrl": "https://www.wvnews.com/recorddelta/news/west-virginia-wesleyan-college-annual-spring-weekend-slated-for-april-24-26/article_1e64c56c-8335-4f92-b2fe-473d044769c9.html",
+        "sourceUrl": "https://www.wvnews.com/recorddelta/news/buckhannon-native-mr-understood-to-release-new-album-honoring-hometown/article_dd3be4f4-9e4c-4914-91b6-dc5b23edb5c9.html",
         "prefix": "recorddelta",
         "source": "section"
       }
     ],
     "jackson": [
+      {
+        "id": "f3f0ec84-2531-4250-93b6-ae4c4f9d1c4f",
+        "slug": "courthouse-news",
+        "title": "Courthouse News",
+        "description": "",
+        "pubDate": null,
+        "author": "",
+        "image": null,
+        "sourceUrl": "https://www.wvnews.com/jacksonnews/courthouse-news/article_f3f0ec84-2531-4250-93b6-ae4c4f9d1c4f.html",
+        "prefix": "jacksonnews",
+        "source": "section"
+      },
+      {
+        "id": "801a2758-1bf5-47a7-8e1c-9903bd089a63",
+        "slug": "five-years-strong-movin-in-may-keeps-jackson-county-active",
+        "title": "Five Years Strong: Movin’ in May Keeps Jackson County Active",
+        "description": "",
+        "pubDate": null,
+        "author": "",
+        "image": null,
+        "sourceUrl": "https://www.wvnews.com/jacksonnews/five-years-strong-movin-in-may-keeps-jackson-county-active/article_801a2758-1bf5-47a7-8e1c-9903bd089a63.html",
+        "prefix": "jacksonnews",
+        "source": "section"
+      },
+      {
+        "id": "fe628db2-e4f2-4d71-9bf3-2b51b1ff9ab2",
+        "slug": "micah-s-manor-hosts-successful-first-wedding-event-expo",
+        "title": "Micah’s Manor hosts successful first Wedding & Event Expo",
+        "description": "",
+        "pubDate": null,
+        "author": "",
+        "image": null,
+        "sourceUrl": "https://www.wvnews.com/jacksonnews/micah-s-manor-hosts-successful-first-wedding-event-expo/article_fe628db2-e4f2-4d71-9bf3-2b51b1ff9ab2.html",
+        "prefix": "jacksonnews",
+        "source": "section"
+      },
       {
         "id": "239b7669-0032-4b44-b74c-921252513bee",
         "slug": "gilmore-elementary-fundraiser-raises-nearly-4-400-for-new-playground-equipment",
@@ -642,42 +678,6 @@
         "author": "",
         "image": null,
         "sourceUrl": "https://www.wvnews.com/jacksonnews/hupp-sturm-named-county-2026-teacher-and-service-personnel-of-the-year/article_04cf741e-41ba-4c49-a053-b96382ada15f.html",
-        "prefix": "jacksonnews",
-        "source": "section"
-      },
-      {
-        "id": "a6decdee-1fab-4e7c-8434-7e5afb159b89",
-        "slug": "new-union-takes-shape-in-jackson-county",
-        "title": "New union takes shape in Jackson County",
-        "description": "",
-        "pubDate": null,
-        "author": "",
-        "image": null,
-        "sourceUrl": "https://www.wvnews.com/jacksonnews/new-union-takes-shape-in-jackson-county/article_a6decdee-1fab-4e7c-8434-7e5afb159b89.html",
-        "prefix": "jacksonnews",
-        "source": "section"
-      },
-      {
-        "id": "2e5b3bf6-288e-407a-828f-9d05a4c90bbe",
-        "slug": "community-calendar",
-        "title": "Community Calendar",
-        "description": "",
-        "pubDate": null,
-        "author": "",
-        "image": null,
-        "sourceUrl": "https://www.wvnews.com/jacksonnews/community-calendar/article_2e5b3bf6-288e-407a-828f-9d05a4c90bbe.html",
-        "prefix": "jacksonnews",
-        "source": "section"
-      },
-      {
-        "id": "6c7560cb-2707-4b1e-98b7-b1998aa91480",
-        "slug": "olympic-champion-scott-hamilton-to-headline-jccf-benefit-dinner",
-        "title": "Olympic Champion Scott Hamilton to headline JCCF Benefit Dinner",
-        "description": "",
-        "pubDate": null,
-        "author": "",
-        "image": null,
-        "sourceUrl": "https://www.wvnews.com/jacksonnews/olympic-champion-scott-hamilton-to-headline-jccf-benefit-dinner/article_6c7560cb-2707-4b1e-98b7-b1998aa91480.html",
         "prefix": "jacksonnews",
         "source": "section"
       }
@@ -1173,6 +1173,18 @@
     ],
     "rivercities": [
       {
+        "id": "de9f2b27-3b04-42ca-8823-1d7a27ea1fac",
+        "slug": "gallia-county-fair-announces-2026-entertainment-lineup",
+        "title": "Gallia County Fair announces 2026 entertainment lineup",
+        "description": "",
+        "pubDate": null,
+        "author": "",
+        "image": null,
+        "sourceUrl": "https://www.wvnews.com/rivercities/gallia-county-fair-announces-2026-entertainment-lineup/article_de9f2b27-3b04-42ca-8823-1d7a27ea1fac.html",
+        "prefix": "rivercities",
+        "source": "section"
+      },
+      {
         "id": "e14a8bbb-8a49-49b3-aad3-3d4f2dd42cef",
         "slug": "gallia-commissioners-approve-cdbg-application-for-clearview-estates-wastewater-project",
         "title": "Gallia commissioners approve CDBG application for Clearview Estates wastewater project",
@@ -1209,6 +1221,18 @@
         "source": "section"
       },
       {
+        "id": "e4ffa79d-f41e-43e8-b841-5d9d4a9af881",
+        "slug": "meigs-bella-roush-signs-letter-of-intent-for-rio-softball",
+        "title": "Meigs' Bella Roush signs letter of intent for Rio softball",
+        "description": "",
+        "pubDate": null,
+        "author": "",
+        "image": null,
+        "sourceUrl": "https://www.wvnews.com/rivercities/pomeroy/sports/meigs-bella-roush-signs-letter-of-intent-for-rio-softball/article_e4ffa79d-f41e-43e8-b841-5d9d4a9af881.html",
+        "prefix": "rivercities",
+        "source": "section"
+      },
+      {
         "id": "fabc45cc-8d30-4356-8dfe-a08149038bf2",
         "slug": "ethan-edwards-throws-perfect-game-as-eastern-shuts-out-belpre-11-0",
         "title": "Ethan Edwards throws perfect game as Eastern shuts out Belpre 11-0",
@@ -1233,18 +1257,6 @@
         "source": "section"
       },
       {
-        "id": "1338a2da-c1be-4989-9490-04e1b6ff84a2",
-        "slug": "river-cities-high-school-sports-schedule-for-april-24-29",
-        "title": "River Cities high school sports schedule for April 24-29",
-        "description": "",
-        "pubDate": null,
-        "author": "",
-        "image": null,
-        "sourceUrl": "https://www.wvnews.com/rivercities/gallipolis/sports/river-cities-high-school-sports-schedule-for-april-24-29/article_1338a2da-c1be-4989-9490-04e1b6ff84a2.html",
-        "prefix": "rivercities",
-        "source": "section"
-      },
-      {
         "id": "d0d7712c-bb72-4231-9181-5f0e3ec9611c",
         "slug": "meigs-health-matters-preventing-cervical-cancer",
         "title": "Meigs Health Matters: Preventing cervical cancer",
@@ -1265,18 +1277,6 @@
         "author": "",
         "image": null,
         "sourceUrl": "https://www.wvnews.com/rivercities/gallia-county-student-art-show-draws-praise-community-support-at-french-art-colony/article_a6a761ed-3726-4cac-8a79-fd07ed54bbdf.html",
-        "prefix": "rivercities",
-        "source": "section"
-      },
-      {
-        "id": "76a45982-e92f-4ba9-ba4a-58f5fe06177a",
-        "slug": "rio-honors-faculty-for-excellence-in-teaching-service",
-        "title": "Rio honors faculty for excellence in teaching, service",
-        "description": "",
-        "pubDate": null,
-        "author": "",
-        "image": null,
-        "sourceUrl": "https://www.wvnews.com/rivercities/rio-honors-faculty-for-excellence-in-teaching-service/article_76a45982-e92f-4ba9-ba4a-58f5fe06177a.html",
         "prefix": "rivercities",
         "source": "section"
       },
@@ -1417,18 +1417,6 @@
     ],
     "mineral": [
       {
-        "id": "898c60e3-aca5-4d83-8792-d512afd2e6e8",
-        "slug": "governor-morrisey-signs-hope-scholarship-reform-legislation",
-        "title": "Governor Morrisey Signs HOPE Scholarship Reform Legislation",
-        "description": "",
-        "pubDate": null,
-        "author": "",
-        "image": null,
-        "sourceUrl": "https://www.wvnews.com/mineralnews/governor-morrisey-signs-hope-scholarship-reform-legislation/article_898c60e3-aca5-4d83-8792-d512afd2e6e8.html",
-        "prefix": "mineralnews",
-        "source": "section"
-      },
-      {
         "id": "7964520d-fc0c-4b70-8368-b42cd83eb78f",
         "slug": "frostburg-state-university-s-chamber-orchestra-presents-celestial-journey",
         "title": "Frostburg State University’s Chamber Orchestra Presents “Celestial Journey”",
@@ -1437,6 +1425,18 @@
         "author": "",
         "image": null,
         "sourceUrl": "https://www.wvnews.com/mineralnews/frostburg-state-university-s-chamber-orchestra-presents-celestial-journey/article_7964520d-fc0c-4b70-8368-b42cd83eb78f.html",
+        "prefix": "mineralnews",
+        "source": "section"
+      },
+      {
+        "id": "898c60e3-aca5-4d83-8792-d512afd2e6e8",
+        "slug": "governor-morrisey-signs-hope-scholarship-reform-legislation",
+        "title": "Governor Morrisey Signs HOPE Scholarship Reform Legislation",
+        "description": "",
+        "pubDate": null,
+        "author": "",
+        "image": null,
+        "sourceUrl": "https://www.wvnews.com/mineralnews/governor-morrisey-signs-hope-scholarship-reform-legislation/article_898c60e3-aca5-4d83-8792-d512afd2e6e8.html",
         "prefix": "mineralnews",
         "source": "section"
       },
