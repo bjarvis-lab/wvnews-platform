@@ -470,9 +470,72 @@ function StoryEditorModal({ story, sections, sites, onClose }) {
     onClose();
   }
 
-  function aiStub(label) {
-    alert(`AI: ${label}\n\n(Wire to /api/ai in a follow-up — the endpoint stub already exists at src/app/api/ai/route.js)`);
+  // AI Writing Assistant — each button invokes /api/ai with a specific action.
+  // Simple-apply actions (summary, meta, tags, alt) patch the form directly.
+  // Multi-option actions (headlines, social, links) set aiPopup to show picker.
+  const [aiLoading, setAiLoading] = useState(null);
+  const [aiPopup, setAiPopup] = useState(null);
+  const [aiError, setAiError] = useState(null);
+
+  async function ai(action) {
+    setAiError(null);
+    setAiLoading(action);
+    try {
+      const res = await fetch('/api/ai', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          action,
+          story: {
+            headline: form.headline,
+            deck: form.deck,
+            body: form.body,
+            tags: form.tags,
+            image: form.image,
+          },
+        }),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || `HTTP ${res.status}`);
+
+      switch (action) {
+        case 'summary':
+          if (data.deck) update({ deck: data.deck });
+          break;
+        case 'meta':
+          if (data.metaDescription) update({ metaDescription: data.metaDescription });
+          break;
+        case 'tags':
+          if (data.tags?.length) {
+            const merged = Array.from(new Set([...(form.tags || []), ...data.tags]));
+            update({ tags: merged });
+          }
+          break;
+        case 'alt':
+          if (data.alt) update({ image: { ...(form.image || {}), alt: data.alt } });
+          else if (data.note) setAiError(data.note);
+          break;
+        case 'headlines':
+        case 'social':
+        case 'links':
+          setAiPopup({ action, data });
+          break;
+      }
+    } catch (e) {
+      setAiError(e.message || 'AI request failed');
+    } finally {
+      setAiLoading(null);
+    }
   }
+
+  const AI_BUTTONS = [
+    { action: 'summary', label: 'Generate Deck', hint: 'Writes the subheadline under your headline.' },
+    { action: 'headlines', label: 'Suggest Headlines', hint: 'Five alternates to pick from.' },
+    { action: 'meta', label: 'Write Meta Description', hint: 'Fills the SEO meta description field.' },
+    { action: 'tags', label: 'Auto-Tag Topics', hint: 'Appends 8 suggested tags.' },
+    { action: 'links', label: 'Suggest Internal Links', hint: 'Finds link-worthy phrases in your body.' },
+    { action: 'social', label: 'Social Post Copy', hint: 'Writes X / Facebook / Instagram posts.' },
+  ];
 
   return (
     <div className="fixed inset-0 z-50 bg-black/50 flex items-start justify-center p-4 overflow-y-auto" onClick={onClose}>
@@ -536,19 +599,31 @@ function StoryEditorModal({ story, sections, sites, onClose }) {
               <div className="flex items-center gap-2 mb-3">
                 <span className="text-sm">🤖</span>
                 <h4 className="text-xs font-bold text-brand-800">AI Writing Assistant</h4>
+                <span className="ml-auto text-[10px] text-brand-600">powered by Claude</span>
               </div>
               <div className="flex flex-wrap gap-2">
-                {['Generate Summary', 'Suggest Headlines', 'Write Meta Description', 'Auto-Tag Topics', 'Suggest Internal Links', 'Social Post Copy'].map(label => (
+                {AI_BUTTONS.map(btn => (
                   <button
-                    key={label}
+                    key={btn.action}
                     type="button"
-                    onClick={() => aiStub(label)}
-                    className="px-3 py-1.5 text-xs bg-white text-brand-700 rounded-lg border border-brand-200 hover:bg-brand-50"
+                    onClick={() => ai(btn.action)}
+                    disabled={aiLoading !== null}
+                    title={btn.hint}
+                    className={`px-3 py-1.5 text-xs rounded-lg border ${
+                      aiLoading === btn.action
+                        ? 'bg-brand-700 text-white border-brand-700'
+                        : 'bg-white text-brand-700 border-brand-200 hover:bg-brand-50'
+                    } disabled:opacity-50`}
                   >
-                    {label}
+                    {aiLoading === btn.action ? '⏳ thinking…' : btn.label}
                   </button>
                 ))}
               </div>
+              {aiError && (
+                <div className="mt-3 px-3 py-2 bg-red-50 border border-red-200 text-red-800 text-xs rounded">
+                  {aiError} <button onClick={() => setAiError(null)} className="ml-2 underline">dismiss</button>
+                </div>
+              )}
             </div>
           </div>
 
@@ -647,7 +722,9 @@ function StoryEditorModal({ story, sections, sites, onClose }) {
 
             <Field label="Meta Description">
               <textarea value={form.metaDescription || ''} onChange={e => update({ metaDescription: e.target.value })} className="w-full px-3 py-2 bg-white rounded border border-ink-200 text-sm h-20" placeholder="Meta description..." />
-              <button type="button" onClick={() => aiStub('Write Meta Description')} className="mt-1 text-xs text-brand-700 hover:underline">🤖 AI Generate</button>
+              <button type="button" onClick={() => ai('meta')} disabled={aiLoading !== null} className="mt-1 text-xs text-brand-700 hover:underline disabled:opacity-50">
+                {aiLoading === 'meta' ? '⏳ generating…' : '🤖 AI Generate'}
+              </button>
             </Field>
 
             <Field label="Tags">
@@ -658,7 +735,9 @@ function StoryEditorModal({ story, sections, sites, onClose }) {
                 className="w-full px-3 py-2 bg-white rounded border border-ink-200 text-sm"
                 placeholder="Add tags, comma-separated..."
               />
-              <button type="button" onClick={() => aiStub('Auto-Tag Topics')} className="mt-1 text-xs text-brand-700 hover:underline">🤖 AI Suggest Tags</button>
+              <button type="button" onClick={() => ai('tags')} disabled={aiLoading !== null} className="mt-1 text-xs text-brand-700 hover:underline disabled:opacity-50">
+                {aiLoading === 'tags' ? '⏳ suggesting…' : '🤖 AI Suggest Tags'}
+              </button>
             </Field>
 
             <Field label="Featured Image">
@@ -683,7 +762,9 @@ function StoryEditorModal({ story, sections, sites, onClose }) {
                 placeholder="Photo credit"
                 className="mt-1 w-full px-3 py-2 bg-white rounded border border-ink-200 text-sm"
               />
-              <button type="button" onClick={() => aiStub('Generate Alt Text')} className="mt-1 text-xs text-brand-700 hover:underline">🤖 AI Generate Alt Text</button>
+              <button type="button" onClick={() => ai('alt')} disabled={aiLoading !== null} className="mt-1 text-xs text-brand-700 hover:underline disabled:opacity-50">
+                {aiLoading === 'alt' ? '⏳ writing…' : '🤖 AI Generate Alt Text'}
+              </button>
             </Field>
 
             <label className="flex items-center gap-2">
@@ -703,6 +784,111 @@ function StoryEditorModal({ story, sections, sites, onClose }) {
               </div>
             )}
           </div>
+        </div>
+      </div>
+
+      {/* AI suggestion popup — layered over the editor modal */}
+      {aiPopup && (
+        <AiSuggestionPopup
+          action={aiPopup.action}
+          data={aiPopup.data}
+          onApplyHeadline={h => { update({ headline: h }); setAiPopup(null); }}
+          onApplyLinkSuggestion={null /* advisory only — editor inserts manually */}
+          onClose={() => setAiPopup(null)}
+        />
+      )}
+    </div>
+  );
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// AI suggestion popup — overlays the editor for multi-option results
+// ─────────────────────────────────────────────────────────────────────────────
+
+function AiSuggestionPopup({ action, data, onApplyHeadline, onClose }) {
+  const title =
+    action === 'headlines' ? 'Headline Suggestions' :
+    action === 'social'    ? 'Social Posts' :
+                             'Internal Link Suggestions';
+
+  return (
+    <div className="fixed inset-0 z-[60] bg-black/60 flex items-center justify-center p-4" onClick={onClose}>
+      <div className="bg-white rounded-xl shadow-2xl w-full max-w-2xl" onClick={e => e.stopPropagation()}>
+        <div className="flex items-center justify-between px-5 py-4 border-b border-ink-100">
+          <div className="flex items-center gap-2">
+            <span>🤖</span>
+            <h3 className="font-display text-lg font-bold text-ink-900">{title}</h3>
+          </div>
+          <button onClick={onClose} className="p-2 text-ink-400 hover:text-ink-700">✕</button>
+        </div>
+
+        <div className="p-5 space-y-3 max-h-[70vh] overflow-y-auto">
+          {action === 'headlines' && (
+            <>
+              <p className="text-xs text-ink-500 mb-2">Click one to apply as your headline.</p>
+              {(data.options || []).map((h, i) => (
+                <button
+                  key={i}
+                  onClick={() => onApplyHeadline(h)}
+                  className="w-full text-left px-4 py-3 border border-ink-200 rounded-lg hover:border-brand-400 hover:bg-brand-50 transition-colors"
+                >
+                  <div className="text-[10px] font-bold text-ink-500 uppercase tracking-wider mb-1">Option {i + 1}</div>
+                  <div className="font-display text-base text-ink-900">{h}</div>
+                </button>
+              ))}
+              {!data.options?.length && <div className="text-sm text-ink-500">No suggestions returned.</div>}
+            </>
+          )}
+
+          {action === 'social' && (
+            <div className="space-y-4">
+              {[
+                { key: 'x', label: 'X / Twitter', limit: 280 },
+                { key: 'facebook', label: 'Facebook', limit: null },
+                { key: 'instagram', label: 'Instagram', limit: null },
+              ].map(({ key, label, limit }) => (
+                <div key={key}>
+                  <div className="flex items-center justify-between mb-1">
+                    <span className="text-xs font-bold text-ink-700 uppercase tracking-wider">{label}</span>
+                    {limit && (
+                      <span className={`text-[10px] ${(data[key] || '').length > limit ? 'text-red-600 font-bold' : 'text-ink-500'}`}>
+                        {(data[key] || '').length} / {limit}
+                      </span>
+                    )}
+                  </div>
+                  <textarea
+                    readOnly
+                    value={data[key] || '(empty)'}
+                    rows={key === 'x' ? 3 : 4}
+                    className="w-full px-3 py-2 bg-ink-50 border border-ink-200 rounded text-sm"
+                  />
+                  <button
+                    onClick={() => { navigator.clipboard.writeText(data[key] || ''); }}
+                    className="mt-1 text-xs text-brand-700 hover:underline"
+                  >
+                    📋 Copy {label}
+                  </button>
+                </div>
+              ))}
+            </div>
+          )}
+
+          {action === 'links' && (
+            <>
+              <p className="text-xs text-ink-500 mb-2">Candidate phrases for internal links. Use the editor&apos;s 🔗 Link button to add URLs manually.</p>
+              {(data.suggestions || []).map((s, i) => (
+                <div key={i} className="px-4 py-3 border border-ink-200 rounded-lg">
+                  <div className="font-semibold text-ink-900">“{s.phrase}”</div>
+                  <div className="text-xs text-ink-600 mt-1">{s.reason}</div>
+                </div>
+              ))}
+              {!data.suggestions?.length && <div className="text-sm text-ink-500">No candidates found.</div>}
+            </>
+          )}
+        </div>
+
+        <div className="px-5 py-3 border-t border-ink-100 text-[10px] text-ink-400">
+          Generated by Claude · results are suggestions, review before publishing.
         </div>
       </div>
     </div>

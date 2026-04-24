@@ -6,7 +6,7 @@
 
 import { NextResponse } from 'next/server';
 import { storage } from '@/lib/firebase-admin';
-import { requireAdmin } from '@/lib/auth-server';
+import { getSessionUser } from '@/lib/auth-server';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -25,9 +25,11 @@ function kindOf(mime) {
 }
 
 export async function POST(request) {
+  const user = await getSessionUser();
+  if (!user) {
+    return NextResponse.json({ error: 'Not authenticated' }, { status: 401 });
+  }
   try {
-    await requireAdmin();
-
     const form = await request.formData();
     const file = form.get('file');
     if (!file || typeof file === 'string') {
@@ -86,7 +88,6 @@ export async function POST(request) {
       contentType: file.type,
     });
   } catch (err) {
-    if (err?.digest === 'NEXT_REDIRECT') throw err; // let requireAdmin redirect bubble
     console.error('/api/stories/media failed:', err);
     return NextResponse.json({ error: err.message || 'Upload failed' }, { status: 500 });
   }

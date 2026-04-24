@@ -1,129 +1,162 @@
-// API Route: /api/ai
-// Handles AI content generation requests
+// POST /api/ai — routes AI Writing Assistant button actions to Claude.
 //
-// Supports: OpenAI (GPT-4), Anthropic (Claude), or Google Vertex AI
+// Request: { action, story: { headline, deck, body, tags, image } }
+// Response (per action):
+//   summary        → { deck: string }              → fills the deck field
+//   headlines      → { options: string[] }         → popup, click to apply
+//   meta           → { metaDescription: string }   → fills meta desc field
+//   tags           → { tags: string[] }            → appended to tags list
+//   alt            → { alt: string }               → fills image alt field
+//   social         → { x, facebook, instagram }    → popup with copy buttons
+//   links          → { suggestions: [{ phrase, reason }] } → popup
 //
-// Set one of these environment variables:
-// - OPENAI_API_KEY for OpenAI
-// - ANTHROPIC_API_KEY for Anthropic Claude
-// - GOOGLE_VERTEX_PROJECT_ID for Google Vertex AI
-//
-// All AI features route through this endpoint:
-// - Content rewriting (without plagiarism)
-// - Headline generation
-// - Meta description generation
-// - Auto-tagging
-// - Social post generation
-// - Newsletter summaries
-// - SEO optimization
-// - Image alt-text generation
+// Gated by requireAdmin() so only signed-in staff burn tokens. Uses
+// claude-haiku-4-5 for cost/speed — SEO tasks don't need a big model.
 
 import { NextResponse } from 'next/server';
+import { getClient, DEFAULT_MODEL, htmlToPlainText } from '@/lib/anthropic';
+import { getSessionUser } from '@/lib/auth-server';
 
-const SYSTEM_PROMPTS = {
-  rewrite: `You are a professional news editor. Rewrite the following article in a completely fresh voice. 
-Preserve ALL facts, names, numbers, quotes, and dates exactly. Change ALL sentence structures and word choices. 
-The output must be original prose that cannot be matched to any existing source. 
-Do not copy any phrases of 5+ words from the original. Write in AP style.`,
+export const runtime = 'nodejs';
+export const dynamic = 'force-dynamic';
+export const maxDuration = 30; // seconds
 
-  headline: `You are an SEO-savvy news editor. Generate 7 headline variants for this article.
-Each headline should be:
-- Under 70 characters for SEO
-- Include the primary keyword naturally
-- Use active voice
-- Be clear and specific (no clickbait)
-Number each headline 1-7. Vary between straight news, question, and impact-focused styles.`,
+// Truncate body to keep prompts bounded. 8000 chars ≈ 2000 tokens, plenty for
+// summarization tasks, and keeps calls fast.
+const MAX_BODY_CHARS = 8000;
 
-  social: `You are a social media editor for a news organization. Create platform-specific posts for this article.
-Write separate posts for:
-- Facebook (2-3 sentences, conversational, include a question to drive engagement)
-- X/Twitter (under 280 characters, punchy, include key stat)
-- Instagram (caption with emoji, call-to-action for comments)
-- TikTok (short caption, relevant hashtags)
-Label each platform clearly.`,
+function contextBlock(story) {
+  const body = htmlToPlainText(story.body || '').slice(0, MAX_BODY_CHARS);
+  return [
+    story.headline && `HEADLINE: ${story.headline}`,
+    story.deck && `DECK: ${story.deck}`,
+    (story.tags?.length) && `CURRENT TAGS: ${story.tags.join(', ')}`,
+    body && `BODY:\n${body}`,
+  ].filter(Boolean).join('\n\n');
+}
 
-  newsletter: `You are a newsletter editor. Write a 2-3 sentence summary of this article suitable for a morning news digest email.
-Be concise but informative. Include the most important fact. Write in a slightly warmer tone than hard news.`,
+async function callClaude({ system, user, json = false, maxTokens = 800 }) {
+  const client = getClient();
+  const res = await client.messages.create({
+    model: DEFAULT_MODEL,
+    max_tokens: maxTokens,
+    system,
+    messages: [{ role: 'user', content: user }],
+  });
+  const text = res.content?.[0]?.text?.trim() || '';
+  if (!json) return { text, usage: res.usage };
+  try {
+    // Strip any markdown code fences Claude sometimes wraps JSON in
+    const cleaned = text.replace(/^```(?:json)?\s*|\s*```$/g, '').trim();
+    return { data: JSON.parse(cleaned), usage: res.usage };
+  } catch {
+    return { data: null, parseError: text, usage: res.usage };
+  }
+}
 
-  seo: `You are an SEO specialist for a news website. Rewrite this article to naturally incorporate the target keyword.
-Rules:
-- Include the keyword in the first paragraph
-- Use the keyword 3-5 times total (never forced)
-- Use related terms and synonyms throughout
-- Keep the article natural and readable
-- Do not stuff keywords`,
+// ---------- Action handlers ----------
 
-  simplify: `You are an editor who specializes in clear, accessible writing. Rewrite this article at a 6th-8th grade reading level.
-- Use shorter sentences (under 20 words each)
-- Replace complex vocabulary with simpler alternatives
-- Break up long paragraphs
-- Keep all facts and quotes intact
-- Maintain a professional news tone`,
-};
+async function summary(story) {
+  const { text } = await callClaude({
+    system: 'You are a senior newspaper editor writing deck subheadlines. A deck is one punchy sentence that sits under the headline and expands on the story without repeating the headline. It should be 20–30 words. No quotes around it.',
+    user: `Write the deck subheadline for this story.\n\n${contextBlock(story)}\n\nReturn only the deck sentence, no explanation.`,
+    maxTokens: 150,
+  });
+  return { deck: text.replace(/^["']|["']$/g, '') };
+}
+
+async function headlines(story) {
+  const { data } = await callClaude({
+    system: 'You are an SEO-savvy news editor. Generate alternate headline options that are specific, under 70 characters, use active voice, and avoid clickbait. Return strict JSON.',
+    user: `Generate 5 strong alternate headlines for this story. Return JSON in this exact shape: {"options": ["headline 1", "headline 2", ...]}\n\n${contextBlock(story)}`,
+    json: true,
+    maxTokens: 500,
+  });
+  return { options: data?.options || [] };
+}
+
+async function meta(story) {
+  const { text } = await callClaude({
+    system: 'You write SEO meta descriptions for news articles. The output is one sentence, between 140 and 155 characters, compelling without clickbait, includes the primary topic/keyword naturally.',
+    user: `Write the meta description for this story.\n\n${contextBlock(story)}\n\nReturn only the meta description, no quotes or explanation.`,
+    maxTokens: 200,
+  });
+  return { metaDescription: text.replace(/^["']|["']$/g, '') };
+}
+
+async function tags(story) {
+  const { data } = await callClaude({
+    system: 'You are an SEO topic tagger. Extract 8 relevant tags from news stories. Tags should be lowercase, short (1–3 words), specific to the story, and useful for both search and site navigation. Prefer proper nouns and named entities where relevant. Return strict JSON.',
+    user: `Extract 8 tags for this story. Return JSON in this exact shape: {"tags": ["tag 1", "tag 2", ...]}\n\n${contextBlock(story)}`,
+    json: true,
+    maxTokens: 400,
+  });
+  return { tags: (data?.tags || []).map(t => String(t).toLowerCase().trim()).filter(Boolean) };
+}
+
+async function alt(story) {
+  const imageUrl = story.image?.url;
+  if (!imageUrl) {
+    return { alt: '', note: 'No image URL on the story yet — upload or paste one first.' };
+  }
+  // We can't vision-analyze without multimodal input; derive alt from the
+  // story context instead. For a v2, send the image to claude via the files API.
+  const { text } = await callClaude({
+    system: 'You write accessibility alt text for news photos. Describe what the photo likely shows given the story context. Keep it factual, 10–20 words, no "image of" or "photo of" preamble.',
+    user: `Write alt text for the hero photo of this story. The image URL (for reference only) is ${imageUrl}.\n\n${contextBlock(story)}\n\nReturn only the alt text sentence.`,
+    maxTokens: 120,
+  });
+  return { alt: text.replace(/^["']|["']$/g, '') };
+}
+
+async function social(story) {
+  const { data } = await callClaude({
+    system: 'You write social media copy for a West Virginia newspaper. Output is strict JSON with three platform-specific posts. X/Twitter is under 280 chars, punchy. Facebook is 2–3 sentences, conversational, ends with a question. Instagram is a caption with 1–2 relevant emoji and a call to read more.',
+    user: `Write social posts for this story. Return JSON in this exact shape: {"x": "...", "facebook": "...", "instagram": "..."}\n\n${contextBlock(story)}`,
+    json: true,
+    maxTokens: 600,
+  });
+  return data || { x: '', facebook: '', instagram: '' };
+}
+
+async function links(story) {
+  const { data } = await callClaude({
+    system: 'You identify phrases in a news article that would be good internal-link anchors — named entities, topics, or events that likely have standalone coverage on the same news site. Return strict JSON.',
+    user: `Identify up to 5 phrases in this story that could become internal links. For each, suggest why it\\'s a good candidate (a standalone topic, person, place, or ongoing story). Return JSON in this exact shape: {"suggestions": [{"phrase": "exact text from body", "reason": "short why"}]}\n\n${contextBlock(story)}`,
+    json: true,
+    maxTokens: 600,
+  });
+  return { suggestions: data?.suggestions || [] };
+}
+
+// ---------- Dispatcher ----------
+
+const HANDLERS = { summary, headlines, meta, tags, alt, social, links };
 
 export async function POST(request) {
-  const { mode, content, targetKeyword, tone } = await request.json();
-
-  if (!content) {
-    return NextResponse.json({ error: 'No content provided' }, { status: 400 });
+  const user = await getSessionUser();
+  if (!user) {
+    return NextResponse.json({ error: 'Not authenticated' }, { status: 401 });
   }
+  try {
+    const body = await request.json();
+    const { action, story } = body;
 
-  const systemPrompt = SYSTEM_PROMPTS[mode] || SYSTEM_PROMPTS.rewrite;
+    const handler = HANDLERS[action];
+    if (!handler) {
+      return NextResponse.json({ error: `Unknown action: ${action}` }, { status: 400 });
+    }
+    if (!story || (!story.headline && !story.body)) {
+      return NextResponse.json({ error: 'Story needs at least a headline or body' }, { status: 400 });
+    }
 
-  // ─── OpenAI Implementation ───
-  // if (process.env.OPENAI_API_KEY) {
-  //   const response = await fetch('https://api.openai.com/v1/chat/completions', {
-  //     method: 'POST',
-  //     headers: {
-  //       'Authorization': `Bearer ${process.env.OPENAI_API_KEY}`,
-  //       'Content-Type': 'application/json',
-  //     },
-  //     body: JSON.stringify({
-  //       model: 'gpt-4o',
-  //       messages: [
-  //         { role: 'system', content: systemPrompt },
-  //         { role: 'user', content: `${targetKeyword ? `Target keyword: "${targetKeyword}"\n\n` : ''}Article:\n${content}` },
-  //       ],
-  //       temperature: 0.7,
-  //       max_tokens: 2000,
-  //     }),
-  //   });
-  //   const data = await response.json();
-  //   return NextResponse.json({
-  //     output: data.choices[0].message.content,
-  //     model: 'gpt-4o',
-  //     tokens: data.usage.total_tokens,
-  //   });
-  // }
-
-  // ─── Anthropic Implementation ───
-  // if (process.env.ANTHROPIC_API_KEY) {
-  //   const response = await fetch('https://api.anthropic.com/v1/messages', {
-  //     method: 'POST',
-  //     headers: {
-  //       'x-api-key': process.env.ANTHROPIC_API_KEY,
-  //       'Content-Type': 'application/json',
-  //       'anthropic-version': '2023-06-01',
-  //     },
-  //     body: JSON.stringify({
-  //       model: 'claude-sonnet-4-20250514',
-  //       max_tokens: 2000,
-  //       system: systemPrompt,
-  //       messages: [{ role: 'user', content: content }],
-  //     }),
-  //   });
-  //   const data = await response.json();
-  //   return NextResponse.json({
-  //     output: data.content[0].text,
-  //     model: 'claude-sonnet',
-  //   });
-  // }
-
-  // Mock response for demo
-  return NextResponse.json({
-    status: 'demo_mode',
-    message: 'Set OPENAI_API_KEY or ANTHROPIC_API_KEY in Vercel env vars to enable real AI rewriting.',
-    output: 'This is a placeholder. Connect an AI provider to see real rewritten content.',
-    model: 'none',
-  });
+    const result = await handler(story);
+    return NextResponse.json({ ok: true, action, ...result });
+  } catch (err) {
+    console.error('/api/ai error:', err);
+    return NextResponse.json(
+      { error: err.message || 'AI request failed' },
+      { status: err.status || 500 }
+    );
+  }
 }
