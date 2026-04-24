@@ -3,6 +3,7 @@ import Link from 'next/link';
 import PublicHeader from '@/components/public/Header';
 import Footer from '@/components/public/Footer';
 import SiteBadge from '@/components/public/SiteBadge';
+import AdSlot from '@/components/public/AdSlot';
 import { sites } from '@/data/mock';
 import ingested from '@/data/ingested-stories.json';
 
@@ -79,6 +80,10 @@ export default function PublicationPage({ params }) {
             </button>
           ))}
         </div>
+      </div>
+
+      <div className="max-w-7xl mx-auto px-4 pt-4">
+        <AdSlot placement="publication-top" site={site.id} targeting={{ page: 'publication', publication: site.id }} />
       </div>
 
       <main className="max-w-7xl mx-auto px-4 py-8">

@@ -1,6 +1,8 @@
 import './globals.css';
 import { Suspense } from 'react';
+import Script from 'next/script';
 import BreakingNewsRibbon from '@/components/public/BreakingNewsRibbon';
+import { GAM_IS_LIVE } from '@/lib/gam-config';
 
 export const metadata = {
   title: 'WVNews - West Virginia News & Information',
@@ -17,6 +19,24 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
+      <head>
+        {/* Google Publisher Tag — loads once, initializes the ad queue so
+            individual AdSlot components can define slots on mount. Loaded
+            on all pages (including admin) so ad previews work everywhere,
+            but actual ad requests only fire from placements on public pages. */}
+        {GAM_IS_LIVE && (
+          <>
+            <Script
+              id="gpt-js"
+              src="https://securepubads.g.doubleclick.net/tag/js/gpt.js"
+              strategy="afterInteractive"
+            />
+            <Script id="gpt-init" strategy="afterInteractive">
+              {`window.googletag = window.googletag || { cmd: [] };`}
+            </Script>
+          </>
+        )}
+      </head>
       <body className="min-h-screen bg-[#fafafa]">
         {/* Renders only on public routes; reads breaking stories from Firestore */}
         <Suspense>

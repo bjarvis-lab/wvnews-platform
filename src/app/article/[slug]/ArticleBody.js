@@ -4,6 +4,7 @@ import Link from 'next/link';
 import PublicHeader from '@/components/public/Header';
 import Footer from '@/components/public/Footer';
 import RegistrationWall from '@/components/public/RegistrationWall';
+import AdSlot from '@/components/public/AdSlot';
 
 // Client-side layout for the article page. Server component fetches the
 // story and hands it in as a prop so we get SSR for SEO/cache while
@@ -12,6 +13,16 @@ import RegistrationWall from '@/components/public/RegistrationWall';
 export default function ArticleBody({ story, section, sections, related, sectionMore }) {
   const [showRegWall, setShowRegWall] = useState(false);
 
+  const adSite = (story.sites && story.sites[0]) || 'wvnews';
+  const adTargeting = {
+    page: 'article',
+    section: story.section || 'news',
+    tags: story.tags || [],
+    breaking: story.breaking ? 'yes' : 'no',
+    access: story.accessLevel || 'free',
+    storyId: story.id || '',
+  };
+
   const publishDate = story.publishedAt
     ? new Date(story.publishedAt).toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })
     : 'Draft';
@@ -19,6 +30,11 @@ export default function ArticleBody({ story, section, sections, related, section
   return (
     <div className="min-h-screen">
       <PublicHeader />
+
+      {/* Top-of-article ad */}
+      <div className="max-w-4xl mx-auto px-4 pt-3">
+        <AdSlot placement="article-top" site={adSite} targeting={adTargeting} />
+      </div>
 
       <main className="max-w-4xl mx-auto px-4 py-8">
         <nav className="flex items-center gap-2 text-xs text-ink-500 mb-4">
@@ -114,10 +130,7 @@ export default function ArticleBody({ story, section, sections, related, section
           </article>
 
           <aside className="space-y-4">
-            <div className="bg-ink-100 rounded-lg p-4 text-center">
-              <span className="text-[10px] uppercase tracking-widest text-ink-400">Ad</span>
-              <div className="h-48 flex items-center justify-center text-ink-400 text-xs">300×250</div>
-            </div>
+            <AdSlot placement="article-sidebar" site={adSite} targeting={adTargeting} />
 
             {section && sectionMore.length > 0 && (
               <div className="bg-white rounded-lg p-4 shadow-sm border border-ink-100">
@@ -133,7 +146,15 @@ export default function ArticleBody({ story, section, sections, related, section
             )}
           </aside>
         </div>
+
+        {/* End-of-article ad */}
+        <div className="mt-8">
+          <AdSlot placement="article-end" site={adSite} targeting={adTargeting} />
+        </div>
       </main>
+
+      {/* Mobile-only sticky footer ad */}
+      <AdSlot placement="article-sticky-mobile" site={adSite} targeting={adTargeting} />
 
       <Footer />
       {showRegWall && <RegistrationWall onClose={() => setShowRegWall(false)} />}

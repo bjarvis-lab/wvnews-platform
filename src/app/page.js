@@ -7,6 +7,7 @@ import Link from 'next/link';
 import PublicHeader from '@/components/public/Header';
 import Footer from '@/components/public/Footer';
 import { WeatherWidget, NewsletterSignup } from '@/components/public/HomeSidebarClient';
+import AdSlot from '@/components/public/AdSlot';
 import { listPublishedStories } from '@/lib/stories-db';
 import { stories as mockStories, sections } from '@/data/mock';
 
@@ -155,9 +156,16 @@ export default async function HomePage() {
   const latest = all.filter(s => !s.featured && !s.breaking).slice(0, 20);
   const mostRead = [...all].sort((a, b) => (b.stats?.views || 0) - (a.stats?.views || 0)).slice(0, 5);
 
+  const adTargeting = { page: 'home', breaking: breaking ? 'yes' : 'no' };
+
   return (
     <div className="min-h-screen">
       <PublicHeader />
+
+      {/* Top-of-page ad slot — desktop leaderboard / mobile banner */}
+      <div className="max-w-7xl mx-auto px-4 pt-3">
+        <AdSlot placement="home-top" site="wvnews" targeting={adTargeting} />
+      </div>
 
       <main className="max-w-7xl mx-auto px-4 py-6">
         {/* Hero Section */}
@@ -209,9 +217,8 @@ export default async function HomePage() {
                 <StoryCard key={story.id || story.slug} story={story} size="medium" />
               ))}
             </div>
-            <div className="my-6 bg-ink-100 rounded-lg p-4 text-center">
-              <span className="text-[10px] uppercase tracking-widest text-ink-400 font-medium">Advertisement</span>
-              <div className="h-24 flex items-center justify-center text-ink-400 text-sm">728×90 Leaderboard</div>
+            <div className="my-6">
+              <AdSlot placement="home-in-feed" site="wvnews" targeting={adTargeting} />
             </div>
           </div>
 
@@ -258,10 +265,7 @@ export default async function HomePage() {
               </div>
             </div>
 
-            <div className="bg-ink-100 rounded-lg p-4 text-center">
-              <span className="text-[10px] uppercase tracking-widest text-ink-400 font-medium">Advertisement</span>
-              <div className="h-64 flex items-center justify-center text-ink-400 text-sm">300×250</div>
-            </div>
+            <AdSlot placement="home-sidebar-1" site="wvnews" targeting={adTargeting} />
           </div>
         </div>
       </main>

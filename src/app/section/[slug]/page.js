@@ -5,6 +5,7 @@
 import Link from 'next/link';
 import PublicHeader from '@/components/public/Header';
 import Footer from '@/components/public/Footer';
+import AdSlot from '@/components/public/AdSlot';
 import { listPublishedBySection } from '@/lib/stories-db';
 import { stories as mockStories, sections } from '@/data/mock';
 
@@ -33,10 +34,14 @@ export default async function SectionPage({ params }) {
   const { slug } = params;
   const section = sections.find(s => s.slug === slug) || sections[0];
   const sectionStories = await blendSectionStories(section.id);
+  const adTargeting = { page: 'section', section: section.id };
 
   return (
     <div className="min-h-screen">
       <PublicHeader />
+      <div className="max-w-7xl mx-auto px-4 pt-3">
+        <AdSlot placement="section-top" site="wvnews" targeting={adTargeting} />
+      </div>
       <main className="max-w-7xl mx-auto px-4 py-6">
         <div className="flex items-center gap-3 mb-6">
           <span className="text-2xl">{section.icon}</span>
@@ -86,10 +91,7 @@ export default async function SectionPage({ params }) {
           </div>
 
           <aside className="space-y-4">
-            <div className="bg-ink-100 rounded-lg p-4 text-center">
-              <span className="text-[10px] uppercase tracking-widest text-ink-400">Ad</span>
-              <div className="h-64 flex items-center justify-center text-ink-400 text-sm">300×250</div>
-            </div>
+            <AdSlot placement="section-sidebar" site="wvnews" targeting={adTargeting} />
             <div className="bg-white rounded-lg p-4 shadow-sm border border-ink-100">
               <h3 className="text-xs font-bold uppercase tracking-wider text-ink-500 mb-3">All Sections</h3>
               {sections.map(s => (
