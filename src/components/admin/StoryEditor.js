@@ -132,6 +132,21 @@ export default function StoryEditor({ initialContent = '', onChange, autoFocus =
     if (autoFocus && editor) editor.commands.focus();
   }, [editor, autoFocus]);
 
+  // Sync external initialContent changes into the editor after mount.
+  // TipTap's useEditor only reads `content` once; when the parent populates
+  // the body later (AI-generated draft, cluster-seeded auto-generate,
+  // version-tab switch, etc.), we push it in explicitly.
+  //
+  // The `initialContent === editor.getHTML()` short-circuit prevents the
+  // onUpdate → onChange → parent update → re-render → effect loop. Passing
+  // `false` as the second arg to setContent also suppresses onUpdate so
+  // programmatic updates don't bubble back up as user edits.
+  useEffect(() => {
+    if (!editor) return;
+    if (initialContent === editor.getHTML()) return;
+    editor.commands.setContent(initialContent || '', false);
+  }, [editor, initialContent]);
+
   if (!editor) return <div className="border border-ink-200 rounded-lg min-h-[400px] bg-ink-50/40 animate-pulse" />;
 
   return (
