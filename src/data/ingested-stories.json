@@ -1,19 +1,19 @@
 {
-  "fetchedAt": "2026-04-24T21:31:53.261Z",
+  "fetchedAt": "2026-04-24T22:26:27.263Z",
   "source": "wvnews.com RSS + section HTML backfill",
   "target": 10,
   "siteCounts": {
-    "exponent": 0,
+    "exponent": 10,
     "bridgeport": 5,
-    "dominion": 0,
+    "dominion": 10,
     "bluegold": 10,
     "recorddelta": 10,
-    "jackson": 0,
+    "jackson": 10,
     "preston": 0,
     "garrett": 10,
     "braxtondem": 10,
     "mtnstates": 10,
-    "fmn": 0,
+    "fmn": 10,
     "rivercities": 10,
     "spencer": 10,
     "mineral": 10,
@@ -22,7 +22,128 @@
     "bulletin": 0
   },
   "stories": {
-    "exponent": [],
+    "exponent": [
+      {
+        "id": "5c5b4733-70ae-4e23-8215-e7ef00471e5f",
+        "slug": "services-stymied-at-harrison-county-government-offices-as-staff-deal-with-cybersecurity-attack",
+        "title": "Services stymied at Harrison County government offices as staff deal with cybersecurity attack",
+        "description": "",
+        "pubDate": null,
+        "author": "",
+        "image": null,
+        "sourceUrl": "https://www.wvnews.com/theet/news/services-stymied-at-harrison-county-government-offices-as-staff-deal-with-cybersecurity-attack/article_5c5b4733-70ae-4e23-8215-e7ef00471e5f.html",
+        "prefix": "theet",
+        "source": "section"
+      },
+      {
+        "id": "d75920f8-1dca-4a7c-ba5c-baf38db28087",
+        "slug": "harrison-county-to-alter-ballot-in-general-election-due-to-passing-of-circuit-clerk-albert",
+        "title": "Harrison County to alter ballot in General Election due to passing of Circuit Clerk Albert Marano",
+        "description": "",
+        "pubDate": null,
+        "author": "",
+        "image": null,
+        "sourceUrl": "https://www.wvnews.com/theet/news/harrison-county-to-alter-ballot-in-general-election-due-to-passing-of-circuit-clerk-albert/article_d75920f8-1dca-4a7c-ba5c-baf38db28087.html",
+        "prefix": "theet",
+        "source": "section"
+      },
+      {
+        "id": "32df50e8-d7b1-4b1d-995d-55b6590ca1c1",
+        "slug": "emmanuel-christian-school-and-hope-gas-plant-tree-at-new-north-view-campus",
+        "title": "Emmanuel Christian School and Hope Gas plant tree at new North View campus",
+        "description": "",
+        "pubDate": null,
+        "author": "",
+        "image": null,
+        "sourceUrl": "https://www.wvnews.com/theet/news/local/emmanuel-christian-school-and-hope-gas-plant-tree-at-new-north-view-campus/article_32df50e8-d7b1-4b1d-995d-55b6590ca1c1.html",
+        "prefix": "theet",
+        "source": "section"
+      },
+      {
+        "id": "51be89b7-3b8f-44ad-be02-ae211bb99f84",
+        "slug": "bridgeport-middle-students-make-west-virginia-history-with-national-investwrite-wins",
+        "title": "Bridgeport Middle students make West Virginia history with national InvestWrite wins",
+        "description": "",
+        "pubDate": null,
+        "author": "",
+        "image": null,
+        "sourceUrl": "https://www.wvnews.com/theet/news/bridgeport-middle-students-make-west-virginia-history-with-national-investwrite-wins/article_51be89b7-3b8f-44ad-be02-ae211bb99f84.html",
+        "prefix": "theet",
+        "source": "section"
+      },
+      {
+        "id": "3717c398-f209-4bc8-a54b-1fae0c4e4edb",
+        "slug": "clarksburg-city-council-questions-opioid-settlement-spending-on-proposed-community-center-architectural-drawings",
+        "title": "Clarksburg city council questions opioid settlement spending on proposed community center architectural drawings",
+        "description": "",
+        "pubDate": null,
+        "author": "",
+        "image": null,
+        "sourceUrl": "https://www.wvnews.com/theet/news/clarksburg-city-council-questions-opioid-settlement-spending-on-proposed-community-center-architectural-drawings/article_3717c398-f209-4bc8-a54b-1fae0c4e4edb.html",
+        "prefix": "theet",
+        "source": "section"
+      },
+      {
+        "id": "93cab2b1-0360-4b74-91da-e53d59e5f985",
+        "slug": "utc-students-earn-33-medals-at-2026-skillsusa-state-competition",
+        "title": "UTC students earn 33 medals at 2026 SkillsUSA state competition",
+        "description": "",
+        "pubDate": null,
+        "author": "",
+        "image": null,
+        "sourceUrl": "https://www.wvnews.com/theet/news/utc-students-earn-33-medals-at-2026-skillsusa-state-competition/article_93cab2b1-0360-4b74-91da-e53d59e5f985.html",
+        "prefix": "theet",
+        "source": "section"
+      },
+      {
+        "id": "4165b714-b6eb-4e92-b2f8-8491e50aacb4",
+        "slug": "clarksburgs-inaugural-fairy-ren-faire-postponed-to-may-9-due-to-weather",
+        "title": "Clarksburg's inaugural Fairy Ren Faire postponed to May 9 due to weather",
+        "description": "",
+        "pubDate": null,
+        "author": "",
+        "image": null,
+        "sourceUrl": "https://www.wvnews.com/theet/news/local/clarksburgs-inaugural-fairy-ren-faire-postponed-to-may-9-due-to-weather/article_4165b714-b6eb-4e92-b2f8-8491e50aacb4.html",
+        "prefix": "theet",
+        "source": "section"
+      },
+      {
+        "id": "06707696-a070-46c6-9a87-8e235b8e6211",
+        "slug": "george-hoffman-murder-trial-set-to-begin-may-11-amid-unresolved-rulings-on-trial-structure",
+        "title": "George Hoffman murder trial set to begin May 11 amid unresolved rulings on trial structure, evidence",
+        "description": "",
+        "pubDate": null,
+        "author": "",
+        "image": null,
+        "sourceUrl": "https://www.wvnews.com/theet/news/george-hoffman-murder-trial-set-to-begin-may-11-amid-unresolved-rulings-on-trial-structure/article_06707696-a070-46c6-9a87-8e235b8e6211.html",
+        "prefix": "theet",
+        "source": "section"
+      },
+      {
+        "id": "c8dac5b8-2d4f-43b1-9e24-b7fed650bba7",
+        "slug": "harrison-county-commission-candidate-martin-howe",
+        "title": "Harrison County Commission candidate: Martin Howe",
+        "description": "",
+        "pubDate": null,
+        "author": "",
+        "image": null,
+        "sourceUrl": "https://www.wvnews.com/theet/news/harrison-county-commission-candidate-martin-howe/article_c8dac5b8-2d4f-43b1-9e24-b7fed650bba7.html",
+        "prefix": "theet",
+        "source": "section"
+      },
+      {
+        "id": "fc23d255-4f76-4c6b-b5a8-3a99b79e1ae0",
+        "slug": "harrison-county-commission-candidate-mickey-petitto",
+        "title": "Harrison County Commission candidate: Mickey Petitto",
+        "description": "",
+        "pubDate": null,
+        "author": "",
+        "image": null,
+        "sourceUrl": "https://www.wvnews.com/theet/news/harrison-county-commission-candidate-mickey-petitto/article_fc23d255-4f76-4c6b-b5a8-3a99b79e1ae0.html",
+        "prefix": "theet",
+        "source": "section"
+      }
+    ],
     "bridgeport": [
       {
         "id": "f34aa831-a4d6-4a9e-b15f-4ca874d9cdaf",
@@ -85,7 +206,128 @@
         "source": "section"
       }
     ],
-    "dominion": [],
+    "dominion": [
+      {
+        "id": "213272d0-adee-4be5-8e40-2bfca52b993d",
+        "slug": "morgantown-farmers-market-opens-summer-season",
+        "title": "Morgantown Farmers Market opens summer season",
+        "description": "",
+        "pubDate": null,
+        "author": "",
+        "image": null,
+        "sourceUrl": "https://www.wvnews.com/morgantownnews/news/local/morgantown-farmers-market-opens-summer-season/article_213272d0-adee-4be5-8e40-2bfca52b993d.html",
+        "prefix": "morgantownnews",
+        "source": "section"
+      },
+      {
+        "id": "67b83e4f-96c0-490c-8402-3bea691353f2",
+        "slug": "joseph-nevera-sentenced-to-life-without-mercy-following-murder-conviction",
+        "title": "Joseph Nevera sentenced to life without mercy following murder conviction",
+        "description": "",
+        "pubDate": null,
+        "author": "",
+        "image": null,
+        "sourceUrl": "https://www.wvnews.com/morgantownnews/news/local/joseph-nevera-sentenced-to-life-without-mercy-following-murder-conviction/article_67b83e4f-96c0-490c-8402-3bea691353f2.html",
+        "prefix": "morgantownnews",
+        "source": "section"
+      },
+      {
+        "id": "79a334fc-f906-4a2f-8cd4-518e5658522e",
+        "slug": "morgantown-public-library-system-unveils-new-logo-website-ahead-of-100th-anniversary",
+        "title": "Morgantown Public Library System unveils new logo, website ahead of 100th anniversary",
+        "description": "",
+        "pubDate": null,
+        "author": "",
+        "image": null,
+        "sourceUrl": "https://www.wvnews.com/morgantownnews/news/morgantown-public-library-system-unveils-new-logo-website-ahead-of-100th-anniversary/article_79a334fc-f906-4a2f-8cd4-518e5658522e.html",
+        "prefix": "morgantownnews",
+        "source": "section"
+      },
+      {
+        "id": "d3d89295-ac90-48e5-9604-39f2f1b42d7e",
+        "slug": "morgantown-high-school-wins-2026-wv-envirothon",
+        "title": "Morgantown High School wins 2026 WV Envirothon",
+        "description": "",
+        "pubDate": null,
+        "author": "",
+        "image": null,
+        "sourceUrl": "https://www.wvnews.com/morgantownnews/news/local/morgantown-high-school-wins-2026-wv-envirothon/article_d3d89295-ac90-48e5-9604-39f2f1b42d7e.html",
+        "prefix": "morgantownnews",
+        "source": "section"
+      },
+      {
+        "id": "dd22346f-e5da-45b0-b5a6-a241ac09e7c9",
+        "slug": "morgantown-high-school-named-model-school",
+        "title": "Morgantown High School named model school",
+        "description": "",
+        "pubDate": null,
+        "author": "",
+        "image": null,
+        "sourceUrl": "https://www.wvnews.com/morgantownnews/news/local/morgantown-high-school-named-model-school/article_dd22346f-e5da-45b0-b5a6-a241ac09e7c9.html",
+        "prefix": "morgantownnews",
+        "source": "section"
+      },
+      {
+        "id": "645873b4-b4f8-47ea-9cde-5c82fc1fb5fd",
+        "slug": "getmoving-to-host-day-of-play-in-morgantown-to-promote-family-fitness",
+        "title": "GetMoving! to host ‘Day of Play’ in Morgantown to promote family fitness",
+        "description": "",
+        "pubDate": null,
+        "author": "",
+        "image": null,
+        "sourceUrl": "https://www.wvnews.com/morgantownnews/news/getmoving-to-host-day-of-play-in-morgantown-to-promote-family-fitness/article_645873b4-b4f8-47ea-9cde-5c82fc1fb5fd.html",
+        "prefix": "morgantownnews",
+        "source": "section"
+      },
+      {
+        "id": "3b1a531c-6f62-4727-b2c5-c8622d02fd60",
+        "slug": "testimony-continues-in-joseph-nevera-murder-trial-in-monongalia-county",
+        "title": "Testimony continues in Joseph Nevera murder trial in Monongalia County",
+        "description": "",
+        "pubDate": null,
+        "author": "",
+        "image": null,
+        "sourceUrl": "https://www.wvnews.com/morgantownnews/news/local/testimony-continues-in-joseph-nevera-murder-trial-in-monongalia-county/article_3b1a531c-6f62-4727-b2c5-c8622d02fd60.html",
+        "prefix": "morgantownnews",
+        "source": "section"
+      },
+      {
+        "id": "f5602190-b3f3-47fd-88a4-45923120e905",
+        "slug": "wvu-hires-chris-kabourek-as-vice-president-chief-financial-officer",
+        "title": "WVU hires Chris Kabourek as vice president, chief financial officer",
+        "description": "",
+        "pubDate": null,
+        "author": "",
+        "image": null,
+        "sourceUrl": "https://www.wvnews.com/morgantownnews/news/wvu-hires-chris-kabourek-as-vice-president-chief-financial-officer/article_f5602190-b3f3-47fd-88a4-45923120e905.html",
+        "prefix": "morgantownnews",
+        "source": "section"
+      },
+      {
+        "id": "21ba2c2c-0bf7-4650-82f5-29d8b0c08155",
+        "slug": "henry-thoreau-documentary-to-be-played-at-the-met",
+        "title": "Henry Thoreau documentary to be played at the Met",
+        "description": "",
+        "pubDate": null,
+        "author": "",
+        "image": null,
+        "sourceUrl": "https://www.wvnews.com/morgantownnews/news/local/henry-thoreau-documentary-to-be-played-at-the-met/article_21ba2c2c-0bf7-4650-82f5-29d8b0c08155.html",
+        "prefix": "morgantownnews",
+        "source": "section"
+      },
+      {
+        "id": "b61659d9-7998-47a3-83f0-8aae3a63a9f4",
+        "slug": "panera-bread-opens-new-westover-caf-with-grand-opening-giveaways-and-local-hiring-boost",
+        "title": "Panera Bread opens new Westover café with grand opening giveaways and local hiring boost",
+        "description": "",
+        "pubDate": null,
+        "author": "",
+        "image": null,
+        "sourceUrl": "https://www.wvnews.com/morgantownnews/news/panera-bread-opens-new-westover-caf-with-grand-opening-giveaways-and-local-hiring-boost/article_b61659d9-7998-47a3-83f0-8aae3a63a9f4.html",
+        "prefix": "morgantownnews",
+        "source": "section"
+      }
+    ],
     "bluegold": [
       {
         "id": "7b72e3dd-1c9e-4254-b733-eb3e273a4856",
@@ -330,7 +572,128 @@
         "source": "section"
       }
     ],
-    "jackson": [],
+    "jackson": [
+      {
+        "id": "3c5ce7b5-4c8d-438e-9055-a001352701c2",
+        "slug": "meet-the-candidates-event-set-for-april-28",
+        "title": "Meet the Candidates event set for April 28",
+        "description": "",
+        "pubDate": null,
+        "author": "",
+        "image": null,
+        "sourceUrl": "https://www.wvnews.com/jacksonnews/meet-the-candidates-event-set-for-april-28/article_3c5ce7b5-4c8d-438e-9055-a001352701c2.html",
+        "prefix": "jacksonnews",
+        "source": "section"
+      },
+      {
+        "id": "f3f0ec84-2531-4250-93b6-ae4c4f9d1c4f",
+        "slug": "courthouse-news",
+        "title": "Courthouse News",
+        "description": "",
+        "pubDate": null,
+        "author": "",
+        "image": null,
+        "sourceUrl": "https://www.wvnews.com/jacksonnews/courthouse-news/article_f3f0ec84-2531-4250-93b6-ae4c4f9d1c4f.html",
+        "prefix": "jacksonnews",
+        "source": "section"
+      },
+      {
+        "id": "801a2758-1bf5-47a7-8e1c-9903bd089a63",
+        "slug": "five-years-strong-movin-in-may-keeps-jackson-county-active",
+        "title": "Five Years Strong: Movin’ in May Keeps Jackson County Active",
+        "description": "",
+        "pubDate": null,
+        "author": "",
+        "image": null,
+        "sourceUrl": "https://www.wvnews.com/jacksonnews/five-years-strong-movin-in-may-keeps-jackson-county-active/article_801a2758-1bf5-47a7-8e1c-9903bd089a63.html",
+        "prefix": "jacksonnews",
+        "source": "section"
+      },
+      {
+        "id": "fe628db2-e4f2-4d71-9bf3-2b51b1ff9ab2",
+        "slug": "micah-s-manor-hosts-successful-first-wedding-event-expo",
+        "title": "Micah’s Manor hosts successful first Wedding & Event Expo",
+        "description": "",
+        "pubDate": null,
+        "author": "",
+        "image": null,
+        "sourceUrl": "https://www.wvnews.com/jacksonnews/micah-s-manor-hosts-successful-first-wedding-event-expo/article_fe628db2-e4f2-4d71-9bf3-2b51b1ff9ab2.html",
+        "prefix": "jacksonnews",
+        "source": "section"
+      },
+      {
+        "id": "239b7669-0032-4b44-b74c-921252513bee",
+        "slug": "gilmore-elementary-fundraiser-raises-nearly-4-400-for-new-playground-equipment",
+        "title": "Gilmore Elementary fundraiser raises nearly $4,400 for new playground equipment",
+        "description": "",
+        "pubDate": null,
+        "author": "",
+        "image": null,
+        "sourceUrl": "https://www.wvnews.com/jacksonnews/gilmore-elementary-fundraiser-raises-nearly-4-400-for-new-playground-equipment/article_239b7669-0032-4b44-b74c-921252513bee.html",
+        "prefix": "jacksonnews",
+        "source": "section"
+      },
+      {
+        "id": "0fd7adcb-15a6-4108-ab26-f99f08912f98",
+        "slug": "ravenswood-youth-bags-21-pound-gobbler-during-west-virginia-spring-turkey-season",
+        "title": "Ravenswood youth bags 21-pound gobbler during West Virginia spring turkey season",
+        "description": "",
+        "pubDate": null,
+        "author": "",
+        "image": null,
+        "sourceUrl": "https://www.wvnews.com/jacksonnews/ravenswood-youth-bags-21-pound-gobbler-during-west-virginia-spring-turkey-season/article_0fd7adcb-15a6-4108-ab26-f99f08912f98.html",
+        "prefix": "jacksonnews",
+        "source": "section"
+      },
+      {
+        "id": "86fe1f5c-b24a-4a6d-8446-3952439f1f11",
+        "slug": "ravenswood-native-finishes-as-top-american-in-paris-marathon",
+        "title": "Ravenswood native finishes as top American in Paris Marathon",
+        "description": "",
+        "pubDate": null,
+        "author": "",
+        "image": null,
+        "sourceUrl": "https://www.wvnews.com/jacksonnews/ravenswood-native-finishes-as-top-american-in-paris-marathon/article_86fe1f5c-b24a-4a6d-8446-3952439f1f11.html",
+        "prefix": "jacksonnews",
+        "source": "section"
+      },
+      {
+        "id": "9c4afb45-2d6b-4305-bde9-e5b65ded1c9f",
+        "slug": "ravenswood-city-council-approves-first-reading-of-sewer-bond-ordinances",
+        "title": "Ravenswood City Council approves first reading of sewer bond ordinances",
+        "description": "",
+        "pubDate": null,
+        "author": "",
+        "image": null,
+        "sourceUrl": "https://www.wvnews.com/jacksonnews/ravenswood-city-council-approves-first-reading-of-sewer-bond-ordinances/article_9c4afb45-2d6b-4305-bde9-e5b65ded1c9f.html",
+        "prefix": "jacksonnews",
+        "source": "section"
+      },
+      {
+        "id": "572c80a6-fa4e-4e0f-952d-3238b7d3ce84",
+        "slug": "ravenswood-breaks-ground-on-new-riverfront-welcome-center-and-smokehouse-restaurant",
+        "title": "Ravenswood breaks ground on new riverfront welcome center and smokehouse restaurant",
+        "description": "",
+        "pubDate": null,
+        "author": "",
+        "image": null,
+        "sourceUrl": "https://www.wvnews.com/jacksonnews/ravenswood-breaks-ground-on-new-riverfront-welcome-center-and-smokehouse-restaurant/article_572c80a6-fa4e-4e0f-952d-3238b7d3ce84.html",
+        "prefix": "jacksonnews",
+        "source": "section"
+      },
+      {
+        "id": "85e1afa3-6999-49a8-a944-9ee886bf380d",
+        "slug": "dar-chapter-s-america-250-spotlight",
+        "title": "DAR chapter’s America 250! spotlight",
+        "description": "",
+        "pubDate": null,
+        "author": "",
+        "image": null,
+        "sourceUrl": "https://www.wvnews.com/jacksonnews/dar-chapter-s-america-250-spotlight/article_85e1afa3-6999-49a8-a944-9ee886bf380d.html",
+        "prefix": "jacksonnews",
+        "source": "section"
+      }
+    ],
     "preston": [],
     "garrett": [
       {
@@ -698,7 +1061,128 @@
         "source": "section"
       }
     ],
-    "fmn": [],
+    "fmn": [
+      {
+        "id": "e9650dbb-5ec9-465c-bbb2-32394eab33a6",
+        "slug": "white-hall-elementarys-jessica-ford-named-marion-co-teacher-of-the-year",
+        "title": "White Hall Elementary's Jessica Ford named Marion Co. Teacher of the Year",
+        "description": "",
+        "pubDate": null,
+        "author": "",
+        "image": null,
+        "sourceUrl": "https://www.wvnews.com/fairmontnews/news/white-hall-elementarys-jessica-ford-named-marion-co-teacher-of-the-year/article_e9650dbb-5ec9-465c-bbb2-32394eab33a6.html",
+        "prefix": "fairmontnews",
+        "source": "section"
+      },
+      {
+        "id": "db0ea70e-b034-4601-82ad-2aa0aa89e70a",
+        "slug": "marion-county-prepares-for-primary-election-calls-for-backup-poll-workers",
+        "title": "Marion County prepares for primary election, calls for backup poll workers",
+        "description": "",
+        "pubDate": null,
+        "author": "",
+        "image": null,
+        "sourceUrl": "https://www.wvnews.com/fairmontnews/news/marion-county-prepares-for-primary-election-calls-for-backup-poll-workers/article_db0ea70e-b034-4601-82ad-2aa0aa89e70a.html",
+        "prefix": "fairmontnews",
+        "source": "section"
+      },
+      {
+        "id": "2f1095c4-caa9-42d2-abc9-fc5392ddfefa",
+        "slug": "city-of-fairmont-announces-wv-doh-plans-to-lessen-palatine-park-intersection-delineators",
+        "title": "City of Fairmont announces WV DOH plans to lessen Palatine Park intersection delineators",
+        "description": "",
+        "pubDate": null,
+        "author": "",
+        "image": null,
+        "sourceUrl": "https://www.wvnews.com/fairmontnews/news/city-of-fairmont-announces-wv-doh-plans-to-lessen-palatine-park-intersection-delineators/article_2f1095c4-caa9-42d2-abc9-fc5392ddfefa.html",
+        "prefix": "fairmontnews",
+        "source": "section"
+      },
+      {
+        "id": "261274ae-3bf0-4e21-a5ac-ef7c3504bb14",
+        "slug": "country-church-project-st-peter-the-fisherman-archives-preserve-fairmont-s-immigrant-history-through-sacramental",
+        "title": "Country Church Project: St. Peter the Fisherman archives preserve Fairmont’s immigrant history through sacramental records",
+        "description": "",
+        "pubDate": null,
+        "author": "",
+        "image": null,
+        "sourceUrl": "https://www.wvnews.com/fairmontnews/news/local/country-church-project-st-peter-the-fisherman-archives-preserve-fairmont-s-immigrant-history-through-sacramental/article_261274ae-3bf0-4e21-a5ac-ef7c3504bb14.html",
+        "prefix": "fairmontnews",
+        "source": "section"
+      },
+      {
+        "id": "73a62021-6205-4087-b66d-aa00b7795904",
+        "slug": "delineators-constricting-palatine-park-road-removed-though-local-officials-deny-responsibility",
+        "title": "Delineators constricting Palatine Park road removed, though local officials deny responsibility",
+        "description": "",
+        "pubDate": null,
+        "author": "",
+        "image": null,
+        "sourceUrl": "https://www.wvnews.com/fairmontnews/news/delineators-constricting-palatine-park-road-removed-though-local-officials-deny-responsibility/article_73a62021-6205-4087-b66d-aa00b7795904.html",
+        "prefix": "fairmontnews",
+        "source": "section"
+      },
+      {
+        "id": "86bb6947-eae5-4ba5-8ed7-41688e562d1b",
+        "slug": "marion-co-s-crouch-ward-woertz-to-vie-for-republican-house-of-del-district-74",
+        "title": "Marion Co.'s Crouch, Ward, Woertz to vie for Republican House of Del. District 74 nomination",
+        "description": "",
+        "pubDate": null,
+        "author": "",
+        "image": null,
+        "sourceUrl": "https://www.wvnews.com/fairmontnews/news/marion-co-s-crouch-ward-woertz-to-vie-for-republican-house-of-del-district-74/article_86bb6947-eae5-4ba5-8ed7-41688e562d1b.html",
+        "prefix": "fairmontnews",
+        "source": "section"
+      },
+      {
+        "id": "5eb1ac0b-0df3-4ec8-9aae-69c7e18b490f",
+        "slug": "wfmss-allison-lampinen-named-2026-marion-co-counselor-of-the-year",
+        "title": "WFMS's Allison Lampinen named 2026 Marion Co. Counselor of the Year",
+        "description": "",
+        "pubDate": null,
+        "author": "",
+        "image": null,
+        "sourceUrl": "https://www.wvnews.com/fairmontnews/news/wfmss-allison-lampinen-named-2026-marion-co-counselor-of-the-year/article_5eb1ac0b-0df3-4ec8-9aae-69c7e18b490f.html",
+        "prefix": "fairmontnews",
+        "source": "section"
+      },
+      {
+        "id": "1be815f7-8048-4b09-9974-b6ed2dcbc35d",
+        "slug": "city-of-fairmont-mcparc-to-celebrate-trails-day-with-local-events-this-weekend",
+        "title": "City of Fairmont, MCPARC to celebrate Trails Day with local events this weekend",
+        "description": "",
+        "pubDate": null,
+        "author": "",
+        "image": null,
+        "sourceUrl": "https://www.wvnews.com/fairmontnews/news/city-of-fairmont-mcparc-to-celebrate-trails-day-with-local-events-this-weekend/article_1be815f7-8048-4b09-9974-b6ed2dcbc35d.html",
+        "prefix": "fairmontnews",
+        "source": "section"
+      },
+      {
+        "id": "1137c398-65fd-474f-9510-cca21f6d2cbf",
+        "slug": "5-democrats-2-republicans-vie-for-party-nomination-in-marion-co-commission-race",
+        "title": "5 Democrats, 2 Republicans vie for party nomination in Marion Co. Commission race",
+        "description": "",
+        "pubDate": null,
+        "author": "",
+        "image": null,
+        "sourceUrl": "https://www.wvnews.com/fairmontnews/news/5-democrats-2-republicans-vie-for-party-nomination-in-marion-co-commission-race/article_1137c398-65fd-474f-9510-cca21f6d2cbf.html",
+        "prefix": "fairmontnews",
+        "source": "section"
+      },
+      {
+        "id": "33b325df-8d66-4884-941c-f2604b5f8ea8",
+        "slug": "marion-co-boe-honors-top-employees-of-the-year-including-teacher-principal",
+        "title": "Marion Co. BOE honors top employees of the year, including teacher, principal",
+        "description": "",
+        "pubDate": null,
+        "author": "",
+        "image": null,
+        "sourceUrl": "https://www.wvnews.com/fairmontnews/news/marion-co-boe-honors-top-employees-of-the-year-including-teacher-principal/article_33b325df-8d66-4884-941c-f2604b5f8ea8.html",
+        "prefix": "fairmontnews",
+        "source": "section"
+      }
+    ],
     "rivercities": [
       {
         "id": "de9f2b27-3b04-42ca-8823-1d7a27ea1fac",
