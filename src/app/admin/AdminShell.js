@@ -155,7 +155,7 @@ export default function AdminShell({ user, children }) {
             </h1>
           </div>
           <div className="flex items-center gap-4">
-            <Link href="/admin/stories/new" className="px-4 py-2 bg-brand-700 text-white text-sm font-medium rounded-lg hover:bg-brand-600 transition-colors">
+            <Link href="/admin/stories?new=1" className="px-4 py-2 bg-brand-700 text-white text-sm font-medium rounded-lg hover:bg-brand-600 transition-colors">
               + New Story
             </Link>
           </div>
