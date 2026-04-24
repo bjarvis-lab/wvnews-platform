@@ -78,6 +78,20 @@ export async function getRecentBySection(sectionId, { limit = 10 } = {}) {
   return snap.docs.map(serializeStory);
 }
 
+export async function getBreakingStories({ limit = 5 } = {}) {
+  // Fetch the most recently-updated published stories and filter to the
+  // breaking ones in app code — same approach as listStories() for avoiding
+  // composite indexes. Breaking stories are typically few, so this is cheap.
+  const snap = await db.collection('stories')
+    .orderBy('updatedAt', 'desc')
+    .limit(50)
+    .get();
+  return snap.docs
+    .map(serializeStory)
+    .filter(s => s.breaking && s.status === 'published' && s.source === 'native')
+    .slice(0, limit);
+}
+
 export async function getRecentBySite(siteId, { limit = 10 } = {}) {
   // 'sites' is an array — Firestore supports array-contains
   const snap = await db.collection(COL)

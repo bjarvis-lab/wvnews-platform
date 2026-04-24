@@ -1,32 +1,132 @@
 'use client';
-// TipTap-based rich-text editor used on /admin/stories/new and /[id]/edit.
-// Emits HTML body string via the onChange callback so the server action can
-// write it straight to Firestore.
+// TipTap rich-text editor used in the story modal.
+//
+// Capabilities:
+//   - Text formatting (bold, italic, H2, H3, lists, blockquote, link)
+//   - Drag-and-drop images/videos → uploaded to Firebase Storage via
+//     /api/stories/media, inserted at the drop position
+//   - Paste an image URL, a media file, or a YouTube URL → handled automatically
+//   - "Upload media" toolbar button for click-to-select
+//   - YouTube URLs (watch, shorts, embed, youtu.be) auto-embed as iframes
+//
+// Emits HTML via onChange.
 
 import { useEditor, EditorContent } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
 import Link from '@tiptap/extension-link';
 import Image from '@tiptap/extension-image';
 import Placeholder from '@tiptap/extension-placeholder';
-import { useEffect } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import { Video, YouTube, extractYouTubeId } from './tiptap-extensions';
+
+async function uploadMedia(file) {
+  const fd = new FormData();
+  fd.append('file', file);
+  const res = await fetch('/api/stories/media', { method: 'POST', body: fd });
+  const data = await res.json();
+  if (!res.ok) throw new Error(data.error || `HTTP ${res.status}`);
+  return data; // { kind, url, name, size, contentType }
+}
 
 export default function StoryEditor({ initialContent = '', onChange, autoFocus = true }) {
+  const fileInputRef = useRef(null);
+  const [uploading, setUploading] = useState(null); // null | { name, kind }
+  const [error, setError] = useState(null);
+
   const editor = useEditor({
     extensions: [
       StarterKit.configure({ heading: { levels: [2, 3] } }),
       Link.configure({ openOnClick: false, HTMLAttributes: { class: 'text-brand-700 underline' } }),
       Image,
-      Placeholder.configure({ placeholder: 'Write your story…' }),
+      Video,
+      YouTube,
+      Placeholder.configure({ placeholder: 'Write your story… or drop photos/videos here.' }),
     ],
     content: initialContent,
     editorProps: {
       attributes: {
         class: 'prose prose-lg max-w-none min-h-[400px] focus:outline-none px-5 py-4',
       },
+      handleDrop(view, event, _slice, moved) {
+        if (moved) return false; // moving existing content, not a new drop
+        const files = Array.from(event.dataTransfer?.files || []);
+        if (!files.length) return false;
+
+        event.preventDefault();
+        handleFiles(files);
+        return true;
+      },
+      handlePaste(view, event) {
+        // 1) Image/video pasted as a file
+        const items = Array.from(event.clipboardData?.files || []);
+        if (items.length) {
+          event.preventDefault();
+          handleFiles(items);
+          return true;
+        }
+        // 2) YouTube URL pasted as text
+        const text = event.clipboardData?.getData('text/plain');
+        const ytId = extractYouTubeId(text);
+        if (ytId) {
+          event.preventDefault();
+          editor?.chain().focus().insertContent({
+            type: 'youtube',
+            attrs: { videoId: ytId, url: text.trim() },
+          }).run();
+          return true;
+        }
+        return false;
+      },
     },
     onUpdate: ({ editor }) => onChange?.(editor.getHTML()),
-    immediatelyRender: false, // avoids hydration mismatch in Next.js app router
+    immediatelyRender: false,
   });
+
+  async function handleFiles(files) {
+    setError(null);
+    for (const file of files) {
+      const kind = file.type.startsWith('image/') ? 'image'
+        : file.type.startsWith('video/') ? 'video'
+        : null;
+      if (!kind) {
+        setError(`Unsupported file type: ${file.type || 'unknown'}`);
+        continue;
+      }
+      setUploading({ name: file.name, kind });
+      try {
+        const data = await uploadMedia(file);
+        if (data.kind === 'image') {
+          editor?.chain().focus().setImage({ src: data.url, alt: file.name }).run();
+        } else {
+          editor?.chain().focus().insertContent({
+            type: 'video',
+            attrs: { src: data.url },
+          }).run();
+        }
+      } catch (e) {
+        setError(e.message);
+      } finally {
+        setUploading(null);
+      }
+    }
+  }
+
+  function onPickFiles(e) {
+    const files = Array.from(e.target.files || []);
+    if (files.length) handleFiles(files);
+    e.target.value = ''; // reset so the same file can be picked again
+  }
+
+  async function askYouTube() {
+    const url = window.prompt('Paste a YouTube URL');
+    if (!url) return;
+    const id = extractYouTubeId(url);
+    if (!id) { setError('Could not parse that as a YouTube URL.'); return; }
+    editor?.chain().focus().insertContent({
+      type: 'youtube',
+      attrs: { videoId: id, url: url.trim() },
+    }).run();
+  }
 
   useEffect(() => {
     if (autoFocus && editor) editor.commands.focus();
@@ -54,19 +154,32 @@ export default function StoryEditor({ initialContent = '', onChange, autoFocus =
           if (url === '') { editor.chain().focus().unsetLink().run(); return; }
           editor.chain().focus().extendMarkRange('link').setLink({ href: url }).run();
         }} active={editor.isActive('link')}>🔗 Link</TB>
-        <TB onClick={() => {
-          const url = window.prompt('Image URL');
-          if (url) editor.chain().focus().setImage({ src: url }).run();
-        }}>🖼 Image</TB>
+        <TB onClick={() => fileInputRef.current?.click()}>📷 Photo / Video</TB>
+        <TB onClick={askYouTube}>🎬 YouTube</TB>
+        <input ref={fileInputRef} type="file" accept="image/*,video/*" multiple className="hidden" onChange={onPickFiles} />
         <Sep />
         <TB onClick={() => editor.chain().focus().undo().run()}>↶</TB>
         <TB onClick={() => editor.chain().focus().redo().run()}>↷</TB>
         <div className="ml-auto self-center text-[11px] text-ink-500 px-2">
-          {editor.storage.characterCount?.characters() || editor.getText().length} chars
+          {editor.getText().length} chars
         </div>
       </div>
 
-      <EditorContent editor={editor} />
+      {/* Upload / error status */}
+      {(uploading || error) && (
+        <div className={`px-4 py-2 text-xs ${error ? 'bg-red-50 text-red-800 border-b border-red-200' : 'bg-blue-50 text-blue-800 border-b border-blue-200'}`}>
+          {error ? (
+            <>❌ {error} <button onClick={() => setError(null)} className="ml-2 underline">dismiss</button></>
+          ) : (
+            <>⏳ Uploading {uploading.kind}: {uploading.name}…</>
+          )}
+        </div>
+      )}
+
+      {/* Drop hint when empty */}
+      <div className="relative">
+        <EditorContent editor={editor} />
+      </div>
     </div>
   );
 }

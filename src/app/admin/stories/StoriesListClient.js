@@ -26,12 +26,20 @@ function fmtDate(iso) {
 
 export default function StoriesListClient({ stories, sections, sites }) {
   const [view, setView] = useState('list');
-  const [filter, setFilter] = useState('all');
   const [search, setSearch] = useState('');
+  const [statusFilter, setStatusFilter] = useState('all');
+  const [accessFilter, setAccessFilter] = useState('all');
+  const [sectionFilter, setSectionFilter] = useState('all');
+  const [siteFilter, setSiteFilter] = useState('all');
+  const [authorFilter, setAuthorFilter] = useState('all');
+  const [dateFrom, setDateFrom] = useState('');
+  const [dateTo, setDateTo] = useState('');
+  const [tagFilter, setTagFilter] = useState('');
+  const [flagFilter, setFlagFilter] = useState('all'); // all | breaking | featured
+  const [advOpen, setAdvOpen] = useState(false);
   const [editorOpen, setEditorOpen] = useState(false);
   const [selectedStory, setSelectedStory] = useState(null);
 
-  // Let external links open the modal via /admin/stories?new=1
   const searchParams = useSearchParams();
   useEffect(() => {
     if (searchParams.get('new') === '1') {
@@ -40,23 +48,59 @@ export default function StoriesListClient({ stories, sections, sites }) {
     }
   }, [searchParams]);
 
+  // Distinct authors for dropdown — sourced from the rows we have
+  const authors = Array.from(new Set(stories.map(s => s.author?.name).filter(Boolean))).sort();
+
+  function clearFilters() {
+    setSearch(''); setStatusFilter('all'); setAccessFilter('all');
+    setSectionFilter('all'); setSiteFilter('all'); setAuthorFilter('all');
+    setDateFrom(''); setDateTo(''); setTagFilter(''); setFlagFilter('all');
+  }
+
+  const activeFilterCount = [
+    statusFilter !== 'all', accessFilter !== 'all', sectionFilter !== 'all',
+    siteFilter !== 'all', authorFilter !== 'all', flagFilter !== 'all',
+    !!dateFrom, !!dateTo, !!tagFilter, !!search,
+  ].filter(Boolean).length;
+
   const filtered = stories.filter(s => {
-    if (filter === 'published' && s.status !== 'published') return false;
-    if (filter === 'draft' && s.status !== 'draft') return false;
-    if (filter === 'premium' && s.accessLevel !== 'premium') return false;
-    if (filter === 'free' && s.accessLevel !== 'free') return false;
-    if (search && !(s.headline || '').toLowerCase().includes(search.toLowerCase())) return false;
+    if (statusFilter !== 'all' && s.status !== statusFilter) return false;
+    if (accessFilter !== 'all' && s.accessLevel !== accessFilter) return false;
+    if (sectionFilter !== 'all' && s.section !== sectionFilter) return false;
+    if (siteFilter !== 'all' && !(s.sites || []).includes(siteFilter)) return false;
+    if (authorFilter !== 'all' && s.author?.name !== authorFilter) return false;
+    if (flagFilter === 'breaking' && !s.breaking) return false;
+    if (flagFilter === 'featured' && !s.featured) return false;
+    if (dateFrom) {
+      const d = s.publishedAt || s.updatedAt;
+      if (!d || new Date(d) < new Date(dateFrom)) return false;
+    }
+    if (dateTo) {
+      const d = s.publishedAt || s.updatedAt;
+      const endOfDay = new Date(dateTo); endOfDay.setHours(23, 59, 59);
+      if (!d || new Date(d) > endOfDay) return false;
+    }
+    if (tagFilter) {
+      const needle = tagFilter.toLowerCase();
+      if (!(s.tags || []).some(t => t.toLowerCase().includes(needle))) return false;
+    }
+    if (search) {
+      const needle = search.toLowerCase();
+      const haystack = [s.headline, s.deck, s.seoHeadline, (s.tags || []).join(' '), s.author?.name]
+        .filter(Boolean).join(' ').toLowerCase();
+      if (!haystack.includes(needle)) return false;
+    }
     return true;
   });
 
   return (
     <div className="space-y-4">
-      {/* Controls */}
+      {/* Controls — primary row */}
       <div className="flex items-center gap-3 flex-wrap">
-        <div className="relative flex-1 max-w-md">
+        <div className="relative flex-1 min-w-[260px] max-w-md">
           <input
             type="text"
-            placeholder="Search stories..."
+            placeholder="Search headlines, decks, tags, authors..."
             value={search}
             onChange={e => setSearch(e.target.value)}
             className="w-full pl-9 pr-4 py-2 bg-white rounded-lg border border-ink-200 text-sm outline-none focus:ring-2 focus:ring-brand-500"
@@ -65,14 +109,21 @@ export default function StoriesListClient({ stories, sections, sites }) {
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
           </svg>
         </div>
-        <select value={filter} onChange={e => setFilter(e.target.value)} className="px-3 py-2 bg-white rounded-lg border border-ink-200 text-sm outline-none">
-          <option value="all">All Stories</option>
-          <option value="published">Published</option>
-          <option value="draft">Drafts</option>
-          <option value="premium">Subscriber Only</option>
-          <option value="free">Free</option>
-        </select>
-        <div className="flex bg-white rounded-lg border border-ink-200 overflow-hidden">
+        <button
+          onClick={() => setAdvOpen(v => !v)}
+          className={`px-3 py-2 rounded-lg border text-sm font-medium flex items-center gap-1 ${
+            advOpen || activeFilterCount > 0 ? 'bg-brand-50 text-brand-700 border-brand-200' : 'bg-white text-ink-700 border-ink-200 hover:bg-ink-50'
+          }`}
+        >
+          ⚙ Filters
+          {activeFilterCount > 0 && <span className="px-1.5 bg-brand-700 text-white text-[10px] rounded-full">{activeFilterCount}</span>}
+        </button>
+        {activeFilterCount > 0 && (
+          <button onClick={clearFilters} className="text-xs text-ink-500 hover:text-ink-900 underline">
+            Clear
+          </button>
+        )}
+        <div className="flex bg-white rounded-lg border border-ink-200 overflow-hidden ml-auto">
           <button onClick={() => setView('list')} className={`px-3 py-2 text-xs font-medium ${view === 'list' ? 'bg-brand-50 text-brand-700' : 'text-ink-500'}`}>List</button>
           <button onClick={() => setView('grid')} className={`px-3 py-2 text-xs font-medium ${view === 'grid' ? 'bg-brand-50 text-brand-700' : 'text-ink-500'}`}>Grid</button>
         </div>
@@ -85,6 +136,72 @@ export default function StoriesListClient({ stories, sections, sites }) {
         <button className="px-3 py-2 bg-white text-ink-600 text-sm font-medium rounded-lg border border-ink-200 hover:bg-ink-50">
           Import from Google Docs
         </button>
+      </div>
+
+      {/* Advanced filter drawer */}
+      {advOpen && (
+        <div className="bg-white rounded-xl border border-ink-200 p-4 grid grid-cols-2 md:grid-cols-4 gap-3">
+          <FilterField label="Status">
+            <select value={statusFilter} onChange={e => setStatusFilter(e.target.value)} className="w-full px-3 py-2 bg-white rounded border border-ink-200 text-sm">
+              <option value="all">All</option>
+              <option value="draft">Draft</option>
+              <option value="in_review">In Review</option>
+              <option value="approved">Approved</option>
+              <option value="scheduled">Scheduled</option>
+              <option value="published">Published</option>
+            </select>
+          </FilterField>
+          <FilterField label="Access">
+            <select value={accessFilter} onChange={e => setAccessFilter(e.target.value)} className="w-full px-3 py-2 bg-white rounded border border-ink-200 text-sm">
+              <option value="all">All</option>
+              <option value="free">Free</option>
+              <option value="metered">Metered</option>
+              <option value="premium">Subscriber Only</option>
+            </select>
+          </FilterField>
+          <FilterField label="Section">
+            <select value={sectionFilter} onChange={e => setSectionFilter(e.target.value)} className="w-full px-3 py-2 bg-white rounded border border-ink-200 text-sm">
+              <option value="all">All sections</option>
+              {sections.map(s => <option key={s.id} value={s.id}>{s.name}</option>)}
+            </select>
+          </FilterField>
+          <FilterField label="Publication">
+            <select value={siteFilter} onChange={e => setSiteFilter(e.target.value)} className="w-full px-3 py-2 bg-white rounded border border-ink-200 text-sm">
+              <option value="all">All publications</option>
+              {sites.map(s => <option key={s.id} value={s.id}>{s.name}</option>)}
+            </select>
+          </FilterField>
+          <FilterField label="Author">
+            <select value={authorFilter} onChange={e => setAuthorFilter(e.target.value)} className="w-full px-3 py-2 bg-white rounded border border-ink-200 text-sm">
+              <option value="all">All authors</option>
+              {authors.map(a => <option key={a} value={a}>{a}</option>)}
+            </select>
+          </FilterField>
+          <FilterField label="Flags">
+            <select value={flagFilter} onChange={e => setFlagFilter(e.target.value)} className="w-full px-3 py-2 bg-white rounded border border-ink-200 text-sm">
+              <option value="all">Any</option>
+              <option value="breaking">● Breaking only</option>
+              <option value="featured">★ Featured only</option>
+            </select>
+          </FilterField>
+          <FilterField label="Tag contains">
+            <input type="text" value={tagFilter} onChange={e => setTagFilter(e.target.value)} placeholder="e.g. wvu" className="w-full px-3 py-2 bg-white rounded border border-ink-200 text-sm" />
+          </FilterField>
+          <FilterField label="Published date range">
+            <div className="flex gap-1">
+              <input type="date" value={dateFrom} onChange={e => setDateFrom(e.target.value)} className="w-full px-2 py-2 bg-white rounded border border-ink-200 text-xs" />
+              <input type="date" value={dateTo} onChange={e => setDateTo(e.target.value)} className="w-full px-2 py-2 bg-white rounded border border-ink-200 text-xs" />
+            </div>
+          </FilterField>
+        </div>
+      )}
+
+      {/* Result count */}
+      <div className="flex items-center justify-between text-xs text-ink-500 px-1">
+        <span>
+          Showing <strong className="text-ink-900">{filtered.length}</strong> of {stories.length} stories
+          {activeFilterCount > 0 && <span className="ml-2">· {activeFilterCount} filter{activeFilterCount > 1 ? 's' : ''} active</span>}
+        </span>
       </div>
 
       {/* Empty state */}
@@ -437,6 +554,34 @@ function StoryEditorModal({ story, sections, sites, onClose }) {
 
           {/* Sidebar */}
           <div className="p-4 space-y-4 bg-ink-50/50 overflow-y-auto max-h-[80vh]">
+            {/* Breaking toggle — surfaced at the top so editors can flip it fast */}
+            <button
+              type="button"
+              onClick={() => update({ breaking: !form.breaking })}
+              className={`w-full flex items-center justify-between px-3 py-2.5 rounded-lg border-2 transition-all ${
+                form.breaking
+                  ? 'bg-red-600 border-red-700 text-white shadow-sm'
+                  : 'bg-white border-ink-200 text-ink-700 hover:border-red-300'
+              }`}
+            >
+              <span className="flex items-center gap-2 font-semibold text-sm">
+                <span className={form.breaking ? 'animate-pulse' : ''}>●</span>
+                Breaking News
+              </span>
+              <span className={`inline-flex items-center h-5 w-9 rounded-full transition-colors ${
+                form.breaking ? 'bg-white/25' : 'bg-ink-200'
+              }`}>
+                <span className={`inline-block h-4 w-4 bg-white rounded-full shadow transform transition-transform ${
+                  form.breaking ? 'translate-x-[18px]' : 'translate-x-0.5'
+                }`} />
+              </span>
+            </button>
+            {form.breaking && (
+              <p className="text-[11px] text-red-700 -mt-2">
+                This story will show in the site-wide red ribbon once published.
+              </p>
+            )}
+
             <Field label="Status">
               <select value={form.status} onChange={e => update({ status: e.target.value })} className="w-full px-3 py-2 bg-white rounded border border-ink-200 text-sm">
                 <option value="draft">Draft</option>
@@ -542,10 +687,6 @@ function StoryEditorModal({ story, sections, sites, onClose }) {
             </Field>
 
             <label className="flex items-center gap-2">
-              <input type="checkbox" checked={!!form.breaking} onChange={e => update({ breaking: e.target.checked })} className="rounded" />
-              <span className="text-xs font-medium text-red-600">Mark as Breaking News</span>
-            </label>
-            <label className="flex items-center gap-2">
               <input type="checkbox" checked={!!form.featured} onChange={e => update({ featured: e.target.checked })} className="rounded" />
               <span className="text-xs font-medium text-gold-700">Featured (home/section spotlight)</span>
             </label>
@@ -572,6 +713,15 @@ function Field({ label, children }) {
   return (
     <div>
       <label className="text-xs font-bold text-ink-500 uppercase tracking-wider block mb-1.5">{label}</label>
+      {children}
+    </div>
+  );
+}
+
+function FilterField({ label, children }) {
+  return (
+    <div>
+      <label className="text-[11px] font-semibold text-ink-600 uppercase tracking-wider block mb-1">{label}</label>
       {children}
     </div>
   );
