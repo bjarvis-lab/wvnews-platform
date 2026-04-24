@@ -11,6 +11,7 @@ import Logo from '@/components/public/Logo';
 const navItems = [
   { href: '/admin', label: 'Dashboard', icon: '📊' },
   { href: '/admin/stories', label: 'Stories', icon: '📝', badge: '3' },
+  { href: '/admin/mediadesk', label: 'Media Desk', icon: '📡' },
   { href: '/admin/layout-builder', label: 'Layout Builder', icon: '🧱' },
   { href: '/admin/media', label: 'Media Library', icon: '📸' },
   { href: '/admin/budget', label: 'Editorial Budget', icon: '📋' },
