@@ -105,6 +105,27 @@ export async function listPublishedBySection(sectionId, { limit = 30 } = {}) {
     .slice(0, limit);
 }
 
+// Context snapshot for AI topic-suggestion prompts. Returns a compact
+// list of recent story titles + decks + publication tags that Claude can
+// scan to suggest follow-ups. Kept small so we don't burn tokens.
+export async function getRecentStoriesForContext({ limit = 30 } = {}) {
+  const snap = await db.collection('stories')
+    .orderBy('updatedAt', 'desc')
+    .limit(100)
+    .get();
+  return snap.docs
+    .map(serializeStory)
+    .filter(s => s.status === 'published')
+    .slice(0, limit)
+    .map(s => ({
+      headline: s.headline,
+      deck: s.deck || '',
+      section: s.section || null,
+      sites: s.sites || [],
+      tags: s.tags || [],
+    }));
+}
+
 export async function getBreakingStories({ limit = 5 } = {}) {
   // Fetch the most recently-updated published stories and filter to the
   // breaking ones in app code — same approach as listStories() for avoiding

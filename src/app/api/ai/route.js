@@ -16,10 +16,15 @@
 import { NextResponse } from 'next/server';
 import { getClient, DEFAULT_MODEL, htmlToPlainText } from '@/lib/anthropic';
 import { getSessionUser } from '@/lib/auth-server';
+import { getRecentStoriesForContext } from '@/lib/stories-db';
+
+// Sonnet for full-draft writing (needs better quality + longer context).
+// Haiku is fine for SEO side-tasks and topic brainstorming.
+const DRAFT_MODEL = 'claude-sonnet-4-6';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
-export const maxDuration = 30; // seconds
+export const maxDuration = 60; // generateFullStory on Sonnet can take 15–30s
 
 // Truncate body to keep prompts bounded. 8000 chars ≈ 2000 tokens, plenty for
 // summarization tasks, and keeps calls fast.
@@ -35,10 +40,10 @@ function contextBlock(story) {
   ].filter(Boolean).join('\n\n');
 }
 
-async function callClaude({ system, user, json = false, maxTokens = 800 }) {
+async function callClaude({ system, user, json = false, maxTokens = 800, model = DEFAULT_MODEL }) {
   const client = getClient();
   const res = await client.messages.create({
-    model: DEFAULT_MODEL,
+    model,
     max_tokens: maxTokens,
     system,
     messages: [{ role: 'user', content: user }],
@@ -129,9 +134,61 @@ async function links(story) {
   return { suggestions: data?.suggestions || [] };
 }
 
+// ---------- Story idea actions ----------
+
+// suggestTopics — scans recent coverage and proposes local follow-up angles.
+// No story context needed from the caller; we read recent published stories
+// from Firestore directly.
+async function suggestTopics() {
+  let context = [];
+  try {
+    context = await getRecentStoriesForContext({ limit: 25 });
+  } catch {
+    context = [];
+  }
+  const coverage = context.length
+    ? context.map(s => `- ${s.headline}${s.deck ? ` (${s.deck})` : ''}`).join('\n')
+    : '(no recent stories available — suggest timely West Virginia angles)';
+
+  const { data } = await callClaude({
+    system: `You are a newsroom story-ideas editor at a West Virginia newspaper group (WV News). You know Appalachian civic life: county commissions, school boards, WVU, energy and coal regulation, infrastructure, courts, high-school sports, community events, small-business openings, state politics. Return strict JSON. Each idea must be specific (include a named county, city, agency, or event), actionable (a reporter can pursue it today), and distinct from the recent coverage listed.`,
+    user: `Here's what WV News has covered recently:\n\n${coverage}\n\nPropose 8 fresh local story ideas we should pursue. Return JSON in this exact shape:\n{"ideas": [{"angle": "short headline-style pitch", "why": "one-sentence rationale", "beat": "news|sports|business|politics|community|education|crime|lifestyle"}]}`,
+    json: true,
+    maxTokens: 900,
+  });
+  return { ideas: data?.ideas || [] };
+}
+
+// generateFullStory — accepts a reporter's brief and returns a complete
+// draft: headline, deck, body HTML, tags, primary section.
+//
+// The brief can include: notes, quotes, bullet points, a rough outline, or
+// just a sentence ("There's a water-main break on Main Street in Clarksburg
+// affecting 400 homes").
+async function generateFullStory({ brief, section }) {
+  const hint = section ? `\n\nPrimary section: ${section}` : '';
+  const { data } = await callClaude({
+    model: DRAFT_MODEL,
+    system: `You are a seasoned newspaper reporter writing for WV News (West Virginia). You write in AP style: clear, specific, active voice, attribution, third-person. The lede answers what/where/when/who. Paragraphs are short (1–3 sentences). Use proper HTML tags (<p>, <h2>, <blockquote>) in the body field — no markdown. Never invent quotes or facts the brief doesn't provide; if information is missing, write around it with phrases like "according to the agency" rather than fabricating sources or numbers. Return strict JSON.`,
+    user: `Write a full news article draft from this reporter brief.${hint}\n\nBRIEF:\n${brief}\n\nReturn JSON in this exact shape:\n{\n  "headline": "concrete, under 80 chars",\n  "seoHeadline": "SEO-friendly version of headline",\n  "deck": "one-sentence subheadline, 20-30 words",\n  "body": "<p>Full article body in HTML. 4–8 paragraphs.</p>",\n  "tags": ["tag1", "tag2", ...],\n  "section": "news|sports|business|politics|community|education|crime|lifestyle",\n  "aiDisclaimer": "one-line note the reporter should verify before publishing"\n}`,
+    json: true,
+    maxTokens: 2500,
+  });
+  if (!data) return { error: 'Draft generation returned no valid JSON' };
+  return {
+    headline: data.headline || '',
+    seoHeadline: data.seoHeadline || '',
+    deck: data.deck || '',
+    body: data.body || '',
+    tags: data.tags || [],
+    section: data.section || 'news',
+    aiDisclaimer: data.aiDisclaimer || 'AI-drafted — verify facts, quotes, and numbers before publishing.',
+  };
+}
+
 // ---------- Dispatcher ----------
 
-const HANDLERS = { summary, headlines, meta, tags, alt, social, links };
+const HANDLERS = { summary, headlines, meta, tags, alt, social, links, suggestTopics, generateFullStory };
 
 export async function POST(request) {
   const user = await getSessionUser();
@@ -140,17 +197,29 @@ export async function POST(request) {
   }
   try {
     const body = await request.json();
-    const { action, story } = body;
+    const { action, story, brief, section } = body;
 
     const handler = HANDLERS[action];
     if (!handler) {
       return NextResponse.json({ error: `Unknown action: ${action}` }, { status: 400 });
     }
-    if (!story || (!story.headline && !story.body)) {
-      return NextResponse.json({ error: 'Story needs at least a headline or body' }, { status: 400 });
-    }
 
-    const result = await handler(story);
+    // Per-action arg shape. Story-based actions need { headline | body };
+    // idea-generation actions take different payloads.
+    let result;
+    if (action === 'suggestTopics') {
+      result = await handler();
+    } else if (action === 'generateFullStory') {
+      if (!brief || brief.trim().length < 10) {
+        return NextResponse.json({ error: 'Brief is too short — describe your story in a sentence or more' }, { status: 400 });
+      }
+      result = await handler({ brief, section });
+    } else {
+      if (!story || (!story.headline && !story.body)) {
+        return NextResponse.json({ error: 'Story needs at least a headline or body' }, { status: 400 });
+      }
+      result = await handler(story);
+    }
     return NextResponse.json({ ok: true, action, ...result });
   } catch (err) {
     console.error('/api/ai error:', err);

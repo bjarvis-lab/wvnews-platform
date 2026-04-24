@@ -13,6 +13,7 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import { createStoryAction, updateStoryAction, deleteStoryAction } from './actions';
 import StoryEditor from '@/components/admin/StoryEditor';
+import StoryIdeaPanel from '@/components/admin/StoryIdeaPanel';
 
 function fmtDate(iso) {
   if (!iso) return '—';
@@ -578,6 +579,21 @@ function StoryEditorModal({ story, sections, sites, onClose }) {
         <div className="grid grid-cols-3 divide-x divide-ink-100">
           {/* Main */}
           <div className="col-span-2 p-6 space-y-4">
+            {!isEditing && (
+              <StoryIdeaPanel
+                section={form.section}
+                onGenerated={(draft) => {
+                  update({
+                    headline: draft.headline || form.headline,
+                    seoHeadline: draft.seoHeadline || form.seoHeadline,
+                    deck: draft.deck || form.deck,
+                    body: draft.body || form.body,
+                    tags: (draft.tags && draft.tags.length) ? draft.tags : form.tags,
+                    section: draft.section || form.section,
+                  });
+                }}
+              />
+            )}
             <input
               type="text"
               placeholder="Write your headline..."
