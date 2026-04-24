@@ -3,7 +3,7 @@
 // and coverage gaps. Clicking a signal links out to the source; "Draft a
 // story" pre-fills the brief in the story editor (TODO — next session).
 
-import { listRecentSignals, listClusters } from '@/lib/media-signals-db';
+import { listRecentSignals, listClusters, getSignalsByIds } from '@/lib/media-signals-db';
 import { sourceStats } from '@/data/media-sources';
 import MediaDeskClient from './MediaDeskClient';
 
@@ -28,6 +28,17 @@ export default async function MediaDeskPage() {
   try { signals  = strip(await listRecentSignals({ limit: 200 })); } catch {}
   try { clusters = strip(await listClusters({ limit: 20 })); } catch {}
 
+  // Pre-load every cluster's member signals so the UI expands instantly
+  // without needing a per-cluster API fetch. One batch read covers them all.
+  const memberIdUnion = Array.from(new Set(clusters.flatMap(c => c.memberSignalIds || [])));
+  let memberSignals = {};
+  if (memberIdUnion.length) {
+    try {
+      const rows = strip(await getSignalsByIds(memberIdUnion));
+      memberSignals = Object.fromEntries(rows.map(r => [r.id, r]));
+    } catch {}
+  }
+
   const stats = sourceStats();
   const collectorStats = await loadStats('latest');
   const clusterStats  = await loadStats('latestCluster');
@@ -36,6 +47,7 @@ export default async function MediaDeskPage() {
     <MediaDeskClient
       signals={signals}
       clusters={clusters}
+      memberSignals={memberSignals}
       stats={stats}
       collectorStats={collectorStats}
       clusterStats={clusterStats}

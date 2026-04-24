@@ -16,8 +16,15 @@
 
 import { useState } from 'react';
 
-export default function StoryIdeaPanel({ section, onGenerated, onDismiss }) {
-  const [brief, setBrief] = useState('');
+export default function StoryIdeaPanel({
+  section,
+  onGenerated,
+  onDismiss,
+  seedBrief = '',
+  seedTone = 'hard news',
+  seedBadge = null,
+}) {
+  const [brief, setBrief] = useState(seedBrief);
   const [loading, setLoading] = useState(null); // 'generate' | 'suggest' | null
   const [ideas, setIdeas] = useState(null);
   const [error, setError] = useState(null);
@@ -27,7 +34,7 @@ export default function StoryIdeaPanel({ section, onGenerated, onDismiss }) {
   // facts produces much better output than a thin brief alone.
   const [advOpen, setAdvOpen] = useState(false);
   const [wordLimit, setWordLimit] = useState(600);
-  const [tone, setTone] = useState('hard news');
+  const [tone, setTone] = useState(seedTone);
   const [quotesText, setQuotesText] = useState('');
   const [sourcesText, setSourcesText] = useState('');
   const [mustIncludeText, setMustIncludeText] = useState('');
@@ -96,6 +103,12 @@ export default function StoryIdeaPanel({ section, onGenerated, onDismiss }) {
 
   return (
     <div className="bg-gradient-to-br from-brand-50 via-gold-50 to-white border border-brand-200 rounded-xl p-5">
+      {seedBadge && (
+        <div className="mb-3 px-3 py-2 rounded-lg bg-brand-700 text-white text-xs font-semibold flex items-center gap-2">
+          <span>{seedBadge}</span>
+          <span className="ml-auto text-white/70 font-normal">Brief pre-filled below — edit, then Generate.</span>
+        </div>
+      )}
       <div className="flex items-start justify-between mb-4">
         <div>
           <div className="flex items-center gap-2">

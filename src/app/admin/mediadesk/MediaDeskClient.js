@@ -33,7 +33,7 @@ const KIND_META = {
   'google-news': { label: 'Google News', icon: '🔎', tone: 'bg-gold-100 text-gold-900' },
 };
 
-export default function MediaDeskClient({ signals, clusters = [], stats, collectorStats, clusterStats }) {
+export default function MediaDeskClient({ signals, clusters = [], memberSignals = {}, stats, collectorStats, clusterStats }) {
   const [search, setSearch] = useState('');
   const [kindFilter, setKindFilter] = useState('all');
   const [sourceFilter, setSourceFilter] = useState('all');
@@ -107,6 +107,7 @@ export default function MediaDeskClient({ signals, clusters = [], stats, collect
               <ClusterRow
                 key={c.id}
                 cluster={c}
+                memberSignals={memberSignals}
                 expanded={expandedCluster === c.id}
                 onToggle={() => setExpandedCluster(expandedCluster === c.id ? null : c.id)}
                 variant="breaking"
@@ -132,6 +133,7 @@ export default function MediaDeskClient({ signals, clusters = [], stats, collect
               <ClusterRow
                 key={c.id}
                 cluster={c}
+                memberSignals={memberSignals}
                 expanded={expandedCluster === c.id}
                 onToggle={() => setExpandedCluster(expandedCluster === c.id ? null : c.id)}
                 variant="trending"
@@ -208,12 +210,18 @@ function Stat({ label, value, hint, tone }) {
   );
 }
 
-function ClusterRow({ cluster, expanded, onToggle, variant = 'trending' }) {
+function ClusterRow({ cluster, memberSignals = {}, expanded, onToggle, variant = 'trending' }) {
   const isBreaking = variant === 'breaking';
   const toneText   = isBreaking ? 'text-white' : 'text-ink-900';
   const toneMuted  = isBreaking ? 'text-white/75' : 'text-ink-600';
   const toneBorder = isBreaking ? 'border-white/20 bg-white/5' : 'border-ink-200 bg-white';
   const toneBadge  = isBreaking ? 'bg-white/20 text-white' : 'bg-gold-100 text-gold-900';
+
+  // Resolve member signals from the pre-loaded map; sort newest first.
+  const members = (cluster.memberSignalIds || [])
+    .map(id => memberSignals[id])
+    .filter(Boolean)
+    .sort((a, b) => new Date(b.lastSeenAt || 0) - new Date(a.lastSeenAt || 0));
 
   return (
     <div className={`rounded-lg border ${toneBorder} overflow-hidden`}>
@@ -263,30 +271,56 @@ function ClusterRow({ cluster, expanded, onToggle, variant = 'trending' }) {
       </button>
 
       {expanded && (
-        <div className={`border-t ${isBreaking ? 'border-white/20' : 'border-ink-200'} p-3 space-y-1 ${isBreaking ? 'bg-white/5' : 'bg-ink-50/60'}`}>
-          <div className={`text-[10px] font-semibold uppercase tracking-wider ${toneMuted} mb-2`}>
-            {cluster.memberCount} sources covering this
+        <div className={`border-t ${isBreaking ? 'border-white/20' : 'border-ink-200'} p-3 space-y-3 ${isBreaking ? 'bg-white/5' : 'bg-ink-50/60'}`}>
+          {/* Action bar — draft from cluster + external link-outs */}
+          <div className="flex items-center gap-2 flex-wrap">
+            <a
+              href={`/admin/stories?cluster=${encodeURIComponent(cluster.id)}`}
+              className={`inline-flex items-center gap-1 px-3 py-1.5 text-xs font-bold rounded-lg ${
+                isBreaking ? 'bg-white text-red-700 hover:bg-white/90' : 'bg-brand-700 text-white hover:bg-brand-600'
+              }`}
+            >
+              ✨ Draft from this cluster
+            </a>
+            <span className={`text-[10px] ${toneMuted}`}>
+              Opens the story editor with the brief pre-filled from these {members.length || cluster.memberCount} sources.
+            </span>
           </div>
-          <ClusterMembers clusterId={cluster.id} variant={variant} />
+
+          {/* Member list */}
+          <div>
+            <div className={`text-[10px] font-semibold uppercase tracking-wider ${toneMuted} mb-2`}>
+              Sources covering this story
+            </div>
+            {members.length === 0 ? (
+              <div className={`text-xs italic ${toneMuted}`}>Member signals aren&apos;t available right now — they may have aged out of the recent window.</div>
+            ) : (
+              <ul className="space-y-1.5">
+                {members.map(m => (
+                  <li key={m.id}>
+                    <a
+                      href={m.url}
+                      target="_blank"
+                      rel="noreferrer"
+                      className={`block p-2 rounded transition-colors ${
+                        isBreaking ? 'bg-white/5 hover:bg-white/10' : 'bg-white hover:bg-brand-50 border border-ink-200'
+                      }`}
+                    >
+                      <div className="flex items-center gap-2 flex-wrap text-[10px] mb-0.5">
+                        <span className={`font-semibold ${isBreaking ? 'text-white/80' : 'text-brand-700'}`}>
+                          {m.domain || m.sourceName}
+                        </span>
+                        <span className={toneMuted}>· {fmtAgo(m.lastSeenAt || m.publishedAt)}</span>
+                      </div>
+                      <div className={`text-sm leading-snug ${toneText}`}>{m.title}</div>
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
         </div>
       )}
-    </div>
-  );
-}
-
-function ClusterMembers({ clusterId, variant }) {
-  // Fetch the full member signal list for this cluster on demand.
-  const [members, setMembers] = useState(null);
-  const [error, setError] = useState(null);
-
-  // We don't have a client API for this yet — use the /api route we'll
-  // add later, or pull from a prop. For now: TODO placeholder that
-  // surfaces a link out to Firestore for debugging.
-  return (
-    <div className={variant === 'breaking' ? 'text-white/75' : 'text-ink-600'}>
-      <span className="text-xs italic">
-        Click any source chip above to see what each outlet is saying. Full member list will expand here once the member-fetch API lands.
-      </span>
     </div>
   );
 }

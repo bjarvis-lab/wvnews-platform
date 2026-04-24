@@ -25,7 +25,46 @@ function fmtDate(iso) {
   return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
 }
 
-export default function StoriesListClient({ stories, sections, sites }) {
+// Compose a reporter-facing brief from a Media Desk cluster. Includes the
+// consolidated summary, the per-outlet titles, and the source links so Claude
+// has real context when the reporter generates a draft.
+function clusterToBrief(cluster) {
+  if (!cluster) return { brief: '', section: null, tone: 'hard news' };
+
+  const lines = [];
+  lines.push(`TREND ALERT — ${cluster.primaryTitle}`);
+  if (cluster.summary) lines.push(`\n${cluster.summary}`);
+  if (cluster.keyPlace) lines.push(`\nLocation: ${cluster.keyPlace}`);
+  lines.push(`\nThis story is being covered by ${cluster.uniqueDomainCount || (cluster.uniqueDomains || []).length} outlets:`);
+
+  const members = (cluster.members || []).slice(0, 15);
+  for (const m of members) {
+    lines.push(`\n• ${m.domain || m.sourceName}: "${m.title}"`);
+    if (m.url) lines.push(`  ${m.url}`);
+  }
+
+  lines.push(`\n---\nUse the facts above as a starting point. Do not fabricate quotes or numbers. If something isn't in these sources, hedge the attribution rather than invent.`);
+
+  return {
+    brief: lines.join('\n'),
+    section: mapBeatToSection(cluster.beat),
+    tone: cluster.isBreaking ? 'breaking' : 'hard news',
+    breaking: !!cluster.isBreaking,
+    headline: cluster.primaryTitle || '',
+  };
+}
+
+// Cluster beats are coarser than our section ids. Map with defaults.
+function mapBeatToSection(beat) {
+  const m = {
+    news: 'news', politics: 'politics', sports: 'sports', business: 'business',
+    crime: 'crime', education: 'education', health: 'lifestyle',
+    weather: 'news', obits: 'obituaries', community: 'community',
+  };
+  return m[beat] || 'news';
+}
+
+export default function StoriesListClient({ stories, sections, sites, initialCluster = null }) {
   const [view, setView] = useState('list');
   const [search, setSearch] = useState('');
   const [statusFilter, setStatusFilter] = useState('all');
@@ -40,6 +79,7 @@ export default function StoriesListClient({ stories, sections, sites }) {
   const [advOpen, setAdvOpen] = useState(false);
   const [editorOpen, setEditorOpen] = useState(false);
   const [selectedStory, setSelectedStory] = useState(null);
+  const [clusterSeed, setClusterSeed] = useState(null);
 
   const searchParams = useSearchParams();
   useEffect(() => {
@@ -48,6 +88,20 @@ export default function StoriesListClient({ stories, sections, sites }) {
       setEditorOpen(true);
     }
   }, [searchParams]);
+
+  // Opening from a Media Desk cluster link: /admin/stories?cluster=<id>
+  // The server component fetches the cluster and passes it in as
+  // initialCluster. We derive a brief + auto-open the modal.
+  useEffect(() => {
+    if (initialCluster) {
+      setClusterSeed(clusterToBrief(initialCluster));
+      setSelectedStory(null);
+      setEditorOpen(true);
+    }
+    // only on mount-with-cluster; intentionally no deps so subsequent
+    // edits don't re-inject the brief and clobber the reporter's work.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   // Distinct authors for dropdown — sourced from the rows we have
   const authors = Array.from(new Set(stories.map(s => s.author?.name).filter(Boolean))).sort();
@@ -223,7 +277,8 @@ export default function StoriesListClient({ stories, sections, sites }) {
           story={selectedStory}
           sections={sections}
           sites={sites}
-          onClose={() => setEditorOpen(false)}
+          clusterSeed={!selectedStory ? clusterSeed : null}
+          onClose={() => { setEditorOpen(false); setClusterSeed(null); }}
         />
       )}
     </div>
@@ -403,13 +458,15 @@ const EMPTY = {
   includeInPrintBudget: false,
 };
 
-function StoryEditorModal({ story, sections, sites, onClose }) {
+function StoryEditorModal({ story, sections, sites, clusterSeed = null, onClose }) {
   const router = useRouter();
   const [pending, startTransition] = useTransition();
   const [action, setAction] = useState(null);
   const [error, setError] = useState(null);
 
   // Migrate any legacy story that still has only `body`: treat it as webBody.
+  // A cluster seed (from Media Desk "Draft from this") pre-fills the section +
+  // breaking flag + starter headline.
   const migrated = story
     ? {
         ...EMPTY,
@@ -419,7 +476,12 @@ function StoryEditorModal({ story, sections, sites, onClose }) {
         hasWeb: story.hasWeb ?? true,
         hasPrint: story.hasPrint ?? false,
       }
-    : EMPTY;
+    : {
+        ...EMPTY,
+        headline: clusterSeed?.headline || EMPTY.headline,
+        section: clusterSeed?.section || EMPTY.section,
+        breaking: !!clusterSeed?.breaking,
+      };
   const initial = migrated;
   const [activeVersion, setActiveVersion] = useState('web'); // 'web' | 'print'
   const [form, setForm] = useState(initial);
@@ -627,6 +689,9 @@ function StoryEditorModal({ story, sections, sites, onClose }) {
             {!isEditing && (
               <StoryIdeaPanel
                 section={form.section}
+                seedBrief={clusterSeed?.brief || ''}
+                seedTone={clusterSeed?.tone || 'hard news'}
+                seedBadge={clusterSeed ? `📡 Seeded from Media Desk — ${clusterSeed.breaking ? 'BREAKING' : 'trending'} cluster` : null}
                 onGenerated={(draft) => {
                   update({
                     headline: draft.headline || form.headline,

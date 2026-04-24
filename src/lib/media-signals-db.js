@@ -83,7 +83,26 @@ export async function listClusters({ limit = 30, breakingOnly = false, trendingO
 export async function getClusterMembers(clusterId) {
   const cluster = (await db.collection('mediaClusters').doc(clusterId).get()).data();
   if (!cluster?.memberSignalIds?.length) return [];
-  const refs = cluster.memberSignalIds.map(id => db.collection('mediaSignals').doc(id));
+  return getSignalsByIds(cluster.memberSignalIds);
+}
+
+// Batch-fetch signals for multiple IDs. Used when the Media Desk page wants
+// to render all cluster members at once without N round-trips.
+export async function getSignalsByIds(ids) {
+  if (!ids || ids.length === 0) return [];
+  // Firestore getAll handles up to ~500 refs per call; our member counts are
+  // always well under that.
+  const refs = ids.map(id => db.collection('mediaSignals').doc(id));
   const docs = await db.getAll(...refs);
   return docs.filter(d => d.exists).map(serialize);
+}
+
+// Convenience: one cluster + its members in one round-trip. Used by the
+// /admin/stories?cluster=... entry point for "Draft from this".
+export async function getClusterWithMembers(clusterId) {
+  const snap = await db.collection('mediaClusters').doc(clusterId).get();
+  if (!snap.exists) return null;
+  const cluster = serialize(snap);
+  cluster.members = await getSignalsByIds(cluster.memberSignalIds || []);
+  return cluster;
 }
