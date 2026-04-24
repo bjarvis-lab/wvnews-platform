@@ -1,14 +1,14 @@
 {
-  "fetchedAt": "2026-04-24T23:05:14.807Z",
+  "fetchedAt": "2026-04-24T23:54:46.748Z",
   "source": "wvnews.com RSS + section HTML backfill",
   "target": 10,
   "siteCounts": {
-    "exponent": 0,
-    "bridgeport": 5,
+    "exponent": 10,
+    "bridgeport": 6,
     "dominion": 10,
     "bluegold": 10,
     "recorddelta": 10,
-    "jackson": 0,
+    "jackson": 10,
     "preston": 0,
     "garrett": 10,
     "braxtondem": 10,
@@ -22,7 +22,128 @@
     "bulletin": 0
   },
   "stories": {
-    "exponent": [],
+    "exponent": [
+      {
+        "id": "5c5b4733-70ae-4e23-8215-e7ef00471e5f",
+        "slug": "services-stymied-at-harrison-county-government-offices-as-staff-deal-with-cybersecurity-attack",
+        "title": "Services stymied at Harrison County government offices as staff deal with cybersecurity attack",
+        "description": "",
+        "pubDate": null,
+        "author": "",
+        "image": null,
+        "sourceUrl": "https://www.wvnews.com/theet/news/services-stymied-at-harrison-county-government-offices-as-staff-deal-with-cybersecurity-attack/article_5c5b4733-70ae-4e23-8215-e7ef00471e5f.html",
+        "prefix": "theet",
+        "source": "section"
+      },
+      {
+        "id": "c3b0df6b-e6fc-4e30-a30c-a8ca8c65f7cb",
+        "slug": "family-fun-extravaganza-brings-alpacas-american-idol-singer-and-budget-friendly-family-fun-to-clarksburg",
+        "title": "Family Fun Extravaganza brings alpacas, 'American Idol' singer and budget-friendly-family-fun to Clarksburg City Park",
+        "description": "",
+        "pubDate": null,
+        "author": "",
+        "image": null,
+        "sourceUrl": "https://www.wvnews.com/theet/news/family-fun-extravaganza-brings-alpacas-american-idol-singer-and-budget-friendly-family-fun-to-clarksburg/article_c3b0df6b-e6fc-4e30-a30c-a8ca8c65f7cb.html",
+        "prefix": "theet",
+        "source": "section"
+      },
+      {
+        "id": "32df50e8-d7b1-4b1d-995d-55b6590ca1c1",
+        "slug": "emmanuel-christian-school-and-hope-gas-plant-tree-at-new-north-view-campus",
+        "title": "Emmanuel Christian School and Hope Gas plant tree at new North View campus",
+        "description": "",
+        "pubDate": null,
+        "author": "",
+        "image": null,
+        "sourceUrl": "https://www.wvnews.com/theet/news/local/emmanuel-christian-school-and-hope-gas-plant-tree-at-new-north-view-campus/article_32df50e8-d7b1-4b1d-995d-55b6590ca1c1.html",
+        "prefix": "theet",
+        "source": "section"
+      },
+      {
+        "id": "d75920f8-1dca-4a7c-ba5c-baf38db28087",
+        "slug": "harrison-county-to-alter-ballot-in-general-election-due-to-passing-of-circuit-clerk-albert",
+        "title": "Harrison County to alter ballot in General Election due to passing of Circuit Clerk Albert Marano",
+        "description": "",
+        "pubDate": null,
+        "author": "",
+        "image": null,
+        "sourceUrl": "https://www.wvnews.com/theet/news/harrison-county-to-alter-ballot-in-general-election-due-to-passing-of-circuit-clerk-albert/article_d75920f8-1dca-4a7c-ba5c-baf38db28087.html",
+        "prefix": "theet",
+        "source": "section"
+      },
+      {
+        "id": "51be89b7-3b8f-44ad-be02-ae211bb99f84",
+        "slug": "bridgeport-middle-students-make-west-virginia-history-with-national-investwrite-wins",
+        "title": "Bridgeport Middle students make West Virginia history with national InvestWrite wins",
+        "description": "",
+        "pubDate": null,
+        "author": "",
+        "image": null,
+        "sourceUrl": "https://www.wvnews.com/theet/news/bridgeport-middle-students-make-west-virginia-history-with-national-investwrite-wins/article_51be89b7-3b8f-44ad-be02-ae211bb99f84.html",
+        "prefix": "theet",
+        "source": "section"
+      },
+      {
+        "id": "3717c398-f209-4bc8-a54b-1fae0c4e4edb",
+        "slug": "clarksburg-city-council-questions-opioid-settlement-spending-on-proposed-community-center-architectural-drawings",
+        "title": "Clarksburg city council questions opioid settlement spending on proposed community center architectural drawings",
+        "description": "",
+        "pubDate": null,
+        "author": "",
+        "image": null,
+        "sourceUrl": "https://www.wvnews.com/theet/news/clarksburg-city-council-questions-opioid-settlement-spending-on-proposed-community-center-architectural-drawings/article_3717c398-f209-4bc8-a54b-1fae0c4e4edb.html",
+        "prefix": "theet",
+        "source": "section"
+      },
+      {
+        "id": "4165b714-b6eb-4e92-b2f8-8491e50aacb4",
+        "slug": "clarksburgs-inaugural-fairy-ren-faire-postponed-to-may-9-due-to-weather",
+        "title": "Clarksburg's inaugural Fairy Ren Faire postponed to May 9 due to weather",
+        "description": "",
+        "pubDate": null,
+        "author": "",
+        "image": null,
+        "sourceUrl": "https://www.wvnews.com/theet/news/local/clarksburgs-inaugural-fairy-ren-faire-postponed-to-may-9-due-to-weather/article_4165b714-b6eb-4e92-b2f8-8491e50aacb4.html",
+        "prefix": "theet",
+        "source": "section"
+      },
+      {
+        "id": "93cab2b1-0360-4b74-91da-e53d59e5f985",
+        "slug": "utc-students-earn-33-medals-at-2026-skillsusa-state-competition",
+        "title": "UTC students earn 33 medals at 2026 SkillsUSA state competition",
+        "description": "",
+        "pubDate": null,
+        "author": "",
+        "image": null,
+        "sourceUrl": "https://www.wvnews.com/theet/news/utc-students-earn-33-medals-at-2026-skillsusa-state-competition/article_93cab2b1-0360-4b74-91da-e53d59e5f985.html",
+        "prefix": "theet",
+        "source": "section"
+      },
+      {
+        "id": "06707696-a070-46c6-9a87-8e235b8e6211",
+        "slug": "george-hoffman-murder-trial-set-to-begin-may-11-amid-unresolved-rulings-on-trial-structure",
+        "title": "George Hoffman murder trial set to begin May 11 amid unresolved rulings on trial structure, evidence",
+        "description": "",
+        "pubDate": null,
+        "author": "",
+        "image": null,
+        "sourceUrl": "https://www.wvnews.com/theet/news/george-hoffman-murder-trial-set-to-begin-may-11-amid-unresolved-rulings-on-trial-structure/article_06707696-a070-46c6-9a87-8e235b8e6211.html",
+        "prefix": "theet",
+        "source": "section"
+      },
+      {
+        "id": "c8dac5b8-2d4f-43b1-9e24-b7fed650bba7",
+        "slug": "harrison-county-commission-candidate-martin-howe",
+        "title": "Harrison County Commission candidate: Martin Howe",
+        "description": "",
+        "pubDate": null,
+        "author": "",
+        "image": null,
+        "sourceUrl": "https://www.wvnews.com/theet/news/harrison-county-commission-candidate-martin-howe/article_c8dac5b8-2d4f-43b1-9e24-b7fed650bba7.html",
+        "prefix": "theet",
+        "source": "section"
+      }
+    ],
     "bridgeport": [
       {
         "id": "f34aa831-a4d6-4a9e-b15f-4ca874d9cdaf",
@@ -33,6 +154,18 @@
         "author": "",
         "image": null,
         "sourceUrl": "https://www.wvnews.com/bridgeportnews/news/free-admission-3k-in-prizes-trading-card-show-set-for-the-bridge-sports-complex-may/article_f34aa831-a4d6-4a9e-b15f-4ca874d9cdaf.html",
+        "prefix": "bridgeportnews",
+        "source": "section"
+      },
+      {
+        "id": "611c9c18-de8f-4634-b60c-4faf7eed469e",
+        "slug": "buckhannon-upshur-softball-knocks-off-wheeling-park-bridgeport-routed-by-brooke",
+        "title": "Buckhannon-Upshur softball knocks off Wheeling Park; Bridgeport routed by Brooke",
+        "description": "",
+        "pubDate": null,
+        "author": "",
+        "image": null,
+        "sourceUrl": "https://www.wvnews.com/bridgeportnews/sports/buckhannon-upshur-softball-knocks-off-wheeling-park-bridgeport-routed-by-brooke/article_611c9c18-de8f-4634-b60c-4faf7eed469e.html",
         "prefix": "bridgeportnews",
         "source": "section"
       },
@@ -221,18 +354,6 @@
         "source": "section"
       },
       {
-        "id": "089ba28a-f38e-4fd1-85de-be471dbd0d0e",
-        "slug": "akheem-mesidors-selection-in-the-nfl-draft-is-another-reminder-of-wvu-footballs-decline",
-        "title": "Akheem Mesidor's selection in the NFL draft is another reminder of WVU football's decline",
-        "description": "",
-        "pubDate": null,
-        "author": "",
-        "image": null,
-        "sourceUrl": "https://www.wvnews.com/bluegoldnews/akheem-mesidors-selection-in-the-nfl-draft-is-another-reminder-of-wvu-footballs-decline/article_089ba28a-f38e-4fd1-85de-be471dbd0d0e.html",
-        "prefix": "bluegoldnews",
-        "source": "section"
-      },
-      {
         "id": "2c462a1b-76ae-46f9-8b8a-c4d101ec9159",
         "slug": "rebuilding-up-front-key-for-wvu",
         "title": "Rebuilding up front key for WVU",
@@ -241,6 +362,18 @@
         "author": "",
         "image": null,
         "sourceUrl": "https://www.wvnews.com/bluegoldnews/rebuilding-up-front-key-for-wvu/article_2c462a1b-76ae-46f9-8b8a-c4d101ec9159.html",
+        "prefix": "bluegoldnews",
+        "source": "section"
+      },
+      {
+        "id": "089ba28a-f38e-4fd1-85de-be471dbd0d0e",
+        "slug": "akheem-mesidors-selection-in-the-nfl-draft-is-another-reminder-of-wvu-footballs-decline",
+        "title": "Akheem Mesidor's selection in the NFL draft is another reminder of WVU football's decline",
+        "description": "",
+        "pubDate": null,
+        "author": "",
+        "image": null,
+        "sourceUrl": "https://www.wvnews.com/bluegoldnews/akheem-mesidors-selection-in-the-nfl-draft-is-another-reminder-of-wvu-footballs-decline/article_089ba28a-f38e-4fd1-85de-be471dbd0d0e.html",
         "prefix": "bluegoldnews",
         "source": "section"
       },
@@ -451,7 +584,128 @@
         "source": "section"
       }
     ],
-    "jackson": [],
+    "jackson": [
+      {
+        "id": "3c5ce7b5-4c8d-438e-9055-a001352701c2",
+        "slug": "meet-the-candidates-event-set-for-april-28",
+        "title": "Meet the Candidates event set for April 28",
+        "description": "",
+        "pubDate": null,
+        "author": "",
+        "image": null,
+        "sourceUrl": "https://www.wvnews.com/jacksonnews/meet-the-candidates-event-set-for-april-28/article_3c5ce7b5-4c8d-438e-9055-a001352701c2.html",
+        "prefix": "jacksonnews",
+        "source": "section"
+      },
+      {
+        "id": "f3f0ec84-2531-4250-93b6-ae4c4f9d1c4f",
+        "slug": "courthouse-news",
+        "title": "Courthouse News",
+        "description": "",
+        "pubDate": null,
+        "author": "",
+        "image": null,
+        "sourceUrl": "https://www.wvnews.com/jacksonnews/courthouse-news/article_f3f0ec84-2531-4250-93b6-ae4c4f9d1c4f.html",
+        "prefix": "jacksonnews",
+        "source": "section"
+      },
+      {
+        "id": "801a2758-1bf5-47a7-8e1c-9903bd089a63",
+        "slug": "five-years-strong-movin-in-may-keeps-jackson-county-active",
+        "title": "Five Years Strong: Movin’ in May Keeps Jackson County Active",
+        "description": "",
+        "pubDate": null,
+        "author": "",
+        "image": null,
+        "sourceUrl": "https://www.wvnews.com/jacksonnews/five-years-strong-movin-in-may-keeps-jackson-county-active/article_801a2758-1bf5-47a7-8e1c-9903bd089a63.html",
+        "prefix": "jacksonnews",
+        "source": "section"
+      },
+      {
+        "id": "fe628db2-e4f2-4d71-9bf3-2b51b1ff9ab2",
+        "slug": "micah-s-manor-hosts-successful-first-wedding-event-expo",
+        "title": "Micah’s Manor hosts successful first Wedding & Event Expo",
+        "description": "",
+        "pubDate": null,
+        "author": "",
+        "image": null,
+        "sourceUrl": "https://www.wvnews.com/jacksonnews/micah-s-manor-hosts-successful-first-wedding-event-expo/article_fe628db2-e4f2-4d71-9bf3-2b51b1ff9ab2.html",
+        "prefix": "jacksonnews",
+        "source": "section"
+      },
+      {
+        "id": "239b7669-0032-4b44-b74c-921252513bee",
+        "slug": "gilmore-elementary-fundraiser-raises-nearly-4-400-for-new-playground-equipment",
+        "title": "Gilmore Elementary fundraiser raises nearly $4,400 for new playground equipment",
+        "description": "",
+        "pubDate": null,
+        "author": "",
+        "image": null,
+        "sourceUrl": "https://www.wvnews.com/jacksonnews/gilmore-elementary-fundraiser-raises-nearly-4-400-for-new-playground-equipment/article_239b7669-0032-4b44-b74c-921252513bee.html",
+        "prefix": "jacksonnews",
+        "source": "section"
+      },
+      {
+        "id": "0fd7adcb-15a6-4108-ab26-f99f08912f98",
+        "slug": "ravenswood-youth-bags-21-pound-gobbler-during-west-virginia-spring-turkey-season",
+        "title": "Ravenswood youth bags 21-pound gobbler during West Virginia spring turkey season",
+        "description": "",
+        "pubDate": null,
+        "author": "",
+        "image": null,
+        "sourceUrl": "https://www.wvnews.com/jacksonnews/ravenswood-youth-bags-21-pound-gobbler-during-west-virginia-spring-turkey-season/article_0fd7adcb-15a6-4108-ab26-f99f08912f98.html",
+        "prefix": "jacksonnews",
+        "source": "section"
+      },
+      {
+        "id": "86fe1f5c-b24a-4a6d-8446-3952439f1f11",
+        "slug": "ravenswood-native-finishes-as-top-american-in-paris-marathon",
+        "title": "Ravenswood native finishes as top American in Paris Marathon",
+        "description": "",
+        "pubDate": null,
+        "author": "",
+        "image": null,
+        "sourceUrl": "https://www.wvnews.com/jacksonnews/ravenswood-native-finishes-as-top-american-in-paris-marathon/article_86fe1f5c-b24a-4a6d-8446-3952439f1f11.html",
+        "prefix": "jacksonnews",
+        "source": "section"
+      },
+      {
+        "id": "9c4afb45-2d6b-4305-bde9-e5b65ded1c9f",
+        "slug": "ravenswood-city-council-approves-first-reading-of-sewer-bond-ordinances",
+        "title": "Ravenswood City Council approves first reading of sewer bond ordinances",
+        "description": "",
+        "pubDate": null,
+        "author": "",
+        "image": null,
+        "sourceUrl": "https://www.wvnews.com/jacksonnews/ravenswood-city-council-approves-first-reading-of-sewer-bond-ordinances/article_9c4afb45-2d6b-4305-bde9-e5b65ded1c9f.html",
+        "prefix": "jacksonnews",
+        "source": "section"
+      },
+      {
+        "id": "572c80a6-fa4e-4e0f-952d-3238b7d3ce84",
+        "slug": "ravenswood-breaks-ground-on-new-riverfront-welcome-center-and-smokehouse-restaurant",
+        "title": "Ravenswood breaks ground on new riverfront welcome center and smokehouse restaurant",
+        "description": "",
+        "pubDate": null,
+        "author": "",
+        "image": null,
+        "sourceUrl": "https://www.wvnews.com/jacksonnews/ravenswood-breaks-ground-on-new-riverfront-welcome-center-and-smokehouse-restaurant/article_572c80a6-fa4e-4e0f-952d-3238b7d3ce84.html",
+        "prefix": "jacksonnews",
+        "source": "section"
+      },
+      {
+        "id": "85e1afa3-6999-49a8-a944-9ee886bf380d",
+        "slug": "dar-chapter-s-america-250-spotlight",
+        "title": "DAR chapter’s America 250! spotlight",
+        "description": "",
+        "pubDate": null,
+        "author": "",
+        "image": null,
+        "sourceUrl": "https://www.wvnews.com/jacksonnews/dar-chapter-s-america-250-spotlight/article_85e1afa3-6999-49a8-a944-9ee886bf380d.html",
+        "prefix": "jacksonnews",
+        "source": "section"
+      }
+    ],
     "preston": [],
     "garrett": [
       {
