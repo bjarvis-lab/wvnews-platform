@@ -19,6 +19,7 @@ const navItems = [
   { href: '/admin/newsletters', label: 'Newsletters', icon: '✉️' },
   { href: '/admin/social', label: 'Social Media', icon: '📱' },
   { href: '/admin/forms', label: 'Forms & Submissions', icon: '📝' },
+  { href: '/admin/pricing', label: 'Self-Serve Pricing', icon: '💵' },
   { href: '/admin/contests', label: 'Contests', icon: '🏆' },
   { href: '/admin/ads', label: 'Advertising & GAM', icon: '💰' },
   { href: '/admin/subscribers', label: 'Subscribers', icon: '👥' },

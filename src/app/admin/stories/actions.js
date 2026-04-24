@@ -4,7 +4,6 @@
 // /admin/stories/[id]/edit.
 
 import { revalidatePath } from 'next/cache';
-import { redirect } from 'next/navigation';
 import {
   createNativeStory,
   updateStory,
@@ -44,7 +43,9 @@ export async function createStoryAction(formData) {
   revalidatePath('/admin/stories');
   revalidatePath(`/article/${slug}`);
   if (input.section) revalidatePath(`/section/${input.section}`);
-  redirect(`/admin/stories/${id}/edit?saved=1`);
+  // Let the client close its modal + router.refresh(). No redirect — the list
+  // page re-fetches and the new story appears.
+  return { ok: true, id, slug };
 }
 
 export async function updateStoryAction(id, formData) {
@@ -61,5 +62,5 @@ export async function updateStoryAction(id, formData) {
 export async function deleteStoryAction(id) {
   await deleteStory(id);
   revalidatePath('/admin/stories');
-  redirect('/admin/stories');
+  return { ok: true };
 }
