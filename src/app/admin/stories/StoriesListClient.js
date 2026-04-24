@@ -686,27 +686,6 @@ function StoryEditorModal({ story, sections, sites, clusterSeed = null, onClose 
         <div className="grid grid-cols-3 divide-x divide-ink-100">
           {/* Main */}
           <div className="col-span-2 p-6 space-y-4">
-            {!isEditing && (
-              <StoryIdeaPanel
-                section={form.section}
-                seedBrief={clusterSeed?.brief || ''}
-                seedTone={clusterSeed?.tone || 'hard news'}
-                seedBadge={clusterSeed ? `📡 Seeded from Media Desk — ${clusterSeed.breaking ? 'BREAKING' : 'trending'} cluster` : null}
-                onGenerated={(draft) => {
-                  update({
-                    headline: draft.headline || form.headline,
-                    seoHeadline: draft.seoHeadline || form.seoHeadline,
-                    deck: draft.deck || form.deck,
-                    // AI draft lands in the web version by default — reporters
-                    // edit it live there, then convert to print when ready.
-                    webBody: draft.body || form.webBody,
-                    hasWeb: true,
-                    tags: (draft.tags && draft.tags.length) ? draft.tags : form.tags,
-                    section: draft.section || form.section,
-                  });
-                }}
-              />
-            )}
             <input
               type="text"
               placeholder="Write your headline..."
@@ -827,6 +806,30 @@ function StoryEditorModal({ story, sections, sites, clusterSeed = null, onClose 
                 </div>
               )}
             </div>
+
+            {/* Story Ideas & AI Draft — moved below the editor so it doesn't
+                crowd the writing area. Only shown for new stories.
+                Auto-generates when opened from a Media Desk cluster. */}
+            {!isEditing && (
+              <StoryIdeaPanel
+                section={form.section}
+                seedBrief={clusterSeed?.brief || ''}
+                seedTone={clusterSeed?.tone || 'hard news'}
+                seedBadge={clusterSeed ? `📡 Seeded from Media Desk — ${clusterSeed.breaking ? 'BREAKING' : 'trending'} cluster` : null}
+                autoGenerate={!!clusterSeed}
+                onGenerated={(draft) => {
+                  update({
+                    headline: draft.headline || form.headline,
+                    seoHeadline: draft.seoHeadline || form.seoHeadline,
+                    deck: draft.deck || form.deck,
+                    webBody: draft.body || form.webBody,
+                    hasWeb: true,
+                    tags: (draft.tags && draft.tags.length) ? draft.tags : form.tags,
+                    section: draft.section || form.section,
+                  });
+                }}
+              />
+            )}
           </div>
 
           {/* Sidebar */}

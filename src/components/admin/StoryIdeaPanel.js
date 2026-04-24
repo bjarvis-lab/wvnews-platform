@@ -14,7 +14,7 @@
 // writing. Disclaimer under the generate button reminds them to verify
 // before publishing.
 
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 
 export default function StoryIdeaPanel({
   section,
@@ -23,6 +23,7 @@ export default function StoryIdeaPanel({
   seedBrief = '',
   seedTone = 'hard news',
   seedBadge = null,
+  autoGenerate = false,  // fire generate() once on mount if a seed is present
 }) {
   const [brief, setBrief] = useState(seedBrief);
   const [loading, setLoading] = useState(null); // 'generate' | 'suggest' | null
@@ -60,8 +61,11 @@ export default function StoryIdeaPanel({
     return text.split('\n').map(s => s.trim()).filter(Boolean);
   }
 
-  async function generate() {
-    if (brief.trim().length < 10) {
+  async function generate(overrideBrief) {
+    // Allow an override so auto-generate can fire with the freshly-seeded
+    // brief before React re-runs the effect.
+    const effectiveBrief = (overrideBrief ?? brief).trim();
+    if (effectiveBrief.length < 10) {
       setError('Describe your story in at least a sentence before generating.');
       return;
     }
@@ -72,7 +76,7 @@ export default function StoryIdeaPanel({
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           action: 'generateFullStory',
-          brief,
+          brief: effectiveBrief,
           section,
           wordLimit: Number(wordLimit) || undefined,
           tone,
@@ -89,6 +93,18 @@ export default function StoryIdeaPanel({
       setError(e.message);
     } finally { setLoading(null); }
   }
+
+  // Auto-generate once on mount when we were opened from a Media Desk
+  // cluster (autoGenerate=true + a non-trivial seed brief). The ref guard
+  // prevents double-firing in React StrictMode dev.
+  const autoFiredRef = useRef(false);
+  useEffect(() => {
+    if (autoGenerate && !autoFiredRef.current && seedBrief && seedBrief.trim().length >= 10) {
+      autoFiredRef.current = true;
+      generate(seedBrief);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   if (collapsed) {
     return (
