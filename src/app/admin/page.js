@@ -1,241 +1,311 @@
-'use client';
-import { analyticsData, stories, budgetItems, subscribers } from '@/data/mock';
-import Link from 'next/link';
+// Admin dashboard — server component. Renders a different view per role:
+//   - reporter: their stories, their pageviews (last 7d/30d), drafts in progress
+//   - editor: newsroom-wide rollup, top reporters, top stories, section breakdown
+//   - salesrep: ad order queue, self-serve submission queue
+//   - admin: editor view + system health (GA4 / Firebase / Anthropic / GAM)
+//
+// GA4 Data API powers pageview numbers. When it isn't authorized yet
+// (service account needs Viewer access on the GA4 property), the dashboard
+// still renders with story-side data and surfaces a "Connect GA4" hint.
 
-function StatCard({ label, value, change, changePositive }) {
+import Link from 'next/link';
+import { requireAdmin } from '@/lib/auth-server';
+import { reporterDashboard, editorDashboard, salesDashboard, checkGA4 } from '@/lib/dashboard-stats';
+import { GAM_IS_LIVE } from '@/lib/gam-config';
+import { GA4_IS_LIVE } from '@/lib/ga-config';
+
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
+
+export default async function AdminDashboard() {
+  const user = await requireAdmin();
+  const profile = user.profile;
+  const role = profile?.role || 'reporter';
+
+  if (role === 'reporter') return <ReporterView profile={profile} />;
+  if (role === 'salesrep') return <SalesView profile={profile} />;
+  // editor + admin + designer + custom all see the editor view by default
+  return <EditorView profile={profile} role={role} />;
+}
+
+// ─── Reporter view ────────────────────────────────────────────────────
+async function ReporterView({ profile }) {
+  const data = await reporterDashboard({ email: profile.email, days: 7 });
+
   return (
-    <div className="stat-card bg-white rounded-xl p-5 shadow-sm border border-ink-100">
-      <div className="text-xs font-medium text-ink-500 uppercase tracking-wider mb-1">{label}</div>
-      <div className="text-2xl font-bold text-ink-900">{value}</div>
-      {change && (
-        <div className={`text-xs mt-1 font-medium ${changePositive ? 'text-green-600' : 'text-red-500'}`}>
-          {changePositive ? '↑' : '↓'} {change} vs last week
+    <div className="space-y-6">
+      <Header
+        title={`Welcome, ${(profile.name || 'reporter').split(' ')[0]}.`}
+        subtitle="Your work over the last 7 days. Click any story to edit."
+      />
+
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <StatCard label="Published (all-time)" value={data.totals.published} />
+        <StatCard label="Drafts" value={data.totals.drafts} />
+        <StatCard
+          label="Pageviews · 7d"
+          value={data.totals.totalRecentViews ?? '—'}
+          hint={data.totals.totalRecentViews == null ? 'GA4 not yet connected' : 'on your stories'}
+          accent
+        />
+        <StatCard label="Avg per story" value={
+          data.totals.totalRecentViews && data.totals.published
+            ? Math.round(data.totals.totalRecentViews / data.totals.published).toLocaleString()
+            : '—'
+        } />
+      </div>
+
+      {!data.ga4Ok && <Ga4Notice error={data.ga4Error} />}
+
+      <Panel title="Your top stories (last 7 days)">
+        {data.topStories.length === 0 ? (
+          <Empty text="You haven't published anything yet. Click + New Story up top." />
+        ) : (
+          <StoryList stories={data.topStories} showViews={data.ga4Ok} />
+        )}
+      </Panel>
+
+      <Panel title={`Drafts (${data.drafts.length})`}>
+        {data.drafts.length === 0 ? (
+          <Empty text="No drafts in progress." />
+        ) : (
+          <StoryList stories={data.drafts} showViews={false} draft />
+        )}
+      </Panel>
+
+      <Panel title="Quick actions">
+        <div className="flex flex-wrap gap-2">
+          <ActionLink href="/admin/stories?new=1">+ New Story</ActionLink>
+          <ActionLink href="/admin/mediadesk">📡 Media Desk</ActionLink>
+          <ActionLink href="/admin/stories">📝 All Stories</ActionLink>
         </div>
+      </Panel>
+    </div>
+  );
+}
+
+// ─── Editor view ──────────────────────────────────────────────────────
+async function EditorView({ profile, role }) {
+  const [data, sysGA4] = await Promise.all([
+    editorDashboard({ days: 7 }),
+    role === 'admin' ? checkGA4() : Promise.resolve(null),
+  ]);
+
+  return (
+    <div className="space-y-6">
+      <Header
+        title={`Good day${profile.name ? `, ${profile.name.split(' ')[0]}` : ''}.`}
+        subtitle="Newsroom snapshot — last 7 days."
+      />
+
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <StatCard label="Total pageviews · 7d" value={data.totals.totalRecentViews?.toLocaleString() ?? '—'} accent />
+        <StatCard label="Published stories" value={data.totals.published} />
+        <StatCard label="Drafts in flight" value={data.totals.drafts} />
+        <StatCard label="Active reporters" value={data.topReporters.filter(r => r.stories > 0).length} />
+      </div>
+
+      {!data.ga4Ok && <Ga4Notice error={data.ga4Error} />}
+
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <Panel title="Top stories · 7d">
+          {data.topStories.length === 0 ? (
+            <Empty text="No published stories yet." />
+          ) : (
+            <StoryList stories={data.topStories} showViews={data.ga4Ok} />
+          )}
+        </Panel>
+
+        <Panel title="Top reporters · 7d">
+          {data.topReporters.length === 0 ? (
+            <Empty text="No author data yet." />
+          ) : (
+            <ul className="divide-y divide-ink-100">
+              {data.topReporters.map((r, i) => (
+                <li key={r.email || r.name} className="py-2.5 flex items-center gap-3">
+                  <span className="w-6 text-center text-sm font-bold text-ink-400">{i + 1}</span>
+                  <div className="flex-1 min-w-0">
+                    <div className="text-sm font-semibold text-ink-900 truncate">{r.name}</div>
+                    <div className="text-xs text-ink-500 truncate">{r.email || '—'}</div>
+                  </div>
+                  <div className="text-right whitespace-nowrap">
+                    <div className="text-sm font-bold text-ink-900">
+                      {data.ga4Ok ? r.views.toLocaleString() : '—'}
+                    </div>
+                    <div className="text-[10px] text-ink-500">{r.stories} {r.stories === 1 ? 'story' : 'stories'}</div>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          )}
+        </Panel>
+      </div>
+
+      <Panel title="Sections by traffic">
+        {data.sections.length === 0 ? (
+          <Empty text="No section data yet." />
+        ) : (
+          <ul className="divide-y divide-ink-100">
+            {data.sections.map(s => (
+              <li key={s.section} className="py-2 flex items-center gap-3">
+                <span className="text-sm font-semibold text-ink-800 capitalize">{s.section}</span>
+                <span className="flex-1 text-xs text-ink-500">{s.stories} {s.stories === 1 ? 'story' : 'stories'}</span>
+                <span className="text-sm font-bold text-ink-900">{data.ga4Ok ? s.views.toLocaleString() : '—'}</span>
+              </li>
+            ))}
+          </ul>
+        )}
+      </Panel>
+
+      {role === 'admin' && (
+        <Panel title="System status">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-sm">
+            <SysRow label="Firebase / Firestore" ok={true} hint="Always connected when admin loads" />
+            <SysRow label="GA4 Data API" ok={!!sysGA4?.ok} hint={sysGA4?.error || `Property ${sysGA4?.propertyId || 'not configured'}`} />
+            <SysRow label="GAM (ad serving)" ok={GAM_IS_LIVE} hint={GAM_IS_LIVE ? 'Network configured' : 'NEXT_PUBLIC_GAM_NETWORK_ID not set'} />
+            <SysRow label="GA4 client tracking" ok={GA4_IS_LIVE} hint={GA4_IS_LIVE ? 'gtag.js loading on public pages' : 'NEXT_PUBLIC_GA4_MEASUREMENT_ID not set'} />
+          </div>
+        </Panel>
       )}
     </div>
   );
 }
 
-function MiniChart({ data }) {
-  const max = Math.max(...data.map(d => d.views));
+// ─── Sales view ───────────────────────────────────────────────────────
+async function SalesView({ profile }) {
+  const data = await salesDashboard();
+
   return (
-    <div className="flex items-end gap-1 h-16">
-      {data.map((d, i) => (
-        <div key={i} className="flex-1 flex flex-col items-center gap-1">
-          <div
-            className="w-full bg-brand-500 rounded-t"
-            style={{ height: `${(d.views / max) * 100}%`, minHeight: '4px' }}
-          />
-          <span className="text-[9px] text-ink-400">{d.date.split(' ')[1]}</span>
-        </div>
-      ))}
+    <div className="space-y-6">
+      <Header
+        title={`Good day${profile.name ? `, ${profile.name.split(' ')[0]}` : ''}.`}
+        subtitle="Ad sales pipeline + inbound submissions."
+      />
+
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <StatCard label="Active CRM orders" value={data.orders.total} />
+        <StatCard label="Awaiting artwork" value={data.orders.pendingArtwork} accent />
+        <StatCard label="Submissions to review" value={data.submissions.pendingReview} />
+        <StatCard label="Awaiting payment" value={data.submissions.awaitingPayment} />
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <Link href="/admin/ads" className="block bg-white p-5 rounded-xl border border-ink-200 hover:border-brand-400 transition-colors">
+          <div className="text-2xl mb-2">💰</div>
+          <div className="font-display font-bold text-ink-900">Ad Production Queue →</div>
+          <div className="text-sm text-ink-600 mt-1">Live CRM orders that need artwork.</div>
+        </Link>
+        <Link href="/admin/forms" className="block bg-white p-5 rounded-xl border border-ink-200 hover:border-brand-400 transition-colors">
+          <div className="text-2xl mb-2">📝</div>
+          <div className="font-display font-bold text-ink-900">Submissions Queue →</div>
+          <div className="text-sm text-ink-600 mt-1">Obits, classifieds, legals — review + bill.</div>
+        </Link>
+      </div>
     </div>
   );
 }
 
-export default function AdminDashboard() {
-  const { overview, trafficSources, dailyViews, paywallFunnel } = analyticsData;
-  const activeStories = budgetItems.filter(b => b.status !== 'Published');
-  const recentPublished = stories.filter(s => s.status === 'published').slice(0, 5);
-
+// ─── Subcomponents ────────────────────────────────────────────────────
+function Header({ title, subtitle }) {
   return (
-    <div className="space-y-6">
-      {/* Welcome + quick actions */}
-      <div className="flex items-start justify-between">
-        <div>
-          <h2 className="text-2xl font-display font-bold text-ink-900">Good morning, Sarah</h2>
-          <p className="text-sm text-ink-500 mt-0.5">Here&apos;s what&apos;s happening across your sites today.</p>
-        </div>
-        <div className="flex gap-2">
-          <Link href="/admin/stories" className="px-3 py-2 bg-brand-700 text-white text-sm font-medium rounded-lg hover:bg-brand-600">
-            + New Story
-          </Link>
-          <Link href="/admin/budget" className="px-3 py-2 bg-white text-ink-700 text-sm font-medium rounded-lg border border-ink-200 hover:bg-ink-50">
-            Today&apos;s Budget
-          </Link>
-        </div>
+    <div className="flex items-start justify-between flex-wrap gap-3">
+      <div>
+        <h2 className="text-2xl font-display font-bold text-ink-900">{title}</h2>
+        {subtitle && <p className="text-sm text-ink-500 mt-0.5">{subtitle}</p>}
       </div>
-
-      {/* Stats Grid */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-        <StatCard label="Today's Pageviews" value={overview.totalPageviews.toLocaleString()} change="12%" changePositive={true} />
-        <StatCard label="Unique Visitors" value={overview.uniqueVisitors.toLocaleString()} change="8%" changePositive={true} />
-        <StatCard label="New Subscribers" value={overview.newSubscribers} change="23%" changePositive={true} />
-        <StatCard label="Revenue (MTD)" value={overview.revenue} change="5%" changePositive={true} />
+      <div className="flex gap-2">
+        <Link href="/admin/stories?new=1" className="px-3 py-2 bg-brand-700 text-white text-sm font-semibold rounded-lg hover:bg-brand-600">
+          + New Story
+        </Link>
+        <Link href="/admin/mediadesk" className="px-3 py-2 bg-white text-ink-700 text-sm font-medium rounded-lg border border-ink-200 hover:bg-ink-50">
+          📡 Media Desk
+        </Link>
       </div>
+    </div>
+  );
+}
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        {/* Traffic chart */}
-        <div className="lg:col-span-2 bg-white rounded-xl p-5 shadow-sm border border-ink-100">
-          <div className="flex items-center justify-between mb-4">
-            <h3 className="text-sm font-bold text-ink-800">Pageviews — Last 7 Days</h3>
-            <div className="flex gap-2">
-              <button className="px-2 py-1 text-xs bg-brand-50 text-brand-700 rounded font-medium">7D</button>
-              <button className="px-2 py-1 text-xs text-ink-500 hover:bg-ink-50 rounded">30D</button>
-              <button className="px-2 py-1 text-xs text-ink-500 hover:bg-ink-50 rounded">90D</button>
-            </div>
-          </div>
-          <MiniChart data={dailyViews} />
-          <div className="mt-4 grid grid-cols-3 gap-4 pt-4 border-t border-ink-100">
-            <div>
-              <div className="text-xs text-ink-500">Avg. Session</div>
-              <div className="text-lg font-bold text-ink-900">{overview.avgSessionDuration}</div>
-            </div>
-            <div>
-              <div className="text-xs text-ink-500">Bounce Rate</div>
-              <div className="text-lg font-bold text-ink-900">{overview.bounceRate}</div>
-            </div>
-            <div>
-              <div className="text-xs text-ink-500">Registrations</div>
-              <div className="text-lg font-bold text-ink-900">{overview.registrations}</div>
-            </div>
-          </div>
-        </div>
+function StatCard({ label, value, hint, accent }) {
+  return (
+    <div className={`rounded-xl p-5 border ${accent ? 'bg-brand-50 border-brand-200' : 'bg-white border-ink-200'}`}>
+      <div className="text-xs font-medium text-ink-500 uppercase tracking-wider">{label}</div>
+      <div className="text-2xl font-bold text-ink-900 mt-1">{value}</div>
+      {hint && <div className="text-xs text-ink-500 mt-1">{hint}</div>}
+    </div>
+  );
+}
 
-        {/* Traffic Sources */}
-        <div className="bg-white rounded-xl p-5 shadow-sm border border-ink-100">
-          <h3 className="text-sm font-bold text-ink-800 mb-4">Traffic Sources</h3>
-          <div className="space-y-3">
-            {trafficSources.map(source => (
-              <div key={source.name}>
-                <div className="flex items-center justify-between text-sm mb-1">
-                  <span className="text-ink-700">{source.name}</span>
-                  <span className="font-medium text-ink-900">{source.value}%</span>
-                </div>
-                <div className="h-2 bg-ink-100 rounded-full overflow-hidden">
-                  <div className="h-full rounded-full" style={{ width: `${source.value}%`, background: source.color }} />
-                </div>
+function Panel({ title, children }) {
+  return (
+    <div className="bg-white rounded-xl border border-ink-200">
+      <div className="px-5 py-4 border-b border-ink-100">
+        <h3 className="font-display text-lg font-bold text-ink-900">{title}</h3>
+      </div>
+      <div className="p-5">{children}</div>
+    </div>
+  );
+}
+
+function StoryList({ stories, showViews, draft }) {
+  return (
+    <ul className="divide-y divide-ink-100">
+      {stories.map(s => (
+        <li key={s.id} className="py-3">
+          <Link href={`/admin/stories?edit=${s.id}`} className="flex items-start gap-3 group">
+            <div className="flex-1 min-w-0">
+              <div className="font-semibold text-ink-900 group-hover:text-brand-700 leading-snug truncate">{s.headline}</div>
+              <div className="text-xs text-ink-500 mt-0.5">
+                {draft ? 'Draft · ' : ''}
+                {s.section || 'news'}
+                {s.author?.name ? ` · ${s.author.name}` : ''}
               </div>
-            ))}
-          </div>
-        </div>
-      </div>
-
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        {/* Active stories / budget */}
-        <div className="bg-white rounded-xl p-5 shadow-sm border border-ink-100">
-          <div className="flex items-center justify-between mb-4">
-            <h3 className="text-sm font-bold text-ink-800">Today&apos;s Editorial Budget</h3>
-            <Link href="/admin/budget" className="text-xs text-brand-700 font-medium hover:underline">View Full Budget →</Link>
-          </div>
-          <div className="space-y-2">
-            {activeStories.map(item => (
-              <div key={item.id} className="flex items-center gap-3 py-2 border-b border-ink-50 last:border-0">
-                <span className={`px-2 py-0.5 text-[10px] font-bold rounded uppercase ${
-                  item.status === 'Assigned' ? 'badge-draft' :
-                  item.status === 'In Progress' ? 'badge-review' :
-                  item.status === 'Filed' ? 'badge-scheduled' :
-                  'bg-ink-100 text-ink-600'
-                }`}>
-                  {item.status}
-                </span>
-                <div className="flex-1 min-w-0">
-                  <div className="text-sm font-medium text-ink-800 truncate">{item.slug}</div>
-                  <div className="text-xs text-ink-500">{item.reporter} · {item.section}</div>
-                </div>
-                <div className="flex gap-1">
-                  {item.printFlag && <span className="text-[10px] px-1.5 py-0.5 bg-ink-100 rounded text-ink-600">Print</span>}
-                  {item.digitalFlag && <span className="text-[10px] px-1.5 py-0.5 bg-brand-50 rounded text-brand-700">Web</span>}
-                </div>
+            </div>
+            {showViews && (
+              <div className="text-right whitespace-nowrap">
+                <div className="text-sm font-bold text-ink-900">{(s.recentViews || 0).toLocaleString()}</div>
+                <div className="text-[10px] text-ink-500">views · 7d</div>
               </div>
-            ))}
-          </div>
-        </div>
+            )}
+          </Link>
+        </li>
+      ))}
+    </ul>
+  );
+}
 
-        {/* Paywall funnel */}
-        <div className="bg-white rounded-xl p-5 shadow-sm border border-ink-100">
-          <h3 className="text-sm font-bold text-ink-800 mb-4">Paywall Conversion Funnel</h3>
-          <div className="space-y-3">
-            {paywallFunnel.map((step, i) => {
-              const prevCount = i > 0 ? paywallFunnel[i-1].count : step.count;
-              const convRate = i > 0 ? ((step.count / prevCount) * 100).toFixed(1) : '100';
-              return (
-                <div key={step.stage}>
-                  <div className="flex items-center justify-between text-sm mb-1">
-                    <span className="text-ink-700">{step.stage}</span>
-                    <span className="font-medium text-ink-900">{step.count.toLocaleString()}</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <div className="flex-1 h-3 bg-ink-100 rounded-full overflow-hidden">
-                      <div
-                        className="h-full rounded-full bg-gradient-to-r from-brand-700 to-brand-500"
-                        style={{ width: `${(step.count / paywallFunnel[0].count) * 100}%` }}
-                      />
-                    </div>
-                    {i > 0 && <span className="text-[10px] text-ink-500 w-12 text-right">{convRate}%</span>}
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-        </div>
-      </div>
+function Empty({ text }) {
+  return <div className="text-center py-8 text-sm text-ink-500">{text}</div>;
+}
 
-      {/* Top performing stories */}
-      <div className="bg-white rounded-xl p-5 shadow-sm border border-ink-100">
-        <div className="flex items-center justify-between mb-4">
-          <h3 className="text-sm font-bold text-ink-800">Top Performing Stories Today</h3>
-          <Link href="/admin/analytics" className="text-xs text-brand-700 font-medium hover:underline">Full Analytics →</Link>
-        </div>
-        <div className="overflow-x-auto">
-          <table className="w-full">
-            <thead>
-              <tr className="text-left text-[11px] text-ink-500 uppercase tracking-wider border-b border-ink-100">
-                <th className="pb-2 font-medium">Story</th>
-                <th className="pb-2 font-medium text-right">Views</th>
-                <th className="pb-2 font-medium text-right">Uniques</th>
-                <th className="pb-2 font-medium text-right">Avg. Time</th>
-                <th className="pb-2 font-medium text-right">Social</th>
-                <th className="pb-2 font-medium text-right">SEO Score</th>
-              </tr>
-            </thead>
-            <tbody>
-              {recentPublished.sort((a,b) => b.stats.views - a.stats.views).map(story => (
-                <tr key={story.id} className="border-b border-ink-50 last:border-0">
-                  <td className="py-3">
-                    <div className="text-sm font-medium text-ink-800 max-w-md truncate">{story.headline}</div>
-                    <div className="text-xs text-ink-500">{story.author.name}</div>
-                  </td>
-                  <td className="py-3 text-right text-sm font-medium text-ink-900">{story.stats.views.toLocaleString()}</td>
-                  <td className="py-3 text-right text-sm text-ink-600">{story.stats.uniqueReaders.toLocaleString()}</td>
-                  <td className="py-3 text-right text-sm text-ink-600">{story.stats.avgTimeOnPage}</td>
-                  <td className="py-3 text-right text-sm text-ink-600">{story.stats.socialShares}</td>
-                  <td className="py-3 text-right">
-                    <span className={`px-2 py-0.5 text-xs font-medium rounded ${
-                      story.seo.score >= 90 ? 'bg-green-100 text-green-700' :
-                      story.seo.score >= 75 ? 'bg-yellow-100 text-yellow-700' :
-                      'bg-red-100 text-red-700'
-                    }`}>
-                      {story.seo.score}
-                    </span>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      </div>
+function ActionLink({ href, children }) {
+  return (
+    <Link href={href} className="px-4 py-2 bg-white text-ink-700 text-sm font-semibold rounded-lg border border-ink-200 hover:bg-ink-50">
+      {children}
+    </Link>
+  );
+}
 
-      {/* AI Insights */}
-      <div className="bg-gradient-to-r from-brand-950 to-brand-800 rounded-xl p-5 text-white">
-        <div className="flex items-center gap-2 mb-3">
-          <span className="text-lg">🤖</span>
-          <h3 className="text-sm font-bold">AI Insights & Recommendations</h3>
-        </div>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <div className="bg-white/10 rounded-lg p-3">
-            <div className="text-xs text-white/60 mb-1">Trending Topic</div>
-            <div className="text-sm font-medium">&quot;West Virginia infrastructure&quot; is trending on Google — 3 of your stories match. Consider a landing page.</div>
-          </div>
-          <div className="bg-white/10 rounded-lg p-3">
-            <div className="text-xs text-white/60 mb-1">SEO Opportunity</div>
-            <div className="text-sm font-medium">4 stories published today are missing meta descriptions. AI can generate them in one click.</div>
-          </div>
-          <div className="bg-white/10 rounded-lg p-3">
-            <div className="text-xs text-white/60 mb-1">Engagement Alert</div>
-            <div className="text-sm font-medium">The WVU basketball story has 2× average social engagement. Boost it on Facebook and Instagram.</div>
-          </div>
-        </div>
+function Ga4Notice({ error }) {
+  return (
+    <div className="bg-amber-50 border border-amber-200 rounded-xl p-4 text-sm">
+      <div className="font-semibold text-amber-900 mb-1">📊 Pageview numbers will appear once GA4 is connected</div>
+      <p className="text-amber-800 text-xs">
+        In <a className="underline" href="https://analytics.google.com" target="_blank" rel="noreferrer">GA4 → Admin → Property → Property Access Management</a>, add{' '}
+        <code className="px-1 py-0.5 bg-white rounded font-mono">firebase-adminsdk-fbsvc@wvnews-crm.iam.gserviceaccount.com</code>{' '}
+        with the <strong>Viewer</strong> role. Stats will populate within minutes of pageviews flowing in.
+        {error && <span className="block mt-1 text-amber-700">Last error: {error}</span>}
+      </p>
+    </div>
+  );
+}
+
+function SysRow({ label, ok, hint }) {
+  return (
+    <div className="flex items-center gap-2 p-3 bg-ink-50 rounded">
+      <span>{ok ? '🟢' : '🟡'}</span>
+      <div className="flex-1">
+        <div className="text-sm font-semibold text-ink-900">{label}</div>
+        <div className="text-xs text-ink-500">{hint}</div>
       </div>
     </div>
   );
