@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-04-25T17:41:04.373Z",
+  "fetchedAt": "2026-04-25T18:26:47.241Z",
   "source": "wvnews.com RSS + section HTML backfill",
   "target": 10,
   "siteCounts": {
@@ -24,6 +24,18 @@
   "stories": {
     "exponent": [
       {
+        "id": "62d27113-a218-4d8b-80e1-1b2fcfbccb58",
+        "slug": "clarksburg-city-parks-to-host-an-array-of-low-cost-amphitheater-shows-this-summer",
+        "title": "Clarksburg City Parks to host an array of low-cost amphitheater shows this summer",
+        "description": "",
+        "pubDate": null,
+        "author": "",
+        "image": null,
+        "sourceUrl": "https://www.wvnews.com/theet/news/local/clarksburg-city-parks-to-host-an-array-of-low-cost-amphitheater-shows-this-summer/article_62d27113-a218-4d8b-80e1-1b2fcfbccb58.html",
+        "prefix": "theet",
+        "source": "section"
+      },
+      {
         "id": "b531222a-70ae-425b-8387-37cd46aa1cb8",
         "slug": "sink-hole-causes-closure-of-southbound-route-19-in-harrison-county",
         "title": "Sink hole causes closure of southbound Route 19 in Harrison County",
@@ -36,14 +48,14 @@
         "source": "section"
       },
       {
-        "id": "b4ceebe9-0cee-46e4-8343-3c98f4425ed3",
-        "slug": "wvu-womens-basketballs-gia-cooke-madison-parrish-to-be-at-meadowbrook-mall-today-for-free",
-        "title": "WVU women's basketball's Gia Cooke, Madison Parrish to be at Meadowbrook Mall today for free meet-and-greet",
+        "id": "5e27788c-6d18-4e38-b79f-f6f8a397226a",
+        "slug": "calendar-of-events-for-saturday",
+        "title": "Calendar of Events for Saturday",
         "description": "",
         "pubDate": null,
         "author": "",
         "image": null,
-        "sourceUrl": "https://www.wvnews.com/theet/news/local/wvu-womens-basketballs-gia-cooke-madison-parrish-to-be-at-meadowbrook-mall-today-for-free/article_b4ceebe9-0cee-46e4-8343-3c98f4425ed3.html",
+        "sourceUrl": "https://www.wvnews.com/theet/calendar/calendar-of-events-for-saturday/article_5e27788c-6d18-4e38-b79f-f6f8a397226a.html",
         "prefix": "theet",
         "source": "section"
       },
@@ -128,18 +140,6 @@
         "author": "",
         "image": null,
         "sourceUrl": "https://www.wvnews.com/theet/news/utc-students-earn-33-medals-at-2026-skillsusa-state-competition/article_93cab2b1-0360-4b74-91da-e53d59e5f985.html",
-        "prefix": "theet",
-        "source": "section"
-      },
-      {
-        "id": "06707696-a070-46c6-9a87-8e235b8e6211",
-        "slug": "george-hoffman-murder-trial-set-to-begin-may-11-amid-unresolved-rulings-on-trial-structure",
-        "title": "George Hoffman murder trial set to begin May 11 amid unresolved rulings on trial structure, evidence",
-        "description": "",
-        "pubDate": null,
-        "author": "",
-        "image": null,
-        "sourceUrl": "https://www.wvnews.com/theet/news/george-hoffman-murder-trial-set-to-begin-may-11-amid-unresolved-rulings-on-trial-structure/article_06707696-a070-46c6-9a87-8e235b8e6211.html",
         "prefix": "theet",
         "source": "section"
       }
@@ -1245,18 +1245,6 @@
         "source": "section"
       },
       {
-        "id": "9e112cea-f87c-4163-b04e-a7ba7daca77e",
-        "slug": "meigs-aubrey-newell-signs-with-wilmington-softball",
-        "title": "Meigs' Aubrey Newell signs with Wilmington softball",
-        "description": "",
-        "pubDate": null,
-        "author": "",
-        "image": null,
-        "sourceUrl": "https://www.wvnews.com/rivercities/pomeroy/sports/meigs-aubrey-newell-signs-with-wilmington-softball/article_9e112cea-f87c-4163-b04e-a7ba7daca77e.html",
-        "prefix": "rivercities",
-        "source": "section"
-      },
-      {
         "id": "ae3ff41a-0948-4eea-a9d1-27f093a982bf",
         "slug": "river-valley-science-teacher-presents-research-classroom-innovations-at-national-conference-in-california",
         "title": "River Valley science teacher presents research, classroom innovations at national conference in California",
@@ -1301,6 +1289,18 @@
         "author": "",
         "image": null,
         "sourceUrl": "https://www.wvnews.com/rivercities/rio-honors-faculty-for-excellence-in-teaching-service/article_76a45982-e92f-4ba9-ba4a-58f5fe06177a.html",
+        "prefix": "rivercities",
+        "source": "section"
+      },
+      {
+        "id": "a6a761ed-3726-4cac-8a79-fd07ed54bbdf",
+        "slug": "gallia-county-student-art-show-draws-praise-community-support-at-french-art-colony",
+        "title": "Gallia County student art show draws praise, community support at French Art Colony",
+        "description": "",
+        "pubDate": null,
+        "author": "",
+        "image": null,
+        "sourceUrl": "https://www.wvnews.com/rivercities/gallia-county-student-art-show-draws-praise-community-support-at-french-art-colony/article_a6a761ed-3726-4cac-8a79-fd07ed54bbdf.html",
         "prefix": "rivercities",
         "source": "section"
       }
