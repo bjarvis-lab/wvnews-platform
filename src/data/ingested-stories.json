@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-04-25T19:59:16.860Z",
+  "fetchedAt": "2026-04-25T20:40:04.989Z",
   "source": "wvnews.com RSS + section HTML backfill",
   "target": 10,
   "siteCounts": {
@@ -330,6 +330,18 @@
     ],
     "bluegold": [
       {
+        "id": "ecee93e9-8fb9-4c20-be1c-8af1f27e8a85",
+        "slug": "wvu-wins-two-day-affair-to-take-game-one-of-cincinnati-series",
+        "title": "WVU wins two-day affair to take game one of Cincinnati series",
+        "description": "",
+        "pubDate": null,
+        "author": "",
+        "image": null,
+        "sourceUrl": "https://www.wvnews.com/bluegoldnews/wvu-wins-two-day-affair-to-take-game-one-of-cincinnati-series/article_ecee93e9-8fb9-4c20-be1c-8af1f27e8a85.html",
+        "prefix": "bluegoldnews",
+        "source": "section"
+      },
+      {
         "id": "f9781b70-996b-424d-ac88-09569c03d57a",
         "slug": "another-big-for-restructuring-wvu-mens-hoops",
         "title": "Another big for restructuring WVU men's hoops",
@@ -434,18 +446,6 @@
         "author": "",
         "image": null,
         "sourceUrl": "https://www.wvnews.com/bluegoldnews/friday-is-an-unlucky-day-for-wvu-baseball/article_c9f02c0d-fcd5-4020-bd74-ae49b8578b3b.html",
-        "prefix": "bluegoldnews",
-        "source": "section"
-      },
-      {
-        "id": "18f407ec-f7ac-4dab-a8ba-95d1531b8062",
-        "slug": "kennedy-harris-signs-with-wvu-womens-basketball",
-        "title": "Kennedy Harris signs with WVU women's basketball",
-        "description": "",
-        "pubDate": null,
-        "author": "",
-        "image": null,
-        "sourceUrl": "https://www.wvnews.com/bluegoldnews/kennedy-harris-signs-with-wvu-womens-basketball/article_18f407ec-f7ac-4dab-a8ba-95d1531b8062.html",
         "prefix": "bluegoldnews",
         "source": "section"
       }
