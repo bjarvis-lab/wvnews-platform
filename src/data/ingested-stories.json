@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-04-25T16:01:43.124Z",
+  "fetchedAt": "2026-04-25T17:00:10.004Z",
   "source": "wvnews.com RSS + section HTML backfill",
   "target": 10,
   "siteCounts": {
@@ -25,13 +25,13 @@
     "exponent": [
       {
         "id": "b531222a-70ae-425b-8387-37cd46aa1cb8",
-        "slug": "sink-hole-causes-closure-of-southbound-route-19-near-arlington-in-harrison-county",
-        "title": "Sink hole causes closure of southbound Route 19 near Arlington, in Harrison County",
+        "slug": "sink-hole-causes-closure-of-southbound-route-19-in-harrison-county",
+        "title": "Sink hole causes closure of southbound Route 19 in Harrison County",
         "description": "",
         "pubDate": null,
         "author": "",
         "image": null,
-        "sourceUrl": "https://www.wvnews.com/theet/news/local/sink-hole-causes-closure-of-southbound-route-19-near-arlington-in-harrison-county/article_b531222a-70ae-425b-8387-37cd46aa1cb8.html",
+        "sourceUrl": "https://www.wvnews.com/theet/news/local/sink-hole-causes-closure-of-southbound-route-19-in-harrison-county/article_b531222a-70ae-425b-8387-37cd46aa1cb8.html",
         "prefix": "theet",
         "source": "section"
       },
@@ -452,6 +452,18 @@
     ],
     "recorddelta": [
       {
+        "id": "a81a81a5-4afe-4c11-afc8-f574fa2735bd",
+        "slug": "money-bomb-morrisey-linked-groups-pour-millions-into-legislative-races",
+        "title": "Money Bomb: Morrisey-linked groups pour millions into legislative races",
+        "description": "",
+        "pubDate": null,
+        "author": "",
+        "image": null,
+        "sourceUrl": "https://www.wvnews.com/recorddelta/news/money-bomb-morrisey-linked-groups-pour-millions-into-legislative-races/article_a81a81a5-4afe-4c11-afc8-f574fa2735bd.html",
+        "prefix": "recorddelta",
+        "source": "section"
+      },
+      {
         "id": "b03f8d94-3bec-49b9-a0d3-9265ba3eafd7",
         "slug": "buckhannon-upshur-high-school-students-commit-to-military-service-at-signing-ceremony",
         "title": "Buckhannon-Upshur High School students commit to military service at signing ceremony",
@@ -512,6 +524,30 @@
         "source": "section"
       },
       {
+        "id": "4571203e-db29-4be1-9ec1-ca41b4243fdf",
+        "slug": "west-virginia-wesleyan-softball-drops-pair-to-west-liberty-sweeps-wheeling",
+        "title": "West Virginia Wesleyan softball drops pair to West Liberty, sweeps Wheeling",
+        "description": "",
+        "pubDate": null,
+        "author": "",
+        "image": null,
+        "sourceUrl": "https://www.wvnews.com/recorddelta/sports/west-virginia-wesleyan-softball-drops-pair-to-west-liberty-sweeps-wheeling/article_4571203e-db29-4be1-9ec1-ca41b4243fdf.html",
+        "prefix": "recorddelta",
+        "source": "section"
+      },
+      {
+        "id": "46164cc3-5213-4641-b676-2321effa2a6b",
+        "slug": "west-virginia-wesleyan-baseball-swept-in-4-game-home-series-by-charleston",
+        "title": "West Virginia Wesleyan baseball swept in 4-game home series by Charleston",
+        "description": "",
+        "pubDate": null,
+        "author": "",
+        "image": null,
+        "sourceUrl": "https://www.wvnews.com/recorddelta/sports/west-virginia-wesleyan-baseball-swept-in-4-game-home-series-by-charleston/article_46164cc3-5213-4641-b676-2321effa2a6b.html",
+        "prefix": "recorddelta",
+        "source": "section"
+      },
+      {
         "id": "95129daa-b1fe-4749-98d1-a77ba4da9531",
         "slug": "west-virginia-wesleyan-womens-tennis-battles-in-loss-to-slippery-rock-5-2",
         "title": "West Virginia Wesleyan women's tennis battles in loss to Slippery Rock, 5-2",
@@ -532,42 +568,6 @@
         "author": "",
         "image": null,
         "sourceUrl": "https://www.wvnews.com/recorddelta/sports/buckhannon-upshur-baseball-battles-to-2-3-record-over-busy-5-game-stretch/article_1d6ddbc0-75f5-41b8-9fcc-0b6ac666534d.html",
-        "prefix": "recorddelta",
-        "source": "section"
-      },
-      {
-        "id": "c5b77c7f-6677-441b-be26-16d30b550573",
-        "slug": "west-virginia-wesleyan-track-teams-post-strong-showing-at-jasmine-clagett-memorial-meet",
-        "title": "West Virginia Wesleyan track teams post strong showing at Jasmine Clagett Memorial meet",
-        "description": "",
-        "pubDate": null,
-        "author": "",
-        "image": null,
-        "sourceUrl": "https://www.wvnews.com/recorddelta/sports/west-virginia-wesleyan-track-teams-post-strong-showing-at-jasmine-clagett-memorial-meet/article_c5b77c7f-6677-441b-be26-16d30b550573.html",
-        "prefix": "recorddelta",
-        "source": "section"
-      },
-      {
-        "id": "ac01cd71-aa31-4360-90b2-9947dd4e34dc",
-        "slug": "buckhannon-upshur-softball-extends-winning-streak-to-6-straight",
-        "title": "Buckhannon-Upshur softball extends winning streak to 6 straight",
-        "description": "",
-        "pubDate": null,
-        "author": "",
-        "image": null,
-        "sourceUrl": "https://www.wvnews.com/recorddelta/sports/buckhannon-upshur-softball-extends-winning-streak-to-6-straight/article_ac01cd71-aa31-4360-90b2-9947dd4e34dc.html",
-        "prefix": "recorddelta",
-        "source": "section"
-      },
-      {
-        "id": "dd3be4f4-9e4c-4914-91b6-dc5b23edb5c9",
-        "slug": "buckhannon-native-mr-understood-to-release-new-album-honoring-hometown",
-        "title": "Buckhannon native 'Mr. Understood' to Release New Album Honoring Hometown",
-        "description": "",
-        "pubDate": null,
-        "author": "",
-        "image": null,
-        "sourceUrl": "https://www.wvnews.com/recorddelta/news/buckhannon-native-mr-understood-to-release-new-album-honoring-hometown/article_dd3be4f4-9e4c-4914-91b6-dc5b23edb5c9.html",
         "prefix": "recorddelta",
         "source": "section"
       }
@@ -819,6 +819,18 @@
     ],
     "braxtondem": [
       {
+        "id": "b7947076-80d4-43f1-839f-5466b3e6f256",
+        "slug": "money-bomb-morrisey-linked-groups-pour-millions-into-legislative-races",
+        "title": "Money Bomb: Morrisey-linked groups pour millions into legislative races",
+        "description": "",
+        "pubDate": null,
+        "author": "",
+        "image": null,
+        "sourceUrl": "https://www.wvnews.com/braxtonnews/news/money-bomb-morrisey-linked-groups-pour-millions-into-legislative-races/article_b7947076-80d4-43f1-839f-5466b3e6f256.html",
+        "prefix": "braxtonnews",
+        "source": "section"
+      },
+      {
         "id": "e7c00be6-9abf-4473-af38-2fc3a5d1ca6f",
         "slug": "samantha-rexroad-chooses-wvu-sets-sights-on-pediatric-nursing-career",
         "title": "Samantha Rexroad chooses WVU, sets sights on pediatric nursing career",
@@ -879,18 +891,6 @@
         "source": "section"
       },
       {
-        "id": "79d9b576-5488-4016-aa6e-26c7b3290a94",
-        "slug": "braxton-middle-school-track-dominates-sidney-boggs-memorial-meet",
-        "title": "Braxton Middle School track dominates Sidney Boggs Memorial Meet",
-        "description": "",
-        "pubDate": null,
-        "author": "",
-        "image": null,
-        "sourceUrl": "https://www.wvnews.com/braxtonnews/sports/braxton-middle-school-track-dominates-sidney-boggs-memorial-meet/article_79d9b576-5488-4016-aa6e-26c7b3290a94.html",
-        "prefix": "braxtonnews",
-        "source": "section"
-      },
-      {
         "id": "b98827de-9704-4d37-af8f-effac6669c8b",
         "slug": "mountaineer-food-bank-four-decades-of-feeding-west-virginia",
         "title": "Mountaineer Food Bank: four decades of feeding West Virginia",
@@ -915,14 +915,14 @@
         "source": "section"
       },
       {
-        "id": "cd55651c-1cfa-48be-a2b7-7063e74555c4",
-        "slug": "ceos-combined-meeting-held-april-8",
-        "title": "CEOS combined meeting held April 8",
+        "id": "79d9b576-5488-4016-aa6e-26c7b3290a94",
+        "slug": "braxton-middle-school-track-dominates-sidney-boggs-memorial-meet",
+        "title": "Braxton Middle School track dominates Sidney Boggs Memorial Meet",
         "description": "",
         "pubDate": null,
         "author": "",
         "image": null,
-        "sourceUrl": "https://www.wvnews.com/braxtonnews/news/ceos-combined-meeting-held-april-8/article_cd55651c-1cfa-48be-a2b7-7063e74555c4.html",
+        "sourceUrl": "https://www.wvnews.com/braxtonnews/sports/braxton-middle-school-track-dominates-sidney-boggs-memorial-meet/article_79d9b576-5488-4016-aa6e-26c7b3290a94.html",
         "prefix": "braxtonnews",
         "source": "section"
       },
@@ -1185,6 +1185,18 @@
     ],
     "rivercities": [
       {
+        "id": "40c56262-2156-4275-82b2-32a9a14beab6",
+        "slug": "money-bomb-morrisey-linked-groups-pour-millions-into-legislative-races",
+        "title": "Money Bomb: Morrisey-linked groups pour millions into legislative races",
+        "description": "",
+        "pubDate": null,
+        "author": "",
+        "image": null,
+        "sourceUrl": "https://www.wvnews.com/rivercities/news/money-bomb-morrisey-linked-groups-pour-millions-into-legislative-races/article_40c56262-2156-4275-82b2-32a9a14beab6.html",
+        "prefix": "rivercities",
+        "source": "section"
+      },
+      {
         "id": "1fb621aa-ef7a-4a3f-8c58-9541a4d3e11b",
         "slug": "mason-county-ceos-hosts-spring-luncheon-in-leon",
         "title": "Mason County CEOS hosts Spring Luncheon in Leon",
@@ -1221,14 +1233,14 @@
         "source": "section"
       },
       {
-        "id": "ae3ff41a-0948-4eea-a9d1-27f093a982bf",
-        "slug": "river-valley-science-teacher-presents-research-classroom-innovations-at-national-conference-in-california",
-        "title": "River Valley science teacher presents research, classroom innovations at national conference in California",
+        "id": "0341a25d-e9ca-4fd4-a7f3-715784278f20",
+        "slug": "thursdays-sports-recap-gallia-boys-win-wellston-meet",
+        "title": "Thursday's sports recap: Gallia boys win Wellston meet",
         "description": "",
         "pubDate": null,
         "author": "",
         "image": null,
-        "sourceUrl": "https://www.wvnews.com/rivercities/river-valley-science-teacher-presents-research-classroom-innovations-at-national-conference-in-california/article_ae3ff41a-0948-4eea-a9d1-27f093a982bf.html",
+        "sourceUrl": "https://www.wvnews.com/rivercities/gallipolis/sports/thursdays-sports-recap-gallia-boys-win-wellston-meet/article_0341a25d-e9ca-4fd4-a7f3-715784278f20.html",
         "prefix": "rivercities",
         "source": "section"
       },
@@ -1257,14 +1269,14 @@
         "source": "section"
       },
       {
-        "id": "fabc45cc-8d30-4356-8dfe-a08149038bf2",
-        "slug": "ethan-edwards-throws-perfect-game-as-eastern-shuts-out-belpre-11-0",
-        "title": "Ethan Edwards throws perfect game as Eastern shuts out Belpre 11-0",
+        "id": "ae3ff41a-0948-4eea-a9d1-27f093a982bf",
+        "slug": "river-valley-science-teacher-presents-research-classroom-innovations-at-national-conference-in-california",
+        "title": "River Valley science teacher presents research, classroom innovations at national conference in California",
         "description": "",
         "pubDate": null,
         "author": "",
         "image": null,
-        "sourceUrl": "https://www.wvnews.com/rivercities/pomeroy/sports/ethan-edwards-throws-perfect-game-as-eastern-shuts-out-belpre-11-0/article_fabc45cc-8d30-4356-8dfe-a08149038bf2.html",
+        "sourceUrl": "https://www.wvnews.com/rivercities/river-valley-science-teacher-presents-research-classroom-innovations-at-national-conference-in-california/article_ae3ff41a-0948-4eea-a9d1-27f093a982bf.html",
         "prefix": "rivercities",
         "source": "section"
       },
@@ -1289,18 +1301,6 @@
         "author": "",
         "image": null,
         "sourceUrl": "https://www.wvnews.com/rivercities/news/meigs-health-matters-preventing-cervical-cancer/article_d0d7712c-bb72-4231-9181-5f0e3ec9611c.html",
-        "prefix": "rivercities",
-        "source": "section"
-      },
-      {
-        "id": "76a45982-e92f-4ba9-ba4a-58f5fe06177a",
-        "slug": "rio-honors-faculty-for-excellence-in-teaching-service",
-        "title": "Rio honors faculty for excellence in teaching, service",
-        "description": "",
-        "pubDate": null,
-        "author": "",
-        "image": null,
-        "sourceUrl": "https://www.wvnews.com/rivercities/rio-honors-faculty-for-excellence-in-teaching-service/article_76a45982-e92f-4ba9-ba4a-58f5fe06177a.html",
         "prefix": "rivercities",
         "source": "section"
       }
@@ -1635,38 +1635,38 @@
         "source": "section"
       },
       {
-        "id": "0d265dc3-d94d-496e-8725-ca50cbba0639",
-        "slug": "lewis-county-senior-center-menu",
-        "title": "Lewis County Senior Center menu",
+        "id": "7eb19bf6-a424-4023-8595-c5bb70d52ec8",
+        "slug": "vandalia-ceos-club-hosts-lesson-leader-training-county-council-meeting",
+        "title": "Vandalia CEOS Club hosts lesson leader training, County Council meeting",
         "description": "",
         "pubDate": null,
         "author": "",
         "image": null,
-        "sourceUrl": "https://www.wvnews.com/westondemocrat/news/local/lewis-county-senior-center-menu/article_0d265dc3-d94d-496e-8725-ca50cbba0639.html",
+        "sourceUrl": "https://www.wvnews.com/westondemocrat/news/local/vandalia-ceos-club-hosts-lesson-leader-training-county-council-meeting/article_7eb19bf6-a424-4023-8595-c5bb70d52ec8.html",
         "prefix": "westondemocrat",
         "source": "section"
       },
       {
-        "id": "b2dda42f-4f2d-450c-ba71-ebf2f922b5b4",
-        "slug": "lewis-county-track-and-field-shines-at-buckhannon-quad-and-mountaineer-showcase",
-        "title": "Lewis County Track and Field Shines at Buckhannon Quad and Mountaineer Showcase",
+        "id": "8da54b76-2e10-4e4c-8fb0-3540bd9ff641",
+        "slug": "weston-area-community-educational-outreach-service-meets-at-stonewall-resort",
+        "title": "Weston Area Community Educational Outreach Service meets at Stonewall Resort",
         "description": "",
         "pubDate": null,
         "author": "",
         "image": null,
-        "sourceUrl": "https://www.wvnews.com/westondemocrat/sports/local/lewis-county-track-and-field-shines-at-buckhannon-quad-and-mountaineer-showcase/article_b2dda42f-4f2d-450c-ba71-ebf2f922b5b4.html",
+        "sourceUrl": "https://www.wvnews.com/westondemocrat/news/local/weston-area-community-educational-outreach-service-meets-at-stonewall-resort/article_8da54b76-2e10-4e4c-8fb0-3540bd9ff641.html",
         "prefix": "westondemocrat",
         "source": "section"
       },
       {
-        "id": "800910a6-7b6f-4de5-8831-d82ebea7125f",
-        "slug": "lewis-county-baseball-stuns-no-2-gilmer-county-in-12-inning-marathon",
-        "title": "Lewis County Baseball Stuns No. 2 Gilmer County in 12-Inning Marathon",
+        "id": "4e3db7b1-0263-42f1-93f8-cc08ae2801a4",
+        "slug": "money-bomb-morrisey-linked-groups-pour-millions-into-legislative-races",
+        "title": "Money Bomb: Morrisey-linked groups pour millions into legislative races",
         "description": "",
         "pubDate": null,
         "author": "",
         "image": null,
-        "sourceUrl": "https://www.wvnews.com/westondemocrat/sports/local/lewis-county-baseball-stuns-no-2-gilmer-county-in-12-inning-marathon/article_800910a6-7b6f-4de5-8831-d82ebea7125f.html",
+        "sourceUrl": "https://www.wvnews.com/westondemocrat/news/local/money-bomb-morrisey-linked-groups-pour-millions-into-legislative-races/article_4e3db7b1-0263-42f1-93f8-cc08ae2801a4.html",
         "prefix": "westondemocrat",
         "source": "section"
       }
