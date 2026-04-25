@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-04-25T17:00:10.004Z",
+  "fetchedAt": "2026-04-25T17:41:04.373Z",
   "source": "wvnews.com RSS + section HTML backfill",
   "target": 10,
   "siteCounts": {
@@ -1257,18 +1257,6 @@
         "source": "section"
       },
       {
-        "id": "e4ffa79d-f41e-43e8-b841-5d9d4a9af881",
-        "slug": "meigs-bella-roush-signs-letter-of-intent-for-rio-softball",
-        "title": "Meigs' Bella Roush signs letter of intent for Rio softball",
-        "description": "",
-        "pubDate": null,
-        "author": "",
-        "image": null,
-        "sourceUrl": "https://www.wvnews.com/rivercities/pomeroy/sports/meigs-bella-roush-signs-letter-of-intent-for-rio-softball/article_e4ffa79d-f41e-43e8-b841-5d9d4a9af881.html",
-        "prefix": "rivercities",
-        "source": "section"
-      },
-      {
         "id": "ae3ff41a-0948-4eea-a9d1-27f093a982bf",
         "slug": "river-valley-science-teacher-presents-research-classroom-innovations-at-national-conference-in-california",
         "title": "River Valley science teacher presents research, classroom innovations at national conference in California",
@@ -1301,6 +1289,18 @@
         "author": "",
         "image": null,
         "sourceUrl": "https://www.wvnews.com/rivercities/news/meigs-health-matters-preventing-cervical-cancer/article_d0d7712c-bb72-4231-9181-5f0e3ec9611c.html",
+        "prefix": "rivercities",
+        "source": "section"
+      },
+      {
+        "id": "76a45982-e92f-4ba9-ba4a-58f5fe06177a",
+        "slug": "rio-honors-faculty-for-excellence-in-teaching-service",
+        "title": "Rio honors faculty for excellence in teaching, service",
+        "description": "",
+        "pubDate": null,
+        "author": "",
+        "image": null,
+        "sourceUrl": "https://www.wvnews.com/rivercities/rio-honors-faculty-for-excellence-in-teaching-service/article_76a45982-e92f-4ba9-ba4a-58f5fe06177a.html",
         "prefix": "rivercities",
         "source": "section"
       }
