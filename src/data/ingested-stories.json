@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-04-26T20:29:07.667Z",
+  "fetchedAt": "2026-04-26T21:05:05.850Z",
   "source": "wvnews.com RSS + section HTML backfill",
   "target": 10,
   "siteCounts": {
@@ -10,7 +10,7 @@
     "recorddelta": 10,
     "jackson": 10,
     "preston": 0,
-    "garrett": 0,
+    "garrett": 10,
     "braxtondem": 10,
     "mtnstates": 10,
     "fmn": 10,
@@ -695,7 +695,128 @@
       }
     ],
     "preston": [],
-    "garrett": [],
+    "garrett": [
+      {
+        "id": "705a1ccb-9a82-4584-838e-871e804a59de",
+        "slug": "fsu-s-10th-annual-jazz-festival-features-the-u-s-navy-band-commodores",
+        "title": "FSU’s 10th Annual Jazz Festival features the U.S. Navy Band Commodores",
+        "description": "",
+        "pubDate": null,
+        "author": "",
+        "image": null,
+        "sourceUrl": "https://www.wvnews.com/garrettrepublican/news/fsu-s-10th-annual-jazz-festival-features-the-u-s-navy-band-commodores/article_705a1ccb-9a82-4584-838e-871e804a59de.html",
+        "prefix": "garrettrepublican",
+        "source": "section"
+      },
+      {
+        "id": "479a2c48-0565-4ed6-8b2b-1f6c77562345",
+        "slug": "raised-beds-a-versatile-addition-to-landscapes",
+        "title": "Raised beds: a versatile addition to landscapes",
+        "description": "",
+        "pubDate": null,
+        "author": "",
+        "image": null,
+        "sourceUrl": "https://www.wvnews.com/garrettrepublican/news/raised-beds-a-versatile-addition-to-landscapes/article_479a2c48-0565-4ed6-8b2b-1f6c77562345.html",
+        "prefix": "garrettrepublican",
+        "source": "section"
+      },
+      {
+        "id": "342efd2b-1a60-4a1b-9ced-3df55e73f1c6",
+        "slug": "container-gardening-is-an-easy-process",
+        "title": "Container gardening is an easy process",
+        "description": "",
+        "pubDate": null,
+        "author": "",
+        "image": null,
+        "sourceUrl": "https://www.wvnews.com/garrettrepublican/news/container-gardening-is-an-easy-process/article_342efd2b-1a60-4a1b-9ced-3df55e73f1c6.html",
+        "prefix": "garrettrepublican",
+        "source": "section"
+      },
+      {
+        "id": "2080b6a1-3e27-4f28-b463-387a99ef2eba",
+        "slug": "garrett-college-named-2025-tree-campus",
+        "title": "Garrett College named 2025 Tree Campus",
+        "description": "",
+        "pubDate": null,
+        "author": "",
+        "image": null,
+        "sourceUrl": "https://www.wvnews.com/garrettrepublican/news/garrett-college-named-2025-tree-campus/article_2080b6a1-3e27-4f28-b463-387a99ef2eba.html",
+        "prefix": "garrettrepublican",
+        "source": "section"
+      },
+      {
+        "id": "e387b537-f9a7-40a6-af76-ea81a95e8340",
+        "slug": "starting-a-cut-flower-garden-for-your-own-bouquets",
+        "title": "Starting a cut flower garden for your own bouquets",
+        "description": "",
+        "pubDate": null,
+        "author": "",
+        "image": null,
+        "sourceUrl": "https://www.wvnews.com/garrettrepublican/news/starting-a-cut-flower-garden-for-your-own-bouquets/article_e387b537-f9a7-40a6-af76-ea81a95e8340.html",
+        "prefix": "garrettrepublican",
+        "source": "section"
+      },
+      {
+        "id": "0e62869b-921f-4f96-9bee-043a9ad2be02",
+        "slug": "the-green-team-10-years-and-growing",
+        "title": "The Green Team: 10 years and growing",
+        "description": "",
+        "pubDate": null,
+        "author": "",
+        "image": null,
+        "sourceUrl": "https://www.wvnews.com/garrettrepublican/news/the-green-team-10-years-and-growing/article_0e62869b-921f-4f96-9bee-043a9ad2be02.html",
+        "prefix": "garrettrepublican",
+        "source": "section"
+      },
+      {
+        "id": "84778ccd-345e-4eaa-ac88-c76cbe8b2f8a",
+        "slug": "11th-annual-mountain-maryland-native-plant-festival-set-may-9",
+        "title": "11th annual Mountain Maryland Native Plant Festival set May 9",
+        "description": "",
+        "pubDate": null,
+        "author": "",
+        "image": null,
+        "sourceUrl": "https://www.wvnews.com/garrettrepublican/news/11th-annual-mountain-maryland-native-plant-festival-set-may-9/article_84778ccd-345e-4eaa-ac88-c76cbe8b2f8a.html",
+        "prefix": "garrettrepublican",
+        "source": "section"
+      },
+      {
+        "id": "21c4c274-c795-4e29-8b8c-aaf4af073b02",
+        "slug": "planting-with-a-purpose-marylanders-invited-to-help-reach-five-million-trees-by-2031",
+        "title": "Planting with a purpose: Marylanders invited to help reach five million trees by 2031",
+        "description": "",
+        "pubDate": null,
+        "author": "",
+        "image": null,
+        "sourceUrl": "https://www.wvnews.com/garrettrepublican/news/planting-with-a-purpose-marylanders-invited-to-help-reach-five-million-trees-by-2031/article_21c4c274-c795-4e29-8b8c-aaf4af073b02.html",
+        "prefix": "garrettrepublican",
+        "source": "section"
+      },
+      {
+        "id": "93055146-bc60-11ed-8edc-934e2a34c0ee",
+        "slug": "caffeine-awareness-how-much-are-you-getting",
+        "title": "Caffeine awareness: How much are you getting?",
+        "description": "",
+        "pubDate": null,
+        "author": "",
+        "image": null,
+        "sourceUrl": "https://www.wvnews.com/garrettrepublican/lifestyles/caffeine-awareness-how-much-are-you-getting/article_93055146-bc60-11ed-8edc-934e2a34c0ee.html",
+        "prefix": "garrettrepublican",
+        "source": "section"
+      },
+      {
+        "id": "e64bc38c-b78b-11ed-ae15-a309c59b8e69",
+        "slug": "sustainable-and-healthy-nutrition-practices",
+        "title": "Sustainable and healthy nutrition practices",
+        "description": "",
+        "pubDate": null,
+        "author": "",
+        "image": null,
+        "sourceUrl": "https://www.wvnews.com/garrettrepublican/lifestyles/sustainable-and-healthy-nutrition-practices/article_e64bc38c-b78b-11ed-ae15-a309c59b8e69.html",
+        "prefix": "garrettrepublican",
+        "source": "section"
+      }
+    ],
     "braxtondem": [
       {
         "id": "b7947076-80d4-43f1-839f-5466b3e6f256",
