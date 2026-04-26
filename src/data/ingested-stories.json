@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-04-25T23:21:50.072Z",
+  "fetchedAt": "2026-04-26T00:00:27.382Z",
   "source": "wvnews.com RSS + section HTML backfill",
   "target": 10,
   "siteCounts": {
@@ -342,6 +342,30 @@
         "source": "section"
       },
       {
+        "id": "87a27a3b-89dd-4123-82c4-83d9b2025c39",
+        "slug": "steve-sabins-did-everything-right-in-wvus-win-over-cincinnati",
+        "title": "Steve Sabins did everything right in WVU's win over Cincinnati",
+        "description": "",
+        "pubDate": null,
+        "author": "",
+        "image": null,
+        "sourceUrl": "https://www.wvnews.com/bluegoldnews/steve-sabins-did-everything-right-in-wvus-win-over-cincinnati/article_87a27a3b-89dd-4123-82c4-83d9b2025c39.html",
+        "prefix": "bluegoldnews",
+        "source": "section"
+      },
+      {
+        "id": "9763228a-07cd-43cd-a4e1-0df0526fd9f9",
+        "slug": "one-of-the-wildest-strangest-games-comes-to-an-end-for-wvu-baseball",
+        "title": "One of the wildest, strangest games comes to an end for WVU baseball",
+        "description": "",
+        "pubDate": null,
+        "author": "",
+        "image": null,
+        "sourceUrl": "https://www.wvnews.com/bluegoldnews/one-of-the-wildest-strangest-games-comes-to-an-end-for-wvu-baseball/article_9763228a-07cd-43cd-a4e1-0df0526fd9f9.html",
+        "prefix": "bluegoldnews",
+        "source": "section"
+      },
+      {
         "id": "f9781b70-996b-424d-ac88-09569c03d57a",
         "slug": "another-big-for-restructuring-wvu-mens-hoops",
         "title": "Another big for restructuring WVU men's hoops",
@@ -422,30 +446,6 @@
         "author": "",
         "image": null,
         "sourceUrl": "https://www.wvnews.com/bluegoldnews/column-no-panic-necessary/article_dd47d5c4-203a-4aa0-8964-4190d66cf7ba.html",
-        "prefix": "bluegoldnews",
-        "source": "section"
-      },
-      {
-        "id": "74157229-9349-4cd5-9295-929a856e24bc",
-        "slug": "wvu-adds-acc-guard-to-2026-mens-hoops-roster",
-        "title": "WVU adds ACC guard to 2026 men's hoops roster",
-        "description": "",
-        "pubDate": null,
-        "author": "",
-        "image": null,
-        "sourceUrl": "https://www.wvnews.com/bluegoldnews/wvu-adds-acc-guard-to-2026-mens-hoops-roster/article_74157229-9349-4cd5-9295-929a856e24bc.html",
-        "prefix": "bluegoldnews",
-        "source": "section"
-      },
-      {
-        "id": "c9f02c0d-fcd5-4020-bd74-ae49b8578b3b",
-        "slug": "friday-is-an-unlucky-day-for-wvu-baseball",
-        "title": "Friday is an unlucky day for WVU baseball",
-        "description": "",
-        "pubDate": null,
-        "author": "",
-        "image": null,
-        "sourceUrl": "https://www.wvnews.com/bluegoldnews/friday-is-an-unlucky-day-for-wvu-baseball/article_c9f02c0d-fcd5-4020-bd74-ae49b8578b3b.html",
         "prefix": "bluegoldnews",
         "source": "section"
       }
