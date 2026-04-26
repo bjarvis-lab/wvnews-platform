@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-04-26T21:53:29.980Z",
+  "fetchedAt": "2026-04-26T22:28:18.492Z",
   "source": "wvnews.com RSS + section HTML backfill",
   "target": 10,
   "siteCounts": {
@@ -574,6 +574,30 @@
     ],
     "jackson": [
       {
+        "id": "29761135-3762-40bc-80da-6f2687db10da",
+        "slug": "rvhs-alumni-banquet-may-16th-has-special-honors",
+        "title": "RvHS Alumni Banquet May 16th has Special Honors",
+        "description": "",
+        "pubDate": null,
+        "author": "",
+        "image": null,
+        "sourceUrl": "https://www.wvnews.com/jacksonnews/rvhs-alumni-banquet-may-16th-has-special-honors/article_29761135-3762-40bc-80da-6f2687db10da.html",
+        "prefix": "jacksonnews",
+        "source": "section"
+      },
+      {
+        "id": "066d5463-d6ec-48d8-ae0a-f0c85fa8306b",
+        "slug": "main-street-minute",
+        "title": "Main Street Minute",
+        "description": "",
+        "pubDate": null,
+        "author": "",
+        "image": null,
+        "sourceUrl": "https://www.wvnews.com/jacksonnews/main-street-minute/article_066d5463-d6ec-48d8-ae0a-f0c85fa8306b.html",
+        "prefix": "jacksonnews",
+        "source": "section"
+      },
+      {
         "id": "ec2cbef0-d5d2-4daf-aab5-426c4e9d5eab",
         "slug": "ripley-elementary-students-celebrate-earth-day-with-hands-on-gardening-project",
         "title": "Ripley Elementary students celebrate Earth Day with hands-on gardening project",
@@ -610,6 +634,30 @@
         "source": "section"
       },
       {
+        "id": "4e0b551b-2374-42b5-939b-f39f51cb1679",
+        "slug": "money-bomb-morrisey-linked-groups-pour-millions-into-legislative-races",
+        "title": "Money Bomb: Morrisey-linked groups pour millions into legislative races",
+        "description": "",
+        "pubDate": null,
+        "author": "",
+        "image": null,
+        "sourceUrl": "https://www.wvnews.com/jacksonnews/money-bomb-morrisey-linked-groups-pour-millions-into-legislative-races/article_4e0b551b-2374-42b5-939b-f39f51cb1679.html",
+        "prefix": "jacksonnews",
+        "source": "section"
+      },
+      {
+        "id": "95024c84-5e4c-4e1d-88ce-b2e511f83de8",
+        "slug": "all-redistricting-reformers-are-hypocrites",
+        "title": "All redistricting reformers are hypocrites",
+        "description": "",
+        "pubDate": null,
+        "author": "",
+        "image": null,
+        "sourceUrl": "https://www.wvnews.com/jacksonnews/all-redistricting-reformers-are-hypocrites/article_95024c84-5e4c-4e1d-88ce-b2e511f83de8.html",
+        "prefix": "jacksonnews",
+        "source": "section"
+      },
+      {
         "id": "3c5ce7b5-4c8d-438e-9055-a001352701c2",
         "slug": "meet-the-candidates-event-set-for-april-28",
         "title": "Meet the Candidates event set for April 28",
@@ -642,54 +690,6 @@
         "author": "",
         "image": null,
         "sourceUrl": "https://www.wvnews.com/jacksonnews/five-years-strong-movin-in-may-keeps-jackson-county-active/article_801a2758-1bf5-47a7-8e1c-9903bd089a63.html",
-        "prefix": "jacksonnews",
-        "source": "section"
-      },
-      {
-        "id": "fe628db2-e4f2-4d71-9bf3-2b51b1ff9ab2",
-        "slug": "micah-s-manor-hosts-successful-first-wedding-event-expo",
-        "title": "Micah’s Manor hosts successful first Wedding & Event Expo",
-        "description": "",
-        "pubDate": null,
-        "author": "",
-        "image": null,
-        "sourceUrl": "https://www.wvnews.com/jacksonnews/micah-s-manor-hosts-successful-first-wedding-event-expo/article_fe628db2-e4f2-4d71-9bf3-2b51b1ff9ab2.html",
-        "prefix": "jacksonnews",
-        "source": "section"
-      },
-      {
-        "id": "239b7669-0032-4b44-b74c-921252513bee",
-        "slug": "gilmore-elementary-fundraiser-raises-nearly-4-400-for-new-playground-equipment",
-        "title": "Gilmore Elementary fundraiser raises nearly $4,400 for new playground equipment",
-        "description": "",
-        "pubDate": null,
-        "author": "",
-        "image": null,
-        "sourceUrl": "https://www.wvnews.com/jacksonnews/gilmore-elementary-fundraiser-raises-nearly-4-400-for-new-playground-equipment/article_239b7669-0032-4b44-b74c-921252513bee.html",
-        "prefix": "jacksonnews",
-        "source": "section"
-      },
-      {
-        "id": "0fd7adcb-15a6-4108-ab26-f99f08912f98",
-        "slug": "ravenswood-youth-bags-21-pound-gobbler-during-west-virginia-spring-turkey-season",
-        "title": "Ravenswood youth bags 21-pound gobbler during West Virginia spring turkey season",
-        "description": "",
-        "pubDate": null,
-        "author": "",
-        "image": null,
-        "sourceUrl": "https://www.wvnews.com/jacksonnews/ravenswood-youth-bags-21-pound-gobbler-during-west-virginia-spring-turkey-season/article_0fd7adcb-15a6-4108-ab26-f99f08912f98.html",
-        "prefix": "jacksonnews",
-        "source": "section"
-      },
-      {
-        "id": "86fe1f5c-b24a-4a6d-8446-3952439f1f11",
-        "slug": "ravenswood-native-finishes-as-top-american-in-paris-marathon",
-        "title": "Ravenswood native finishes as top American in Paris Marathon",
-        "description": "",
-        "pubDate": null,
-        "author": "",
-        "image": null,
-        "sourceUrl": "https://www.wvnews.com/jacksonnews/ravenswood-native-finishes-as-top-american-in-paris-marathon/article_86fe1f5c-b24a-4a6d-8446-3952439f1f11.html",
         "prefix": "jacksonnews",
         "source": "section"
       }
