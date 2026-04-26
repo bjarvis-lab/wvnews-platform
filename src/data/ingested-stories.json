@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-04-26T22:28:18.492Z",
+  "fetchedAt": "2026-04-26T23:06:33.404Z",
   "source": "wvnews.com RSS + section HTML backfill",
   "target": 10,
   "siteCounts": {
@@ -574,6 +574,18 @@
     ],
     "jackson": [
       {
+        "id": "22494bd8-a55f-4d9f-aa6e-a2a44a660183",
+        "slug": "local-high-school-students-sign-up-for-military-careers",
+        "title": "Local high school students sign up for military careers",
+        "description": "",
+        "pubDate": null,
+        "author": "",
+        "image": null,
+        "sourceUrl": "https://www.wvnews.com/jacksonnews/local-high-school-students-sign-up-for-military-careers/article_22494bd8-a55f-4d9f-aa6e-a2a44a660183.html",
+        "prefix": "jacksonnews",
+        "source": "section"
+      },
+      {
         "id": "29761135-3762-40bc-80da-6f2687db10da",
         "slug": "rvhs-alumni-banquet-may-16th-has-special-honors",
         "title": "RvHS Alumni Banquet May 16th has Special Honors",
@@ -634,6 +646,18 @@
         "source": "section"
       },
       {
+        "id": "4721aecc-df64-49e2-8e34-65e231d5f8de",
+        "slug": "west-virginia-secretary-of-state-warns-of-text-message-scam-using-state-seal",
+        "title": "West Virginia secretary of state warns of text message scam using state seal",
+        "description": "",
+        "pubDate": null,
+        "author": "",
+        "image": null,
+        "sourceUrl": "https://www.wvnews.com/jacksonnews/west-virginia-secretary-of-state-warns-of-text-message-scam-using-state-seal/article_4721aecc-df64-49e2-8e34-65e231d5f8de.html",
+        "prefix": "jacksonnews",
+        "source": "section"
+      },
+      {
         "id": "4e0b551b-2374-42b5-939b-f39f51cb1679",
         "slug": "money-bomb-morrisey-linked-groups-pour-millions-into-legislative-races",
         "title": "Money Bomb: Morrisey-linked groups pour millions into legislative races",
@@ -666,30 +690,6 @@
         "author": "",
         "image": null,
         "sourceUrl": "https://www.wvnews.com/jacksonnews/meet-the-candidates-event-set-for-april-28/article_3c5ce7b5-4c8d-438e-9055-a001352701c2.html",
-        "prefix": "jacksonnews",
-        "source": "section"
-      },
-      {
-        "id": "f3f0ec84-2531-4250-93b6-ae4c4f9d1c4f",
-        "slug": "courthouse-news",
-        "title": "Courthouse News",
-        "description": "",
-        "pubDate": null,
-        "author": "",
-        "image": null,
-        "sourceUrl": "https://www.wvnews.com/jacksonnews/courthouse-news/article_f3f0ec84-2531-4250-93b6-ae4c4f9d1c4f.html",
-        "prefix": "jacksonnews",
-        "source": "section"
-      },
-      {
-        "id": "801a2758-1bf5-47a7-8e1c-9903bd089a63",
-        "slug": "five-years-strong-movin-in-may-keeps-jackson-county-active",
-        "title": "Five Years Strong: Movin’ in May Keeps Jackson County Active",
-        "description": "",
-        "pubDate": null,
-        "author": "",
-        "image": null,
-        "sourceUrl": "https://www.wvnews.com/jacksonnews/five-years-strong-movin-in-may-keeps-jackson-county-active/article_801a2758-1bf5-47a7-8e1c-9903bd089a63.html",
         "prefix": "jacksonnews",
         "source": "section"
       }
