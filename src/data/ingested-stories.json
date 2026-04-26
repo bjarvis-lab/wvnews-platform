@@ -1,13 +1,12 @@
 {
-  "fetchedAt": "2026-04-26T03:54:27.272Z",
+  "fetchedAt": "2026-04-26T06:01:38.403Z",
   "source": "wvnews.com RSS + section HTML backfill",
   "target": 10,
   "siteCounts": {
-    "wvnews": 10,
-    "bluegold": 10,
     "exponent": 10,
     "bridgeport": 6,
     "dominion": 9,
+    "bluegold": 10,
     "recorddelta": 10,
     "jackson": 10,
     "preston": 0,
@@ -23,284 +22,40 @@
     "bulletin": 0
   },
   "stories": {
-    "wvnews": [
-      {
-        "id": "8472571c-16ee-566d-abb1-7f016139bf56",
-        "slug": "winning-numbers-drawn-in-saturday-s-west-virginia-cash-pop",
-        "title": "Winning numbers drawn in Saturday’s West Virginia Cash Pop",
-        "description": "The winning numbers in Saturday's drawing of the \"West Virginia Cash Pop\" game were:",
-        "pubDate": "2026-04-26T03:30:44.000Z",
-        "author": "By The Associated Press",
-        "image": null,
-        "sourceUrl": "https://www.wvnews.com/newsfeed/wv/winning-numbers-drawn-in-saturday-s-west-virginia-cash-pop/article_8472571c-16ee-566d-abb1-7f016139bf56.html",
-        "prefix": "newsfeed",
-        "source": "rss"
-      },
-      {
-        "id": "dafca8e5-9e4f-5eeb-8653-18cfe78b8590",
-        "slug": "timo-werners-2-goals-help-earthquakes-beat-st-louis-3-2-win-6th-in-a",
-        "title": "Timo Werner's 2 goals help Earthquakes beat St. Louis 3-2, win 6th in a row",
-        "description": "Timo Werner had two goals and an assist — his third consecutive game with multiple goal contributions — to help the San Jose Earthquakes beat St. Louis City 3-2 and extend their win streak to six games. Preston Judd added…",
-        "pubDate": "2026-04-26T03:25:00.000Z",
-        "author": "AP",
-        "image": null,
-        "sourceUrl": "https://www.wvnews.com/sports/pro/timo-werners-2-goals-help-earthquakes-beat-st-louis-3-2-win-6th-in-a/article_dafca8e5-9e4f-5eeb-8653-18cfe78b8590.html",
-        "prefix": "sports",
-        "source": "rss"
-      },
-      {
-        "id": "e8d9f6c1-c93a-552b-9bd6-eb5c0b48371c",
-        "slug": "interim-dc-police-chief-carroll-says-shooting-suspect-was-believed-to-have-been-a-hotel",
-        "title": "Interim DC police chief Carroll says shooting suspect was believed to have been a hotel guest, intended target unknown",
-        "description": "Interim DC police chief Carroll says shooting suspect was believed to have been a hotel guest, intended target unknown.",
-        "pubDate": "2026-04-26T03:22:56.000Z",
-        "author": "AP",
-        "image": null,
-        "sourceUrl": "https://www.wvnews.com/newsfeed/politics/interim-dc-police-chief-carroll-says-shooting-suspect-was-believed-to-have-been-a-hotel/article_e8d9f6c1-c93a-552b-9bd6-eb5c0b48371c.html",
-        "prefix": "newsfeed",
-        "source": "rss"
-      },
-      {
-        "id": "6a3991b8-3c22-56f8-9c4a-5a0e71a94938",
-        "slug": "hurricanes-beat-senators-4-2-complete-first-round-sweep",
-        "title": "Hurricanes beat Senators 4-2, complete first-round sweep",
-        "description": "OTTAWA, Ontario (AP) — Logan Stankoven scored the go-ahead goal in the third period as the Carolina Hurricanes defeated Ottawa 4-2 to sweep the first-round series.",
-        "pubDate": "2026-04-26T03:19:41.000Z",
-        "author": "By The Associated Press",
-        "image": "https://bloximages.chicago2.vip.townnews.com/wvnews.com/content/tncms/assets/v3/editorial/c/19/c1974a4a-4fa8-58d0-b4bd-2c27aa61ca1a/69ed8751626fa.image.jpg?resize=300%2C200",
-        "sourceUrl": "https://www.wvnews.com/sports/pro/hurricanes-beat-senators-4-2-complete-first-round-sweep/article_6a3991b8-3c22-56f8-9c4a-5a0e71a94938.html",
-        "prefix": "sports",
-        "source": "rss"
-      },
-      {
-        "id": "949e35e4-9377-5ece-8f92-3f88181d58a6",
-        "slug": "winning-numbers-drawn-in-saturday-s-west-virginia-cash-pop",
-        "title": "Winning numbers drawn in Saturday’s West Virginia Cash Pop",
-        "description": "The winning numbers in Saturday's drawing of the \"West Virginia Cash Pop\" game were:",
-        "pubDate": "2026-04-26T03:20:22.000Z",
-        "author": "By The Associated Press",
-        "image": null,
-        "sourceUrl": "https://www.wvnews.com/newsfeed/wv/winning-numbers-drawn-in-saturday-s-west-virginia-cash-pop/article_949e35e4-9377-5ece-8f92-3f88181d58a6.html",
-        "prefix": "newsfeed",
-        "source": "rss"
-      },
-      {
-        "id": "e34b6237-122a-5f77-a7a9-d1df1b94a999",
-        "slug": "dc-interim-chief-of-police-says-there-does-not-appear-to-be-any-sort-of",
-        "title": "DC interim chief of police says 'there does not appear to be any sort of danger to the public at this time'",
-        "description": "DC interim chief of police says 'there does not appear to be any sort of danger to the public at this time.'",
-        "pubDate": "2026-04-26T03:14:16.000Z",
-        "author": "AP",
-        "image": null,
-        "sourceUrl": "https://www.wvnews.com/newsfeed/politics/dc-interim-chief-of-police-says-there-does-not-appear-to-be-any-sort-of/article_e34b6237-122a-5f77-a7a9-d1df1b94a999.html",
-        "prefix": "newsfeed",
-        "source": "rss"
-      },
-      {
-        "id": "b6b9f724-7f21-5c52-9b86-6872ec1f3774",
-        "slug": "suspect-in-correspondents-dinner-shooting-has-been-charged-with-firearms-and-assault-charges-us-attorney",
-        "title": "Suspect in correspondent's dinner shooting has been charged with firearms and assault charges, US attorney says",
-        "description": "Suspect in correspondent's dinner shooting has been charged with firearms and assault charges, US attorney says.",
-        "pubDate": "2026-04-26T03:15:54.000Z",
-        "author": "AP",
-        "image": null,
-        "sourceUrl": "https://www.wvnews.com/newsfeed/politics/suspect-in-correspondents-dinner-shooting-has-been-charged-with-firearms-and-assault-charges-us-attorney/article_b6b9f724-7f21-5c52-9b86-6872ec1f3774.html",
-        "prefix": "newsfeed",
-        "source": "rss"
-      },
-      {
-        "id": "28fb4d9b-fdbd-56f1-b4bc-fb22db0eba4b",
-        "slug": "surridge-ties-mls-goal-lead-mukhtar-and-qasem-score-as-nashville-sc-beats-charlotte-fc",
-        "title": "Surridge ties MLS-goal lead, Mukhtar and Qasem score as Nashville SC beats Charlotte FC 4-2",
-        "description": "Sam Surridge scored two goals, Hany Mukhtar and Ahmed Qasem each added a goal, and Nashville SC beat Charlotte FC 4-2. Surridge has nine goals this season, tied with Dallas’ Petar Musa for most in MLS. Morrison Agyemang and Pep…",
-        "pubDate": "2026-04-26T03:13:00.000Z",
-        "author": "AP",
-        "image": null,
-        "sourceUrl": "https://www.wvnews.com/sports/pro/surridge-ties-mls-goal-lead-mukhtar-and-qasem-score-as-nashville-sc-beats-charlotte-fc/article_28fb4d9b-fdbd-56f1-b4bc-fb22db0eba4b.html",
-        "prefix": "sports",
-        "source": "rss"
-      },
-      {
-        "id": "8d110af9-8d79-506f-b36a-c845d7240207",
-        "slug": "dc-mayor-bowser-says-a-sole-gunman-rushed-secret-service-checkpoint-in-the-lobby-of",
-        "title": "DC Mayor Bowser says a sole gunman rushed Secret Service checkpoint in the lobby of the hotel holding press dinner",
-        "description": "DC Mayor Bowser says a sole gunman rushed Secret Service checkpoint in the lobby of the hotel holding press dinner.",
-        "pubDate": "2026-04-26T03:11:00.000Z",
-        "author": "AP",
-        "image": null,
-        "sourceUrl": "https://www.wvnews.com/newsfeed/politics/dc-mayor-bowser-says-a-sole-gunman-rushed-secret-service-checkpoint-in-the-lobby-of/article_8d110af9-8d79-506f-b36a-c845d7240207.html",
-        "prefix": "newsfeed",
-        "source": "rss"
-      },
-      {
-        "id": "9ba533f5-04a8-558b-9a52-e7a5237f879d",
-        "slug": "bowser-says-we-have-no-reason-to-believe-at-this-time-that-anyone-else-was",
-        "title": "Bowser says 'we have no reason to believe at this time that anyone else was involved' in dinner shooting incident",
-        "description": "Bowser says 'we have no reason to believe at this time that anyone else was involved' in dinner shooting incident.",
-        "pubDate": "2026-04-26T03:12:43.000Z",
-        "author": "AP",
-        "image": null,
-        "sourceUrl": "https://www.wvnews.com/newsfeed/politics/bowser-says-we-have-no-reason-to-believe-at-this-time-that-anyone-else-was/article_9ba533f5-04a8-558b-9a52-e7a5237f879d.html",
-        "prefix": "newsfeed",
-        "source": "rss"
-      }
-    ],
-    "bluegold": [
-      {
-        "id": "745d2aa7-aebe-4edd-9c0a-b8a56f60242f",
-        "slug": "wvu-stymied-at-plate-in-5-2-loss-to-cincinnati",
-        "title": "WVU stymied at plate in 5-2 loss to Cincinnati",
-        "description": "West Virginia was unable to capitalize on the momentum of winning the suspended Friday night game against Cincinnati when it managed just six hits against the Bearcats in a 5-2 loss in the second game of the weekend series on…",
-        "pubDate": "2026-04-26T00:00:00.000Z",
-        "author": "by Kevin Kinder",
-        "image": "https://bloximages.chicago2.vip.townnews.com/wvnews.com/content/tncms/assets/v3/editorial/a/0c/a0cfc8f6-c188-41d0-923a-c6d0b6c06ad3/69d7065eaf9a0.image.jpg?resize=300%2C229",
-        "sourceUrl": "https://www.wvnews.com/bluegoldnews/wvu-stymied-at-plate-in-5-2-loss-to-cincinnati/article_745d2aa7-aebe-4edd-9c0a-b8a56f60242f.html",
-        "prefix": "bluegoldnews",
-        "source": "rss"
-      },
-      {
-        "id": "ecee93e9-8fb9-4c20-be1c-8af1f27e8a85",
-        "slug": "wvu-wins-two-day-affair-to-take-game-one-of-cincinnati-series",
-        "title": "WVU wins two-day affair to take game one of Cincinnati series",
-        "description": "It took two days, but West Virginia rallied three times to claim a 9-5, 13-inning win over host Cincinnati in the lengthy first game of a three-game set in the Queen City.",
-        "pubDate": "2026-04-25T23:45:00.000Z",
-        "author": "by Kevin Kinder",
-        "image": "https://bloximages.chicago2.vip.townnews.com/wvnews.com/content/tncms/assets/v3/editorial/3/92/3922483a-1094-11ef-b957-efe4b15b3844/664115b326ccf.image.jpg?resize=300%2C229",
-        "sourceUrl": "https://www.wvnews.com/bluegoldnews/wvu-wins-two-day-affair-to-take-game-one-of-cincinnati-series/article_ecee93e9-8fb9-4c20-be1c-8af1f27e8a85.html",
-        "prefix": "bluegoldnews",
-        "source": "rss"
-      },
-      {
-        "id": "87a27a3b-89dd-4123-82c4-83d9b2025c39",
-        "slug": "steve-sabins-did-everything-right-in-wvus-win-over-cincinnati",
-        "title": "Steve Sabins did everything right in WVU's win over Cincinnati",
-        "description": "MORGANTOWN, W.Va. — It started at twilight on Friday with catcher Gavin Kelly hitting a two-run home run for West Virginia and ended 22 hours and 35 minutes later with now shortstop Kelly beginning a double play to get out…",
-        "pubDate": "2026-04-25T23:39:00.000Z",
-        "author": "By Bob Hertzel For WV News",
-        "image": "https://bloximages.chicago2.vip.townnews.com/wvnews.com/content/tncms/assets/v3/editorial/b/3e/b3ec2c73-1022-4527-8a5c-98e8708cebfb/69e52ed904bb3.image.jpg?resize=300%2C229",
-        "sourceUrl": "https://www.wvnews.com/bluegoldnews/steve-sabins-did-everything-right-in-wvus-win-over-cincinnati/article_87a27a3b-89dd-4123-82c4-83d9b2025c39.html",
-        "prefix": "bluegoldnews",
-        "source": "rss"
-      },
-      {
-        "id": "f9781b70-996b-424d-ac88-09569c03d57a",
-        "slug": "another-big-for-restructuring-wvu-mens-hoops",
-        "title": "Another big for restructuring WVU men's hoops",
-        "description": "",
-        "pubDate": null,
-        "author": "",
-        "image": null,
-        "sourceUrl": "https://www.wvnews.com/bluegoldnews/another-big-for-restructuring-wvu-mens-hoops/article_f9781b70-996b-424d-ac88-09569c03d57a.html",
-        "prefix": "bluegoldnews",
-        "source": "section"
-      },
-      {
-        "id": "2c462a1b-76ae-46f9-8b8a-c4d101ec9159",
-        "slug": "rebuilding-up-front-key-for-wvu",
-        "title": "Rebuilding up front key for WVU",
-        "description": "",
-        "pubDate": null,
-        "author": "",
-        "image": null,
-        "sourceUrl": "https://www.wvnews.com/bluegoldnews/rebuilding-up-front-key-for-wvu/article_2c462a1b-76ae-46f9-8b8a-c4d101ec9159.html",
-        "prefix": "bluegoldnews",
-        "source": "section"
-      },
-      {
-        "id": "7b72e3dd-1c9e-4254-b733-eb3e273a4856",
-        "slug": "standings-metrics-point-in-different-directions-as-wvu-heads-to-cincinnati-for-a-weekend-series",
-        "title": "Standings, metrics point in different directions as WVU heads to Cincinnati for a weekend series",
-        "description": "",
-        "pubDate": null,
-        "author": "",
-        "image": null,
-        "sourceUrl": "https://www.wvnews.com/bluegoldnews/standings-metrics-point-in-different-directions-as-wvu-heads-to-cincinnati-for-a-weekend-series/article_7b72e3dd-1c9e-4254-b733-eb3e273a4856.html",
-        "prefix": "bluegoldnews",
-        "source": "section"
-      },
-      {
-        "id": "089ba28a-f38e-4fd1-85de-be471dbd0d0e",
-        "slug": "akheem-mesidors-selection-in-the-nfl-draft-is-another-reminder-of-wvu-footballs-decline",
-        "title": "Akheem Mesidor's selection in the NFL draft is another reminder of WVU football's decline",
-        "description": "",
-        "pubDate": null,
-        "author": "",
-        "image": null,
-        "sourceUrl": "https://www.wvnews.com/bluegoldnews/akheem-mesidors-selection-in-the-nfl-draft-is-another-reminder-of-wvu-footballs-decline/article_089ba28a-f38e-4fd1-85de-be471dbd0d0e.html",
-        "prefix": "bluegoldnews",
-        "source": "section"
-      },
-      {
-        "id": "6a16a3c2-7619-4475-b6f1-c4db339f27d7",
-        "slug": "wvu-adds-keonte-greybear-to-growing-2026-27-roster",
-        "title": "WVU adds Keonte Greybear to growing 2026-27 roster",
-        "description": "",
-        "pubDate": null,
-        "author": "",
-        "image": null,
-        "sourceUrl": "https://www.wvnews.com/bluegoldnews/wvu-adds-keonte-greybear-to-growing-2026-27-roster/article_6a16a3c2-7619-4475-b6f1-c4db339f27d7.html",
-        "prefix": "bluegoldnews",
-        "source": "section"
-      },
-      {
-        "id": "5e898d13-3e32-4d4e-b133-e17231de335c",
-        "slug": "wvu-spring-football-festival-notebook",
-        "title": "WVU Spring Football Festival Notebook",
-        "description": "",
-        "pubDate": null,
-        "author": "",
-        "image": null,
-        "sourceUrl": "https://www.wvnews.com/bluegoldnews/wvu-spring-football-festival-notebook/article_5e898d13-3e32-4d4e-b133-e17231de335c.html",
-        "prefix": "bluegoldnews",
-        "source": "section"
-      },
-      {
-        "id": "dd47d5c4-203a-4aa0-8964-4190d66cf7ba",
-        "slug": "column-no-panic-necessary",
-        "title": "Column: No panic necessary",
-        "description": "",
-        "pubDate": null,
-        "author": "",
-        "image": null,
-        "sourceUrl": "https://www.wvnews.com/bluegoldnews/column-no-panic-necessary/article_dd47d5c4-203a-4aa0-8964-4190d66cf7ba.html",
-        "prefix": "bluegoldnews",
-        "source": "section"
-      }
-    ],
     "exponent": [
       {
-        "id": "62d27113-a218-4d8b-80e1-1b2fcfbccb58",
-        "slug": "clarksburg-city-parks-to-host-an-array-of-low-cost-amphitheater-shows-this-summer",
-        "title": "Clarksburg City Parks to host an array of low-cost amphitheater shows this summer",
+        "id": "00501a8d-c2e4-4405-baaf-4f157246384e",
+        "slug": "ncwv-leaders-working-to-complete-their-sections-of-p2p-trail",
+        "title": "NCWV leaders working to complete their sections of P2P trail",
         "description": "",
         "pubDate": null,
         "author": "",
         "image": null,
-        "sourceUrl": "https://www.wvnews.com/theet/news/local/clarksburg-city-parks-to-host-an-array-of-low-cost-amphitheater-shows-this-summer/article_62d27113-a218-4d8b-80e1-1b2fcfbccb58.html",
+        "sourceUrl": "https://www.wvnews.com/theet/news/local/ncwv-leaders-working-to-complete-their-sections-of-p2p-trail/article_00501a8d-c2e4-4405-baaf-4f157246384e.html",
         "prefix": "theet",
         "source": "section"
       },
       {
-        "id": "b531222a-70ae-425b-8387-37cd46aa1cb8",
-        "slug": "sink-hole-causes-closure-of-southbound-route-19-in-harrison-county",
-        "title": "Sink hole causes closure of southbound Route 19 in Harrison County",
+        "id": "af3d9c9b-d8f0-4d14-af5c-d5446a739ea1",
+        "slug": "local-fairs-and-festivals-gear-up-for-summer-months-packed-with-celebrations",
+        "title": "Local fairs and festivals gear up for summer months packed with celebrations",
         "description": "",
         "pubDate": null,
         "author": "",
         "image": null,
-        "sourceUrl": "https://www.wvnews.com/theet/news/local/sink-hole-causes-closure-of-southbound-route-19-in-harrison-county/article_b531222a-70ae-425b-8387-37cd46aa1cb8.html",
+        "sourceUrl": "https://www.wvnews.com/theet/news/local/local-fairs-and-festivals-gear-up-for-summer-months-packed-with-celebrations/article_af3d9c9b-d8f0-4d14-af5c-d5446a739ea1.html",
         "prefix": "theet",
         "source": "section"
       },
       {
-        "id": "5e27788c-6d18-4e38-b79f-f6f8a397226a",
-        "slug": "calendar-of-events-for-saturday",
-        "title": "Calendar of Events for Saturday",
+        "id": "d644e1f1-959b-438a-bf7f-f5662336c54c",
+        "slug": "fast-casual-dining-overtakes-mom-pop-restaurants-but-offers-familiar-options-to-out-of-state",
+        "title": "Fast casual dining overtakes mom & pop restaurants but offers familiar options to out of state travelers",
         "description": "",
         "pubDate": null,
         "author": "",
         "image": null,
-        "sourceUrl": "https://www.wvnews.com/theet/calendar/calendar-of-events-for-saturday/article_5e27788c-6d18-4e38-b79f-f6f8a397226a.html",
+        "sourceUrl": "https://www.wvnews.com/theet/news/local/fast-casual-dining-overtakes-mom-pop-restaurants-but-offers-familiar-options-to-out-of-state/article_d644e1f1-959b-438a-bf7f-f5662336c54c.html",
         "prefix": "theet",
         "source": "section"
       },
@@ -329,6 +84,42 @@
         "source": "section"
       },
       {
+        "id": "614326ab-724a-4863-bdcc-70c65f79846a",
+        "slug": "west-virginia-boys-girls-state-programs-build-civic-skills-leadership",
+        "title": "West Virginia Boys, Girls State programs build civic skills, leadership",
+        "description": "",
+        "pubDate": null,
+        "author": "",
+        "image": null,
+        "sourceUrl": "https://www.wvnews.com/theet/news/local/west-virginia-boys-girls-state-programs-build-civic-skills-leadership/article_614326ab-724a-4863-bdcc-70c65f79846a.html",
+        "prefix": "theet",
+        "source": "section"
+      },
+      {
+        "id": "dd89d4f7-8b35-4999-bb57-85d575137144",
+        "slug": "farmers-markets-across-north-central-west-virginia-grow-as-community-hubs",
+        "title": "Farmers markets across North-Central West Virginia grow as community hubs",
+        "description": "",
+        "pubDate": null,
+        "author": "",
+        "image": null,
+        "sourceUrl": "https://www.wvnews.com/theet/news/local/farmers-markets-across-north-central-west-virginia-grow-as-community-hubs/article_dd89d4f7-8b35-4999-bb57-85d575137144.html",
+        "prefix": "theet",
+        "source": "section"
+      },
+      {
+        "id": "62d27113-a218-4d8b-80e1-1b2fcfbccb58",
+        "slug": "clarksburg-city-parks-to-host-an-array-of-low-cost-amphitheater-shows-this-summer",
+        "title": "Clarksburg City Parks to host an array of low-cost amphitheater shows this summer",
+        "description": "",
+        "pubDate": null,
+        "author": "",
+        "image": null,
+        "sourceUrl": "https://www.wvnews.com/theet/news/local/clarksburg-city-parks-to-host-an-array-of-low-cost-amphitheater-shows-this-summer/article_62d27113-a218-4d8b-80e1-1b2fcfbccb58.html",
+        "prefix": "theet",
+        "source": "section"
+      },
+      {
         "id": "d75920f8-1dca-4a7c-ba5c-baf38db28087",
         "slug": "harrison-county-to-alter-ballot-in-general-election-due-to-passing-of-circuit-clerk-albert",
         "title": "Harrison County to alter ballot in General Election due to passing of Circuit Clerk Albert Marano",
@@ -349,42 +140,6 @@
         "author": "",
         "image": null,
         "sourceUrl": "https://www.wvnews.com/theet/news/bridgeport-middle-students-make-west-virginia-history-with-national-investwrite-wins/article_51be89b7-3b8f-44ad-be02-ae211bb99f84.html",
-        "prefix": "theet",
-        "source": "section"
-      },
-      {
-        "id": "3717c398-f209-4bc8-a54b-1fae0c4e4edb",
-        "slug": "clarksburg-city-council-questions-opioid-settlement-spending-on-proposed-community-center-architectural-drawings",
-        "title": "Clarksburg city council questions opioid settlement spending on proposed community center architectural drawings",
-        "description": "",
-        "pubDate": null,
-        "author": "",
-        "image": null,
-        "sourceUrl": "https://www.wvnews.com/theet/news/clarksburg-city-council-questions-opioid-settlement-spending-on-proposed-community-center-architectural-drawings/article_3717c398-f209-4bc8-a54b-1fae0c4e4edb.html",
-        "prefix": "theet",
-        "source": "section"
-      },
-      {
-        "id": "32df50e8-d7b1-4b1d-995d-55b6590ca1c1",
-        "slug": "emmanuel-christian-school-and-hope-gas-plant-tree-at-new-north-view-campus",
-        "title": "Emmanuel Christian School and Hope Gas plant tree at new North View campus",
-        "description": "",
-        "pubDate": null,
-        "author": "",
-        "image": null,
-        "sourceUrl": "https://www.wvnews.com/theet/news/local/emmanuel-christian-school-and-hope-gas-plant-tree-at-new-north-view-campus/article_32df50e8-d7b1-4b1d-995d-55b6590ca1c1.html",
-        "prefix": "theet",
-        "source": "section"
-      },
-      {
-        "id": "93cab2b1-0360-4b74-91da-e53d59e5f985",
-        "slug": "utc-students-earn-33-medals-at-2026-skillsusa-state-competition",
-        "title": "UTC students earn 33 medals at 2026 SkillsUSA state competition",
-        "description": "",
-        "pubDate": null,
-        "author": "",
-        "image": null,
-        "sourceUrl": "https://www.wvnews.com/theet/news/utc-students-earn-33-medals-at-2026-skillsusa-state-competition/article_93cab2b1-0360-4b74-91da-e53d59e5f985.html",
         "prefix": "theet",
         "source": "section"
       }
@@ -570,6 +325,128 @@
         "image": null,
         "sourceUrl": "https://www.wvnews.com/morgantownnews/news/local/henry-thoreau-documentary-to-be-played-at-the-met/article_21ba2c2c-0bf7-4650-82f5-29d8b0c08155.html",
         "prefix": "morgantownnews",
+        "source": "section"
+      }
+    ],
+    "bluegold": [
+      {
+        "id": "745d2aa7-aebe-4edd-9c0a-b8a56f60242f",
+        "slug": "wvu-stymied-at-plate-in-5-2-loss-to-cincinnati",
+        "title": "WVU stymied at plate in 5-2 loss to Cincinnati",
+        "description": "",
+        "pubDate": null,
+        "author": "",
+        "image": null,
+        "sourceUrl": "https://www.wvnews.com/bluegoldnews/wvu-stymied-at-plate-in-5-2-loss-to-cincinnati/article_745d2aa7-aebe-4edd-9c0a-b8a56f60242f.html",
+        "prefix": "bluegoldnews",
+        "source": "section"
+      },
+      {
+        "id": "ecee93e9-8fb9-4c20-be1c-8af1f27e8a85",
+        "slug": "wvu-wins-two-day-affair-to-take-game-one-of-cincinnati-series",
+        "title": "WVU wins two-day affair to take game one of Cincinnati series",
+        "description": "",
+        "pubDate": null,
+        "author": "",
+        "image": null,
+        "sourceUrl": "https://www.wvnews.com/bluegoldnews/wvu-wins-two-day-affair-to-take-game-one-of-cincinnati-series/article_ecee93e9-8fb9-4c20-be1c-8af1f27e8a85.html",
+        "prefix": "bluegoldnews",
+        "source": "section"
+      },
+      {
+        "id": "87a27a3b-89dd-4123-82c4-83d9b2025c39",
+        "slug": "steve-sabins-did-everything-right-in-wvus-win-over-cincinnati",
+        "title": "Steve Sabins did everything right in WVU's win over Cincinnati",
+        "description": "",
+        "pubDate": null,
+        "author": "",
+        "image": null,
+        "sourceUrl": "https://www.wvnews.com/bluegoldnews/steve-sabins-did-everything-right-in-wvus-win-over-cincinnati/article_87a27a3b-89dd-4123-82c4-83d9b2025c39.html",
+        "prefix": "bluegoldnews",
+        "source": "section"
+      },
+      {
+        "id": "f9781b70-996b-424d-ac88-09569c03d57a",
+        "slug": "another-big-for-restructuring-wvu-mens-hoops",
+        "title": "Another big for restructuring WVU men's hoops",
+        "description": "",
+        "pubDate": null,
+        "author": "",
+        "image": null,
+        "sourceUrl": "https://www.wvnews.com/bluegoldnews/another-big-for-restructuring-wvu-mens-hoops/article_f9781b70-996b-424d-ac88-09569c03d57a.html",
+        "prefix": "bluegoldnews",
+        "source": "section"
+      },
+      {
+        "id": "2c462a1b-76ae-46f9-8b8a-c4d101ec9159",
+        "slug": "rebuilding-up-front-key-for-wvu",
+        "title": "Rebuilding up front key for WVU",
+        "description": "",
+        "pubDate": null,
+        "author": "",
+        "image": null,
+        "sourceUrl": "https://www.wvnews.com/bluegoldnews/rebuilding-up-front-key-for-wvu/article_2c462a1b-76ae-46f9-8b8a-c4d101ec9159.html",
+        "prefix": "bluegoldnews",
+        "source": "section"
+      },
+      {
+        "id": "7b72e3dd-1c9e-4254-b733-eb3e273a4856",
+        "slug": "standings-metrics-point-in-different-directions-as-wvu-heads-to-cincinnati-for-a-weekend-series",
+        "title": "Standings, metrics point in different directions as WVU heads to Cincinnati for a weekend series",
+        "description": "",
+        "pubDate": null,
+        "author": "",
+        "image": null,
+        "sourceUrl": "https://www.wvnews.com/bluegoldnews/standings-metrics-point-in-different-directions-as-wvu-heads-to-cincinnati-for-a-weekend-series/article_7b72e3dd-1c9e-4254-b733-eb3e273a4856.html",
+        "prefix": "bluegoldnews",
+        "source": "section"
+      },
+      {
+        "id": "089ba28a-f38e-4fd1-85de-be471dbd0d0e",
+        "slug": "akheem-mesidors-selection-in-the-nfl-draft-is-another-reminder-of-wvu-footballs-decline",
+        "title": "Akheem Mesidor's selection in the NFL draft is another reminder of WVU football's decline",
+        "description": "",
+        "pubDate": null,
+        "author": "",
+        "image": null,
+        "sourceUrl": "https://www.wvnews.com/bluegoldnews/akheem-mesidors-selection-in-the-nfl-draft-is-another-reminder-of-wvu-footballs-decline/article_089ba28a-f38e-4fd1-85de-be471dbd0d0e.html",
+        "prefix": "bluegoldnews",
+        "source": "section"
+      },
+      {
+        "id": "6a16a3c2-7619-4475-b6f1-c4db339f27d7",
+        "slug": "wvu-adds-keonte-greybear-to-growing-2026-27-roster",
+        "title": "WVU adds Keonte Greybear to growing 2026-27 roster",
+        "description": "",
+        "pubDate": null,
+        "author": "",
+        "image": null,
+        "sourceUrl": "https://www.wvnews.com/bluegoldnews/wvu-adds-keonte-greybear-to-growing-2026-27-roster/article_6a16a3c2-7619-4475-b6f1-c4db339f27d7.html",
+        "prefix": "bluegoldnews",
+        "source": "section"
+      },
+      {
+        "id": "5e898d13-3e32-4d4e-b133-e17231de335c",
+        "slug": "wvu-spring-football-festival-notebook",
+        "title": "WVU Spring Football Festival Notebook",
+        "description": "",
+        "pubDate": null,
+        "author": "",
+        "image": null,
+        "sourceUrl": "https://www.wvnews.com/bluegoldnews/wvu-spring-football-festival-notebook/article_5e898d13-3e32-4d4e-b133-e17231de335c.html",
+        "prefix": "bluegoldnews",
+        "source": "section"
+      },
+      {
+        "id": "dd47d5c4-203a-4aa0-8964-4190d66cf7ba",
+        "slug": "column-no-panic-necessary",
+        "title": "Column: No panic necessary",
+        "description": "",
+        "pubDate": null,
+        "author": "",
+        "image": null,
+        "sourceUrl": "https://www.wvnews.com/bluegoldnews/column-no-panic-necessary/article_dd47d5c4-203a-4aa0-8964-4190d66cf7ba.html",
+        "prefix": "bluegoldnews",
         "source": "section"
       }
     ],
@@ -1222,6 +1099,18 @@
         "source": "section"
       },
       {
+        "id": "10ff0258-e8d1-4ad0-91ec-d7196b3640d9",
+        "slug": "palatine-park-has-blossomed-into-marion-county-hub-for-fun",
+        "title": "Palatine Park has blossomed into Marion County hub for fun",
+        "description": "",
+        "pubDate": null,
+        "author": "",
+        "image": null,
+        "sourceUrl": "https://www.wvnews.com/fairmontnews/news/local/palatine-park-has-blossomed-into-marion-county-hub-for-fun/article_10ff0258-e8d1-4ad0-91ec-d7196b3640d9.html",
+        "prefix": "fairmontnews",
+        "source": "section"
+      },
+      {
         "id": "261274ae-3bf0-4e21-a5ac-ef7c3504bb14",
         "slug": "country-church-project-st-peter-the-fisherman-archives-preserve-fairmont-s-immigrant-history-through-sacramental",
         "title": "Country Church Project: St. Peter the Fisherman archives preserve Fairmont’s immigrant history through sacramental records",
@@ -1290,18 +1179,6 @@
         "author": "",
         "image": null,
         "sourceUrl": "https://www.wvnews.com/fairmontnews/sports/east-fairmonts-owen-music-has-no-problems-being-the-leadoff-man/article_7e701932-2f4f-4cec-963c-679461d4af07.html",
-        "prefix": "fairmontnews",
-        "source": "section"
-      },
-      {
-        "id": "1137c398-65fd-474f-9510-cca21f6d2cbf",
-        "slug": "5-democrats-2-republicans-vie-for-party-nomination-in-marion-co-commission-race",
-        "title": "5 Democrats, 2 Republicans vie for party nomination in Marion Co. Commission race",
-        "description": "",
-        "pubDate": null,
-        "author": "",
-        "image": null,
-        "sourceUrl": "https://www.wvnews.com/fairmontnews/news/5-democrats-2-republicans-vie-for-party-nomination-in-marion-co-commission-race/article_1137c398-65fd-474f-9510-cca21f6d2cbf.html",
         "prefix": "fairmontnews",
         "source": "section"
       }
@@ -1758,6 +1635,18 @@
         "source": "section"
       },
       {
+        "id": "dd6206b1-ce79-432c-976d-995f6f44470b",
+        "slug": "lewis-county-park-highlights-attractions-as-they-enter-the-spring-season",
+        "title": "Lewis County Park highlights attractions as they enter the spring season",
+        "description": "",
+        "pubDate": null,
+        "author": "",
+        "image": null,
+        "sourceUrl": "https://www.wvnews.com/westondemocrat/news/local/lewis-county-park-highlights-attractions-as-they-enter-the-spring-season/article_dd6206b1-ce79-432c-976d-995f6f44470b.html",
+        "prefix": "westondemocrat",
+        "source": "section"
+      },
+      {
         "id": "7eb19bf6-a424-4023-8595-c5bb70d52ec8",
         "slug": "vandalia-ceos-club-hosts-lesson-leader-training-county-council-meeting",
         "title": "Vandalia CEOS Club hosts lesson leader training, County Council meeting",
@@ -1778,18 +1667,6 @@
         "author": "",
         "image": null,
         "sourceUrl": "https://www.wvnews.com/westondemocrat/news/local/weston-area-community-educational-outreach-service-meets-at-stonewall-resort/article_8da54b76-2e10-4e4c-8fb0-3540bd9ff641.html",
-        "prefix": "westondemocrat",
-        "source": "section"
-      },
-      {
-        "id": "4e3db7b1-0263-42f1-93f8-cc08ae2801a4",
-        "slug": "money-bomb-morrisey-linked-groups-pour-millions-into-legislative-races",
-        "title": "Money Bomb: Morrisey-linked groups pour millions into legislative races",
-        "description": "",
-        "pubDate": null,
-        "author": "",
-        "image": null,
-        "sourceUrl": "https://www.wvnews.com/westondemocrat/news/local/money-bomb-morrisey-linked-groups-pour-millions-into-legislative-races/article_4e3db7b1-0263-42f1-93f8-cc08ae2801a4.html",
         "prefix": "westondemocrat",
         "source": "section"
       }
