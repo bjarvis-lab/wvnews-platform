@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-04-26T23:06:33.404Z",
+  "fetchedAt": "2026-04-26T23:55:06.004Z",
   "source": "wvnews.com RSS + section HTML backfill",
   "target": 10,
   "siteCounts": {
@@ -574,6 +574,18 @@
     ],
     "jackson": [
       {
+        "id": "a1dd327a-6436-4946-8f19-8cf95daef63a",
+        "slug": "teen-filmmaker-uses-ravenswood-rails-youtube-channel-to-preserve-west-virginia-railway-history",
+        "title": "Teen filmmaker uses 'Ravenswood Rails' YouTube channel to preserve West Virginia railway history",
+        "description": "",
+        "pubDate": null,
+        "author": "",
+        "image": null,
+        "sourceUrl": "https://www.wvnews.com/jacksonnews/teen-filmmaker-uses-ravenswood-rails-youtube-channel-to-preserve-west-virginia-railway-history/article_a1dd327a-6436-4946-8f19-8cf95daef63a.html",
+        "prefix": "jacksonnews",
+        "source": "section"
+      },
+      {
         "id": "22494bd8-a55f-4d9f-aa6e-a2a44a660183",
         "slug": "local-high-school-students-sign-up-for-military-careers",
         "title": "Local high school students sign up for military careers",
@@ -678,18 +690,6 @@
         "author": "",
         "image": null,
         "sourceUrl": "https://www.wvnews.com/jacksonnews/all-redistricting-reformers-are-hypocrites/article_95024c84-5e4c-4e1d-88ce-b2e511f83de8.html",
-        "prefix": "jacksonnews",
-        "source": "section"
-      },
-      {
-        "id": "3c5ce7b5-4c8d-438e-9055-a001352701c2",
-        "slug": "meet-the-candidates-event-set-for-april-28",
-        "title": "Meet the Candidates event set for April 28",
-        "description": "",
-        "pubDate": null,
-        "author": "",
-        "image": null,
-        "sourceUrl": "https://www.wvnews.com/jacksonnews/meet-the-candidates-event-set-for-april-28/article_3c5ce7b5-4c8d-438e-9055-a001352701c2.html",
         "prefix": "jacksonnews",
         "source": "section"
       }
