@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-04-26T21:05:05.850Z",
+  "fetchedAt": "2026-04-26T21:53:29.980Z",
   "source": "wvnews.com RSS + section HTML backfill",
   "target": 10,
   "siteCounts": {
@@ -330,6 +330,18 @@
     ],
     "bluegold": [
       {
+        "id": "688ef3c3-854c-4e78-bcba-a01261acbc60",
+        "slug": "wvu-pitching-wears-down-in-loss-to-cincinnati",
+        "title": "WVU pitching wears down in loss to Cincinnati",
+        "description": "",
+        "pubDate": null,
+        "author": "",
+        "image": null,
+        "sourceUrl": "https://www.wvnews.com/bluegoldnews/wvu-pitching-wears-down-in-loss-to-cincinnati/article_688ef3c3-854c-4e78-bcba-a01261acbc60.html",
+        "prefix": "bluegoldnews",
+        "source": "section"
+      },
+      {
         "id": "bb70b92a-3fe0-4f75-b611-36fdee5a12ad",
         "slug": "wvu-in-upper-tier-of-learfield-directors-cup-standings",
         "title": "WVU in upper tier of Learfield Directors' Cup standings",
@@ -434,18 +446,6 @@
         "author": "",
         "image": null,
         "sourceUrl": "https://www.wvnews.com/bluegoldnews/wvu-adds-keonte-greybear-to-growing-2026-27-roster/article_6a16a3c2-7619-4475-b6f1-c4db339f27d7.html",
-        "prefix": "bluegoldnews",
-        "source": "section"
-      },
-      {
-        "id": "5e898d13-3e32-4d4e-b133-e17231de335c",
-        "slug": "wvu-spring-football-festival-notebook",
-        "title": "WVU Spring Football Festival Notebook",
-        "description": "",
-        "pubDate": null,
-        "author": "",
-        "image": null,
-        "sourceUrl": "https://www.wvnews.com/bluegoldnews/wvu-spring-football-festival-notebook/article_5e898d13-3e32-4d4e-b133-e17231de335c.html",
         "prefix": "bluegoldnews",
         "source": "section"
       }
@@ -574,6 +574,42 @@
     ],
     "jackson": [
       {
+        "id": "ec2cbef0-d5d2-4daf-aab5-426c4e9d5eab",
+        "slug": "ripley-elementary-students-celebrate-earth-day-with-hands-on-gardening-project",
+        "title": "Ripley Elementary students celebrate Earth Day with hands-on gardening project",
+        "description": "",
+        "pubDate": null,
+        "author": "",
+        "image": null,
+        "sourceUrl": "https://www.wvnews.com/jacksonnews/ripley-elementary-students-celebrate-earth-day-with-hands-on-gardening-project/article_ec2cbef0-d5d2-4daf-aab5-426c4e9d5eab.html",
+        "prefix": "jacksonnews",
+        "source": "section"
+      },
+      {
+        "id": "cc1a8783-39b2-4a86-ad98-803015362568",
+        "slug": "farm-bureau-expands-agriculture-literacy-at-rca",
+        "title": "Farm Bureau expands agriculture literacy at RCA",
+        "description": "",
+        "pubDate": null,
+        "author": "",
+        "image": null,
+        "sourceUrl": "https://www.wvnews.com/jacksonnews/farm-bureau-expands-agriculture-literacy-at-rca/article_cc1a8783-39b2-4a86-ad98-803015362568.html",
+        "prefix": "jacksonnews",
+        "source": "section"
+      },
+      {
+        "id": "88a0a809-cc03-407a-b310-ca144b6a064a",
+        "slug": "cedar-lakes-foundation-honors-legacy-of-john-mcginley-and-unveils-jackson-hall-renovations",
+        "title": "Cedar Lakes Foundation honors legacy of John McGinley and unveils Jackson Hall renovations",
+        "description": "",
+        "pubDate": null,
+        "author": "",
+        "image": null,
+        "sourceUrl": "https://www.wvnews.com/jacksonnews/cedar-lakes-foundation-honors-legacy-of-john-mcginley-and-unveils-jackson-hall-renovations/article_88a0a809-cc03-407a-b310-ca144b6a064a.html",
+        "prefix": "jacksonnews",
+        "source": "section"
+      },
+      {
         "id": "3c5ce7b5-4c8d-438e-9055-a001352701c2",
         "slug": "meet-the-candidates-event-set-for-april-28",
         "title": "Meet the Candidates event set for April 28",
@@ -654,42 +690,6 @@
         "author": "",
         "image": null,
         "sourceUrl": "https://www.wvnews.com/jacksonnews/ravenswood-native-finishes-as-top-american-in-paris-marathon/article_86fe1f5c-b24a-4a6d-8446-3952439f1f11.html",
-        "prefix": "jacksonnews",
-        "source": "section"
-      },
-      {
-        "id": "9c4afb45-2d6b-4305-bde9-e5b65ded1c9f",
-        "slug": "ravenswood-city-council-approves-first-reading-of-sewer-bond-ordinances",
-        "title": "Ravenswood City Council approves first reading of sewer bond ordinances",
-        "description": "",
-        "pubDate": null,
-        "author": "",
-        "image": null,
-        "sourceUrl": "https://www.wvnews.com/jacksonnews/ravenswood-city-council-approves-first-reading-of-sewer-bond-ordinances/article_9c4afb45-2d6b-4305-bde9-e5b65ded1c9f.html",
-        "prefix": "jacksonnews",
-        "source": "section"
-      },
-      {
-        "id": "572c80a6-fa4e-4e0f-952d-3238b7d3ce84",
-        "slug": "ravenswood-breaks-ground-on-new-riverfront-welcome-center-and-smokehouse-restaurant",
-        "title": "Ravenswood breaks ground on new riverfront welcome center and smokehouse restaurant",
-        "description": "",
-        "pubDate": null,
-        "author": "",
-        "image": null,
-        "sourceUrl": "https://www.wvnews.com/jacksonnews/ravenswood-breaks-ground-on-new-riverfront-welcome-center-and-smokehouse-restaurant/article_572c80a6-fa4e-4e0f-952d-3238b7d3ce84.html",
-        "prefix": "jacksonnews",
-        "source": "section"
-      },
-      {
-        "id": "85e1afa3-6999-49a8-a944-9ee886bf380d",
-        "slug": "dar-chapter-s-america-250-spotlight",
-        "title": "DAR chapter’s America 250! spotlight",
-        "description": "",
-        "pubDate": null,
-        "author": "",
-        "image": null,
-        "sourceUrl": "https://www.wvnews.com/jacksonnews/dar-chapter-s-america-250-spotlight/article_85e1afa3-6999-49a8-a944-9ee886bf380d.html",
         "prefix": "jacksonnews",
         "source": "section"
       }
