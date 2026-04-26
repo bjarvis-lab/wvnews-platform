@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-04-26T10:31:17.681Z",
+  "fetchedAt": "2026-04-26T11:25:38.393Z",
   "source": "wvnews.com RSS + section HTML backfill",
   "target": 10,
   "siteCounts": {
@@ -330,6 +330,18 @@
     ],
     "bluegold": [
       {
+        "id": "bb70b92a-3fe0-4f75-b611-36fdee5a12ad",
+        "slug": "wvu-in-upper-tier-of-learfield-directors-cup-standings",
+        "title": "WVU in upper tier of Learfield Directors' Cup standings",
+        "description": "",
+        "pubDate": null,
+        "author": "",
+        "image": null,
+        "sourceUrl": "https://www.wvnews.com/bluegoldnews/wvu-in-upper-tier-of-learfield-directors-cup-standings/article_bb70b92a-3fe0-4f75-b611-36fdee5a12ad.html",
+        "prefix": "bluegoldnews",
+        "source": "section"
+      },
+      {
         "id": "745d2aa7-aebe-4edd-9c0a-b8a56f60242f",
         "slug": "wvu-stymied-at-plate-in-5-2-loss-to-cincinnati",
         "title": "WVU stymied at plate in 5-2 loss to Cincinnati",
@@ -434,18 +446,6 @@
         "author": "",
         "image": null,
         "sourceUrl": "https://www.wvnews.com/bluegoldnews/wvu-spring-football-festival-notebook/article_5e898d13-3e32-4d4e-b133-e17231de335c.html",
-        "prefix": "bluegoldnews",
-        "source": "section"
-      },
-      {
-        "id": "dd47d5c4-203a-4aa0-8964-4190d66cf7ba",
-        "slug": "column-no-panic-necessary",
-        "title": "Column: No panic necessary",
-        "description": "",
-        "pubDate": null,
-        "author": "",
-        "image": null,
-        "sourceUrl": "https://www.wvnews.com/bluegoldnews/column-no-panic-necessary/article_dd47d5c4-203a-4aa0-8964-4190d66cf7ba.html",
         "prefix": "bluegoldnews",
         "source": "section"
       }
