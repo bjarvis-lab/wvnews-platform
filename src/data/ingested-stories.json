@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-04-26T15:56:07.897Z",
+  "fetchedAt": "2026-04-26T16:34:56.936Z",
   "source": "wvnews.com RSS + section HTML backfill",
   "target": 10,
   "siteCounts": {
@@ -512,14 +512,14 @@
         "source": "section"
       },
       {
-        "id": "33cf806c-9076-40f7-b3a6-7ce2402d8d3a",
-        "slug": "west-virginia-wesleyan-college-learning-center-launches-new-service-to-support-students",
-        "title": "West Virginia Wesleyan College learning center launches new service to support students",
+        "id": "c914f16f-ef54-4fdd-85de-ca34037438a4",
+        "slug": "west-virginia-wesleyan-mens-tennis-sweeps-west-chester-falls-to-jefferson",
+        "title": "West Virginia Wesleyan men's tennis sweeps West Chester, falls to Jefferson",
         "description": "",
         "pubDate": null,
         "author": "",
         "image": null,
-        "sourceUrl": "https://www.wvnews.com/recorddelta/news/west-virginia-wesleyan-college-learning-center-launches-new-service-to-support-students/article_33cf806c-9076-40f7-b3a6-7ce2402d8d3a.html",
+        "sourceUrl": "https://www.wvnews.com/recorddelta/sports/west-virginia-wesleyan-mens-tennis-sweeps-west-chester-falls-to-jefferson/article_c914f16f-ef54-4fdd-85de-ca34037438a4.html",
         "prefix": "recorddelta",
         "source": "section"
       },
@@ -560,14 +560,14 @@
         "source": "section"
       },
       {
-        "id": "1d6ddbc0-75f5-41b8-9fcc-0b6ac666534d",
-        "slug": "buckhannon-upshur-baseball-battles-to-2-3-record-over-busy-5-game-stretch",
-        "title": "Buckhannon-Upshur baseball battles to 2-3 record over busy 5-game stretch",
+        "id": "33cf806c-9076-40f7-b3a6-7ce2402d8d3a",
+        "slug": "west-virginia-wesleyan-college-learning-center-launches-new-service-to-support-students",
+        "title": "West Virginia Wesleyan College learning center launches new service to support students",
         "description": "",
         "pubDate": null,
         "author": "",
         "image": null,
-        "sourceUrl": "https://www.wvnews.com/recorddelta/sports/buckhannon-upshur-baseball-battles-to-2-3-record-over-busy-5-game-stretch/article_1d6ddbc0-75f5-41b8-9fcc-0b6ac666534d.html",
+        "sourceUrl": "https://www.wvnews.com/recorddelta/news/west-virginia-wesleyan-college-learning-center-launches-new-service-to-support-students/article_33cf806c-9076-40f7-b3a6-7ce2402d8d3a.html",
         "prefix": "recorddelta",
         "source": "section"
       }
@@ -1635,6 +1635,18 @@
         "source": "section"
       },
       {
+        "id": "39995c98-5404-42c4-8942-8f2c1c19cee7",
+        "slug": "weston-ceos-members-participate-in-lewis-county-show-how-day",
+        "title": "Weston CEOS members participate in Lewis County Show How Day",
+        "description": "",
+        "pubDate": null,
+        "author": "",
+        "image": null,
+        "sourceUrl": "https://www.wvnews.com/westondemocrat/news/local/weston-ceos-members-participate-in-lewis-county-show-how-day/article_39995c98-5404-42c4-8942-8f2c1c19cee7.html",
+        "prefix": "westondemocrat",
+        "source": "section"
+      },
+      {
         "id": "dd6206b1-ce79-432c-976d-995f6f44470b",
         "slug": "lewis-county-park-highlights-attractions-as-they-enter-the-spring-season",
         "title": "Lewis County Park highlights attractions as they enter the spring season",
@@ -1655,18 +1667,6 @@
         "author": "",
         "image": null,
         "sourceUrl": "https://www.wvnews.com/westondemocrat/news/local/vandalia-ceos-club-hosts-lesson-leader-training-county-council-meeting/article_7eb19bf6-a424-4023-8595-c5bb70d52ec8.html",
-        "prefix": "westondemocrat",
-        "source": "section"
-      },
-      {
-        "id": "8da54b76-2e10-4e4c-8fb0-3540bd9ff641",
-        "slug": "weston-area-community-educational-outreach-service-meets-at-stonewall-resort",
-        "title": "Weston Area Community Educational Outreach Service meets at Stonewall Resort",
-        "description": "",
-        "pubDate": null,
-        "author": "",
-        "image": null,
-        "sourceUrl": "https://www.wvnews.com/westondemocrat/news/local/weston-area-community-educational-outreach-service-meets-at-stonewall-resort/article_8da54b76-2e10-4e4c-8fb0-3540bd9ff641.html",
         "prefix": "westondemocrat",
         "source": "section"
       }
