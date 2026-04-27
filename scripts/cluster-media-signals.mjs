@@ -76,11 +76,21 @@ function parseClusterJson(text) {
 }
 
 // ─── Scoring + classification ──────────────────────────────────────────
+//
+// Freshness MUST come from the article's actual publish time (publishedAt)
+// or the first time we discovered it (firstSeenAt) — never lastSeenAt.
+// RSS feeds keep articles for days, so the collector re-sees the same
+// URLs every 15 min and bumps lastSeenAt, which would make a 4-day-old
+// article look "1 hour old" if we trusted lastSeenAt for age.
+function memberFreshTime(m) {
+  return new Date(m.publishedAt || m.firstSeenAt || m.lastSeenAt || 0).getTime();
+}
+
 function classifyCluster(cluster, now = Date.now()) {
   const uniqueDomains = new Set(cluster.members.map(m => m.domain).filter(Boolean));
   const hasOfficial = cluster.members.some(m => OFFICIAL_KINDS.has(m.kind));
   const newest = cluster.members.reduce((acc, m) => {
-    const t = new Date(m.lastSeenAt || m.publishedAt || m.firstSeenAt).getTime();
+    const t = memberFreshTime(m);
     return t > acc ? t : acc;
   }, 0);
   const ageMs = now - newest;
@@ -104,20 +114,27 @@ function classifyCluster(cluster, now = Date.now()) {
 async function main() {
   const { db, Timestamp, FieldValue } = await loadFirestore();
 
-  // Pull signals from the last WINDOW_HOURS, newest first. Cap input size.
+  // Pull signals whose ARTICLE is from the last WINDOW_HOURS — gated on
+  // publishedAt (or firstSeenAt fallback). We over-fetch by lastSeenAt
+  // order because that's the index Firestore can sort cheaply, then drop
+  // anything older than the window once we have publishedAt in hand.
   const cutoffMs = Date.now() - WINDOW_HOURS * 3600 * 1000;
-  console.log(`[cluster] pulling signals since ${new Date(cutoffMs).toISOString()}`);
+  console.log(`[cluster] pulling signals with publishedAt >= ${new Date(cutoffMs).toISOString()}`);
 
   const snap = await db.collection('mediaSignals')
     .orderBy('lastSeenAt', 'desc')
-    .limit(400)
+    .limit(800) // wider over-fetch since many recent signals will be filtered out
     .get();
 
   const signals = [];
   for (const doc of snap.docs) {
     const data = doc.data();
-    const lastSeen = data.lastSeenAt?.toDate?.()?.getTime?.() || 0;
-    if (lastSeen >= cutoffMs) {
+    const publishedAtMs = data.publishedAt?.toDate?.()?.getTime?.() || 0;
+    const firstSeenAtMs = data.firstSeenAt?.toDate?.()?.getTime?.() || 0;
+    // Use publishedAt if known, else firstSeenAt. Skip items where neither
+    // is recent — we have no signal that the underlying story is fresh.
+    const freshTime = publishedAtMs || firstSeenAtMs;
+    if (freshTime >= cutoffMs) {
       signals.push({
         id: doc.id,
         title: data.title,
@@ -126,6 +143,7 @@ async function main() {
         domain: data.domain || extractDomain(data.url),
         kind: data.kind,
         publishedAt: data.publishedAt?.toDate?.()?.toISOString?.() || null,
+        firstSeenAt: data.firstSeenAt?.toDate?.()?.toISOString?.() || null,
         lastSeenAt: data.lastSeenAt?.toDate?.()?.toISOString?.() || null,
         url: data.url,
       });
@@ -205,8 +223,15 @@ Rules:
       uniqueDomainCount: scoring.uniqueDomains.length,
       hasOfficial: scoring.hasOfficial,
       memberCount: members.length,
-      firstSeenAt: Timestamp.fromDate(new Date(Math.min(...members.map(m => new Date(m.firstSeenAt || m.lastSeenAt || m.publishedAt || now).getTime())))),
-      lastSeenAt: Timestamp.fromDate(new Date(scoring.newestAt)),
+      firstSeenAt: Timestamp.fromDate(new Date(Math.min(...members.map(m => new Date(m.firstSeenAt || m.publishedAt || m.lastSeenAt || now).getTime())))),
+      // newestPublishedAt = the freshest article (by publishedAt or
+      // firstSeenAt) in this cluster. This is what the UI gates on for
+      // breaking/trending and what we display as "newest X ago".
+      // lastSeenAt is kept for backwards compat with old read paths but
+      // should not be used for freshness — it's just the most recent
+      // collector-touch on any member URL.
+      newestPublishedAt: Timestamp.fromDate(new Date(scoring.newestAt)),
+      lastSeenAt: FieldValue.serverTimestamp(),
       ageMin: scoring.ageMin,
       isTrending: scoring.isTrending,
       isBreaking: scoring.isBreaking,

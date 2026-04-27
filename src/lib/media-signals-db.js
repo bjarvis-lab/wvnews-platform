@@ -52,12 +52,13 @@ export async function listRecentSignals({ limit = 100, source, kind, topic, sinc
   if (topic)  rows = rows.filter(r => r.topic === topic);
   if (since) {
     const sinceMs = new Date(since).getTime();
-    // Gate on max(firstSeenAt, publishedAt) so re-syndicated old items
-    // don't look new just because lastSeenAt was bumped this morning.
+    // Gate on publishedAt (authoritative — when the article was actually
+    // published), with firstSeenAt fallback for items where the source
+    // didn't include a pubDate. Never lastSeenAt — that gets bumped on
+    // every re-seen URL and would surface 4-day-old articles as fresh.
     rows = rows.filter(r => {
-      const candidates = [r.firstSeenAt, r.publishedAt].filter(Boolean).map(t => new Date(t).getTime());
-      const newest = candidates.length ? Math.max(...candidates) : 0;
-      return newest >= sinceMs;
+      const fresh = r.publishedAt || r.firstSeenAt;
+      return fresh && new Date(fresh).getTime() >= sinceMs;
     });
   }
   return rows.slice(0, limit);
@@ -80,16 +81,27 @@ export async function listStaleSources({ hours = 24 } = {}) {
 // Clusters — detected stories that ≥2 signals cover. Surfaced in the
 // Media Desk as "Trending" / "Breaking" sections at the top.
 //
-// `since` is an ISO string: clusters whose lastSeenAt is older than that
-// are dropped. The Media Desk uses this so we don't surface yesterday's
-// breaking news as if it were still breaking.
+// `since` is an ISO string: clusters whose newestPublishedAt is older
+// than that are dropped. We gate on newestPublishedAt (the freshest
+// article in the cluster, by publishedAt) — NOT on lastSeenAt, which
+// gets bumped every time the collector re-sees a member URL in an
+// RSS feed and would make 4-day-old stories look minutes old.
+//
+// Backwards compat: cluster docs written before newestPublishedAt was
+// added fall back to firstSeenAt (oldest member's first-seen) for the
+// gate. That's conservative — a long-lived cluster will be dropped
+// even if its newest member is fresh — but it's safer than the old
+// lastSeenAt behavior. The next clusterer run repopulates the field.
 export async function listClusters({ limit = 30, breakingOnly = false, trendingOnly = false, since } = {}) {
-  let q = db.collection('mediaClusters').orderBy('lastSeenAt', 'desc').limit(limit * 2);
+  let q = db.collection('mediaClusters').orderBy('lastSeenAt', 'desc').limit(limit * 4);
   const snap = await q.get();
   let rows = snap.docs.map(serialize);
   if (since) {
     const sinceMs = new Date(since).getTime();
-    rows = rows.filter(r => r.lastSeenAt && new Date(r.lastSeenAt).getTime() >= sinceMs);
+    rows = rows.filter(r => {
+      const fresh = r.newestPublishedAt || r.firstSeenAt;
+      return fresh && new Date(fresh).getTime() >= sinceMs;
+    });
   }
   if (breakingOnly) rows = rows.filter(r => r.isBreaking);
   if (trendingOnly) rows = rows.filter(r => r.isTrending || r.isBreaking);

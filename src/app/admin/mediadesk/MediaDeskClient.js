@@ -50,10 +50,16 @@ export default function MediaDeskClient({ signals, clusters = [], memberSignals 
   const breakingCutoff = now - BREAKING_HOURS * HOUR;
   const recentCutoff   = now - RECENT_HOURS   * HOUR;
 
-  const isFresh = (cluster, cutoff) => {
-    if (!cluster.lastSeenAt) return false;
-    return new Date(cluster.lastSeenAt).getTime() >= cutoff;
+  // Freshness for clusters comes from newestPublishedAt (the freshest
+  // article's actual publish time), with a firstSeenAt fallback for
+  // cluster docs written by the older clusterer. Never lastSeenAt —
+  // that's just "the collector touched a URL recently" and lights up
+  // for stories that have been in feeds for days.
+  const clusterFreshTime = (c) => {
+    const fresh = c.newestPublishedAt || c.firstSeenAt;
+    return fresh ? new Date(fresh).getTime() : 0;
   };
+  const isFresh = (cluster, cutoff) => clusterFreshTime(cluster) >= cutoff;
 
   // Breaking only counts when (a) the clusterer flagged it AND (b) the
   // cluster has been touched in the last few hours. A cluster from
@@ -62,12 +68,15 @@ export default function MediaDeskClient({ signals, clusters = [], memberSignals 
   // Trending = breaking + isTrending, both with a 24h floor.
   const trending = clusters.filter(c => (c.isTrending || c.isBreaking) && isFresh(c, recentCutoff));
 
-  // Bottom feed: drop anything we first saw (or that was published) more
-  // than 24h ago. lastSeenAt would let re-syndication revive old content.
+  // Bottom feed: gate on the article's publish time. Prefer publishedAt
+  // (authoritative — what the article actually says), fall back to
+  // firstSeenAt for items where the source didn't include a pubDate.
+  // We do NOT take max(): if publishedAt is 4 days ago but firstSeenAt
+  // is today, the article is still 4 days old.
   const recentSignals = useMemo(() => signals.filter(s => {
-    const candidates = [s.firstSeenAt, s.publishedAt].filter(Boolean).map(t => new Date(t).getTime());
-    if (!candidates.length) return false;
-    return Math.max(...candidates) >= recentCutoff;
+    const fresh = s.publishedAt || s.firstSeenAt;
+    if (!fresh) return false;
+    return new Date(fresh).getTime() >= recentCutoff;
   }), [signals, recentCutoff]);
 
   const allKinds = useMemo(() => {
@@ -252,11 +261,14 @@ function ClusterRow({ cluster, memberSignals = {}, expanded, onToggle, variant =
   const toneBorder = isBreaking ? 'border-white/20 bg-white/5' : 'border-ink-200 bg-white';
   const toneBadge  = isBreaking ? 'bg-white/20 text-white' : 'bg-gold-100 text-gold-900';
 
-  // Resolve member signals from the pre-loaded map; sort newest first.
+  // Resolve member signals from the pre-loaded map; sort newest first
+  // by publishedAt (the article's actual publish time), falling back to
+  // firstSeenAt. Never lastSeenAt — see comment in MediaDeskClient root.
+  const memberFresh = (m) => new Date(m.publishedAt || m.firstSeenAt || 0).getTime();
   const members = (cluster.memberSignalIds || [])
     .map(id => memberSignals[id])
     .filter(Boolean)
-    .sort((a, b) => new Date(b.lastSeenAt || 0) - new Date(a.lastSeenAt || 0));
+    .sort((a, b) => memberFresh(b) - memberFresh(a));
 
   return (
     <div className={`rounded-lg border ${toneBorder} overflow-hidden`}>
@@ -287,7 +299,7 @@ function ClusterRow({ cluster, memberSignals = {}, expanded, onToggle, variant =
                 </span>
               )}
               <span className={`ml-auto text-[10px] ${toneMuted} whitespace-nowrap`}>
-                newest {fmtAgo(cluster.lastSeenAt)}
+                newest {fmtAgo(cluster.newestPublishedAt || cluster.firstSeenAt)}
               </span>
             </div>
             <div className={`font-display font-bold leading-snug ${toneText}`}>
@@ -345,7 +357,7 @@ function ClusterRow({ cluster, memberSignals = {}, expanded, onToggle, variant =
                         <span className={`font-semibold ${isBreaking ? 'text-white/80' : 'text-brand-700'}`}>
                           {m.domain || m.sourceName}
                         </span>
-                        <span className={toneMuted}>· {fmtAgo(m.lastSeenAt || m.publishedAt)}</span>
+                        <span className={toneMuted}>· {fmtAgo(m.publishedAt || m.firstSeenAt)}</span>
                       </div>
                       <div className={`text-sm leading-snug ${toneText}`}>{m.title}</div>
                     </a>
@@ -385,7 +397,7 @@ function SignalRow({ signal }) {
             {signal.topic && (
               <span className="text-[10px] text-gold-900 bg-gold-50 px-1.5 py-0.5 rounded">{signal.topic}</span>
             )}
-            <span className="text-xs text-ink-400 ml-auto whitespace-nowrap">{fmtAgo(signal.lastSeenAt || signal.publishedAt)}</span>
+            <span className="text-xs text-ink-400 ml-auto whitespace-nowrap">{fmtAgo(signal.publishedAt || signal.firstSeenAt)}</span>
           </div>
           <div className="font-semibold text-ink-900 group-hover:text-brand-700 transition-colors leading-snug">
             {signal.title}
