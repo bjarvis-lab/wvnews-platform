@@ -2,6 +2,7 @@
 import { useState } from 'react';
 import PublicHeader from '@/components/public/Header';
 import Footer from '@/components/public/Footer';
+import NewsletterPreferences from './NewsletterPreferences';
 
 export default function AccountPage() {
   const [tab, setTab] = useState('profile');
@@ -60,24 +61,7 @@ export default function AccountPage() {
               <button className="px-4 py-2 bg-brand-700 text-white text-sm rounded-lg hover:bg-brand-600">Open Payment Portal (Stripe)</button>
             </div>
           )}
-          {tab === 'newsletters' && (
-            <div className="space-y-3">
-              {[
-                { name: 'Daily News Digest', desc: 'Top stories every morning at 6 AM', on: true },
-                { name: 'Breaking News Alerts', desc: 'Instant alerts for major stories', on: true },
-                { name: 'Sports Wrap', desc: 'Weekly sports roundup every Sunday', on: false },
-                { name: 'Business Report', desc: 'Weekly business news digest', on: false },
-              ].map(nl => (
-                <label key={nl.name} className="flex items-center justify-between py-3 border-b border-ink-50 last:border-0">
-                  <div>
-                    <div className="text-sm font-medium text-ink-800">{nl.name}</div>
-                    <div className="text-xs text-ink-500">{nl.desc}</div>
-                  </div>
-                  <input type="checkbox" defaultChecked={nl.on} className="rounded w-5 h-5" />
-                </label>
-              ))}
-            </div>
-          )}
+          {tab === 'newsletters' && <NewsletterPreferences />}
           {tab === 'billing' && (
             <div className="space-y-4">
               <p className="text-sm text-ink-600">Your billing is managed securely through Stripe. Click below to manage payment methods, view invoices, or download receipts.</p>

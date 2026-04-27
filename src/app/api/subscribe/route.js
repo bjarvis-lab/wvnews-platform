@@ -21,6 +21,8 @@ import { getAuth } from 'firebase-admin/auth';
 import { app } from '@/lib/firebase-admin';
 import { upsertDigitalSubscriber, markClaimEmailSent } from '@/lib/subscribers-db';
 import { sendEmail, buildClaimEmail } from '@/lib/email';
+import { refreshAccessToken, addContact } from '@/lib/cc-client';
+import { getListIdForPublication } from '@/lib/newsletter-lists-db';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -109,6 +111,30 @@ export async function POST(request) {
   }
 
   await markClaimEmailSent(sub.id);
+
+  // Auto-add to the WV News main newsletter list. This is the editor's
+  // policy: every new registered reader joins the umbrella newsletter
+  // by default; they can opt into per-publication newsletters from
+  // their /account page after claiming. Failure is non-fatal — the
+  // signup still completes, we just log + skip the CC sync.
+  try {
+    const wvnewsListId = await getListIdForPublication('wvnews');
+    if (wvnewsListId && process.env.CC_REFRESH_TOKEN) {
+      const tokens = await refreshAccessToken();
+      const [firstName, ...lastParts] = (name || '').trim().split(/\s+/);
+      await addContact({
+        accessToken: tokens.access_token,
+        email,
+        firstName: firstName || undefined,
+        lastName: lastParts.join(' ') || undefined,
+        listMemberships: [wvnewsListId],
+        sourceDetails: 'wvnews-subscribe-page',
+      });
+    }
+  } catch (err) {
+    console.warn('[subscribe] CC auto-subscribe failed (non-fatal):', err.message);
+  }
+
   return NextResponse.json({
     ok: true,
     message: `Check your inbox — we sent a sign-in link to ${email}.`,

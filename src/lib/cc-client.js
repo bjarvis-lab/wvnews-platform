@@ -148,6 +148,78 @@ export async function getCampaignActivityStatsBulk({ accessToken, campaignActivi
   return data.bulk_email_campaign_summaries || [];
 }
 
+// ───────── Contact management ─────────
+
+// Find a contact by email. CC v3: GET /contacts?email=...
+export async function findContactByEmail({ accessToken, email }) {
+  if (!email) return null;
+  const data = await apiFetch(
+    `/contacts?email=${encodeURIComponent(email)}&include=list_memberships,custom_fields`,
+    { accessToken },
+  );
+  return (data.contacts || [])[0] || null;
+}
+
+// Create-or-update via CC's sign-up form endpoint, which handles
+// permission-to-send + dedup automatically. This is what CC recommends
+// for reader-facing signup forms (vs. /contacts which is admin-style).
+//
+// Args:
+//   email                — required
+//   firstName, lastName  — optional
+//   listMemberships      — array of CC list IDs the contact should be ON
+//   sourceDetails        — short string for CC's audit trail
+//
+// Returns the contact id when CC accepts it. Idempotent — calling with
+// the same email twice doesn't duplicate the contact, but DOES re-add
+// them to any lists they had previously left, which is the right
+// behavior for "user re-checked the box."
+export async function addContact({
+  accessToken,
+  email,
+  firstName,
+  lastName,
+  listMemberships = [],
+  sourceDetails = 'wvnews-platform',
+}) {
+  const payload = {
+    email_address: email,
+    first_name: firstName || undefined,
+    last_name: lastName || undefined,
+    list_memberships: listMemberships,
+    source_details: sourceDetails,
+  };
+  // Strip undefined keys for cleaner payload.
+  Object.keys(payload).forEach(k => payload[k] === undefined && delete payload[k]);
+
+  const data = await apiFetch('/contacts/sign_up_form', {
+    accessToken,
+    method: 'POST',
+    body: JSON.stringify(payload),
+  });
+  return data; // { contact_id, action: 'created' | 'updated', ... }
+}
+
+// Replace the contact's list memberships entirely. This is a PUT-style
+// op — pass exactly the lists the contact should belong to. CC removes
+// them from any list not in the array.
+//
+// Used by /account when a reader saves their newsletter preferences.
+export async function setContactLists({ accessToken, contactId, listIds = [] }) {
+  // CC v3 doesn't have a single "replace memberships" endpoint, so we
+  // PUT the full contact with list_memberships: [...]. The contact's
+  // current lists get diffed and updated server-side.
+  const data = await apiFetch(`/contacts/${encodeURIComponent(contactId)}`, {
+    accessToken,
+    method: 'PUT',
+    body: JSON.stringify({
+      update_source: 'Contact',
+      list_memberships: listIds,
+    }),
+  });
+  return data;
+}
+
 // Create a draft email campaign. CC's v3 model: an "email_campaign" has
 // a primary "email_campaign_activity" carrying the actual HTML/subject/
 // from. We set status=DRAFT — editors review + send from the CC
