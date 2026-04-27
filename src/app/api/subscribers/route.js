@@ -3,9 +3,7 @@
 //   POST  — create or merge a subscriber from either side (print or digital).
 //   GET   — list subscribers (admin only). Supports ?bundleType filter.
 //
-// Auth: either
-//   (a) a signed-in admin session (used by /admin/subscribers and /subscribe), or
-//   (b) the INTERNAL_API_TOKEN header (used by PrintManager + bulk import scripts).
+// See lib/api-auth.js for the three accepted auth styles.
 //
 // POST body shape:
 //   { kind: 'print', email?, name, phone?, address?, print: {...} }
@@ -18,38 +16,27 @@
 // instead of blasting thousands at once.
 
 import { NextResponse } from 'next/server';
-import { getSessionUser } from '@/lib/auth-server';
 import {
   upsertPrintSubscriber,
   upsertDigitalSubscriber,
   listSubscribers,
 } from '@/lib/subscribers-db';
-import { hasPermission } from '@/lib/permissions';
+import { authorize, withCors, preflight } from '@/lib/api-auth';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
 
-async function authorize(request, requiredPerm) {
-  const headerToken = request.headers.get('x-internal-token');
-  const expected = process.env.INTERNAL_API_TOKEN;
-  if (expected && headerToken && headerToken === expected) {
-    return { kind: 'internal' };
-  }
-  const user = await getSessionUser();
-  if (!user) return null;
-  if (requiredPerm && !hasPermission(user.profile, requiredPerm)) return null;
-  return { kind: 'session', user };
-}
+export async function OPTIONS(request) { return preflight(request); }
 
 export async function POST(request) {
   const auth = await authorize(request, 'subscribers');
-  if (!auth) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+  if (!auth) return withCors(NextResponse.json({ error: 'Unauthorized' }, { status: 401 }), request);
 
   let body;
   try {
     body = await request.json();
   } catch {
-    return NextResponse.json({ error: 'Invalid JSON body' }, { status: 400 });
+    return withCors(NextResponse.json({ error: 'Invalid JSON body' }, { status: 400 }), request);
   }
 
   const { kind } = body;
@@ -61,11 +48,11 @@ export async function POST(request) {
         phone: body.phone,
         address: body.address,
         print: body.print,
-        source: body.source || (auth.kind === 'internal' ? 'printmanager' : 'admin'),
+        source: body.source || (auth.kind === 'internal' ? 'printmanager' : auth.kind === 'bearer' ? 'printmanager' : 'admin'),
         tags: body.tags,
       });
       const shouldSendClaim = !!body.email && sub.digital && !sub.digital.hasClaimed && !sub.digital.claimEmailSentAt;
-      return NextResponse.json({ subscriber: sub, shouldSendClaim });
+      return withCors(NextResponse.json({ subscriber: sub, shouldSendClaim }), request);
     }
     if (kind === 'digital') {
       const sub = await upsertDigitalSubscriber({
@@ -75,22 +62,22 @@ export async function POST(request) {
         digital: body.digital,
         tags: body.tags,
       });
-      return NextResponse.json({ subscriber: sub });
+      return withCors(NextResponse.json({ subscriber: sub }), request);
     }
-    return NextResponse.json({ error: `Unknown kind: ${kind}` }, { status: 400 });
+    return withCors(NextResponse.json({ error: `Unknown kind: ${kind}` }, { status: 400 }), request);
   } catch (err) {
-    return NextResponse.json({ error: err.message }, { status: 400 });
+    return withCors(NextResponse.json({ error: err.message }, { status: 400 }), request);
   }
 }
 
 export async function GET(request) {
   const auth = await authorize(request, 'subscribers');
-  if (!auth) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+  if (!auth) return withCors(NextResponse.json({ error: 'Unauthorized' }, { status: 401 }), request);
 
   const { searchParams } = new URL(request.url);
   const bundleType = searchParams.get('bundleType') || undefined;
   const limit = Math.min(Number(searchParams.get('limit') || 100), 500);
 
   const rows = await listSubscribers({ bundleType, limit });
-  return NextResponse.json({ subscribers: rows });
+  return withCors(NextResponse.json({ subscribers: rows }), request);
 }
