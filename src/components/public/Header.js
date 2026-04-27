@@ -2,10 +2,10 @@
 import { useState, useEffect } from 'react';
 import { usePathname } from 'next/navigation';
 import Link from 'next/link';
-import { sections } from '@/data/mock';
+import { sections, sites } from '@/data/mock';
 import Logo from './Logo';
 
-export default function PublicHeader() {
+export default function PublicHeader({ publicationId = null }) {
   const [menuOpen, setMenuOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const [today, setToday] = useState('');
@@ -19,6 +19,18 @@ export default function PublicHeader() {
 
   // Highlight the current section in the nav based on the URL.
   const currentSlug = pathname?.startsWith('/section/') ? pathname.slice('/section/'.length).split('/')[0] : null;
+
+  // Resolve which publication's logo to render. Priority:
+  //   1. explicit `publicationId` prop (article pages pass the story's site id)
+  //   2. /p/{slug} routes — read from the URL
+  //   3. otherwise the umbrella WV News mark
+  let resolvedPubId = publicationId;
+  if (!resolvedPubId && pathname?.startsWith('/p/')) {
+    const pSlug = pathname.slice('/p/'.length).split('/')[0];
+    const site = sites.find(s => s.slug === pSlug);
+    if (site) resolvedPubId = site.id;
+  }
+  const currentPub = resolvedPubId ? sites.find(s => s.id === resolvedPubId) : null;
 
   return (
     <header className="bg-white border-b border-ink-200 sticky top-0 z-50">
@@ -55,10 +67,11 @@ export default function PublicHeader() {
             </svg>
           </button>
 
-          {/* Logo */}
-          <Link href="/" aria-label="WV News home" className="flex items-center">
-            <Logo height={44} variant="full" className="hidden sm:block" />
-            <Logo height={40} variant="icon" className="sm:hidden rounded-full" />
+          {/* Logo — swaps to the publication's brand mark when on a
+              per-publication page (article tagged for that paper, /p/...). */}
+          <Link href={currentPub ? `/p/${currentPub.slug}` : '/'} aria-label={`${currentPub?.name || 'WV News'} home`} className="flex items-center">
+            <Logo height={44} variant="full" publicationId={resolvedPubId} className="hidden sm:block" />
+            <Logo height={40} variant="icon" publicationId={resolvedPubId} className="sm:hidden rounded-full" />
           </Link>
 
           {/* Desktop Nav — uppercase eyebrow style, current section underlined in gold */}

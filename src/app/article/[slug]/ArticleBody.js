@@ -85,9 +85,14 @@ export default function ArticleBody({ story, section, sections, related, section
   // (fewer than 4 paragraphs), only the first ad fires.
   const [chunkA, chunkB, chunkC] = useMemo(() => splitParagraphs(bodyHtml, [3, 8]), [bodyHtml]);
 
+  // Header swaps to the publication's logo when the story is tagged for
+  // a specific paper. The umbrella WV News mark renders for stories
+  // tagged with the wvnews umbrella id (or untagged).
+  const headerPubId = adSite && adSite !== 'wvnews' ? adSite : null;
+
   return (
     <div className="min-h-screen">
-      <PublicHeader />
+      <PublicHeader publicationId={headerPubId} />
 
       {/* Top leaderboard */}
       <div className="border-b border-ink-200 bg-white">

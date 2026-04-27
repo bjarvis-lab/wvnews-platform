@@ -1,27 +1,41 @@
-// WV News logo — official brand asset from the NCWV Media Google Drive.
+// Brand logo — masthead asset that swaps based on context.
 //
-//   public/logo-wvnews.png       — full wordmark (circle mark + "WVNews" + tagline)
-//   public/logo-wvnews-mark.png  — wordmark only (circle mark + "WVNews", no tagline)
-//   public/logo-wvnews-icon.jpg  — circle mark only (for social / favicon)
+// On the WV News umbrella site (homepage, generic admin), we render
+// the umbrella mark. On a section or article page tagged for a specific
+// publication, we render that publication's color logo instead. Falls
+// back to the umbrella if the publication has no logoFile yet.
 //
 // Props:
-//   variant: 'full' (default — with tagline) | 'mark' (no tagline) | 'icon' (circle only)
-//   height:  rendered height in px; width scales proportionally
-//   className: passed through for layout
+//   variant:        'full' | 'mark' | 'icon' — only applies to the WV News umbrella
+//   height:         rendered height in px (width scales proportionally)
+//   className:      passed through for layout
+//   publicationId:  override — render this publication's logo instead
 
 import Image from 'next/image';
+import { sites } from '@/data/mock';
 
-const SOURCES = {
-  // Current masthead logo pulled from wvnews.com — mark + "WVNews" + navy banner.
-  full: { src: '/logo-wvnews.png', w: 486, h: 139, alt: 'WV News — West Virginia\'s News' },
-  // Older serif wordmark without the banner, kept as an alt.
+// Umbrella variants.
+const UMBRELLA = {
+  full: { src: '/publications/wvnews.png',    w: 486,  h: 139, alt: 'WV News — West Virginia\'s News' },
   mark: { src: '/logo-wvnews-mark.png', w: 1285, h: 246, alt: 'WV News' },
-  // Circular profile mark — used on dark backgrounds where the navy wordmark would disappear.
-  icon: { src: '/logo-wvnews-icon.jpg', w: 260, h: 260, alt: 'WV News' },
+  icon: { src: '/logo-wvnews-icon.jpg', w: 260,  h: 260, alt: 'WV News' },
 };
 
-export default function Logo({ variant = 'full', height = 44, className = '' }) {
-  const src = SOURCES[variant] || SOURCES.full;
+export default function Logo({ variant = 'full', height = 44, className = '', publicationId = null }) {
+  // If a specific publication is requested AND it has a logoFile, render
+  // it. Otherwise drop back to the umbrella mark.
+  let src;
+  if (publicationId) {
+    const pub = sites.find(s => s.id === publicationId);
+    if (pub?.logoFile) {
+      // We don't know the source dimensions of every publication logo;
+      // most are ~3:1 wordmarks. Use a reasonable default ratio that
+      // gets overridden by next/image's responsive sizing.
+      src = { src: pub.logoFile, w: 600, h: 200, alt: pub.name };
+    }
+  }
+  if (!src) src = UMBRELLA[variant] || UMBRELLA.full;
+
   const width = Math.round((src.w / src.h) * height);
 
   return (
