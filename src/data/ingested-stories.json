@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-04-26T23:55:06.004Z",
+  "fetchedAt": "2026-04-27T01:51:54.795Z",
   "source": "wvnews.com RSS + section HTML backfill",
   "target": 10,
   "siteCounts": {
@@ -330,6 +330,18 @@
     ],
     "bluegold": [
       {
+        "id": "dbfdb839-be4e-46ad-8a83-fb228fb289d2",
+        "slug": "wvu-baseball-drops-rubber-match-to-cincinnati",
+        "title": "WVU baseball drops rubber match to Cincinnati",
+        "description": "",
+        "pubDate": null,
+        "author": "",
+        "image": null,
+        "sourceUrl": "https://www.wvnews.com/bluegoldnews/wvu-baseball-drops-rubber-match-to-cincinnati/article_dbfdb839-be4e-46ad-8a83-fb228fb289d2.html",
+        "prefix": "bluegoldnews",
+        "source": "section"
+      },
+      {
         "id": "688ef3c3-854c-4e78-bcba-a01261acbc60",
         "slug": "wvu-pitching-wears-down-in-loss-to-cincinnati",
         "title": "WVU pitching wears down in loss to Cincinnati",
@@ -434,18 +446,6 @@
         "author": "",
         "image": null,
         "sourceUrl": "https://www.wvnews.com/bluegoldnews/akheem-mesidors-selection-in-the-nfl-draft-is-another-reminder-of-wvu-footballs-decline/article_089ba28a-f38e-4fd1-85de-be471dbd0d0e.html",
-        "prefix": "bluegoldnews",
-        "source": "section"
-      },
-      {
-        "id": "6a16a3c2-7619-4475-b6f1-c4db339f27d7",
-        "slug": "wvu-adds-keonte-greybear-to-growing-2026-27-roster",
-        "title": "WVU adds Keonte Greybear to growing 2026-27 roster",
-        "description": "",
-        "pubDate": null,
-        "author": "",
-        "image": null,
-        "sourceUrl": "https://www.wvnews.com/bluegoldnews/wvu-adds-keonte-greybear-to-growing-2026-27-roster/article_6a16a3c2-7619-4475-b6f1-c4db339f27d7.html",
         "prefix": "bluegoldnews",
         "source": "section"
       }
