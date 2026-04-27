@@ -14,3 +14,12 @@ out/
 *.pem
 *.key
 secrets/
+
+# OS / editor cruft
+.DS_Store
+*/.DS_Store
+
+# Source logo archives — the cleaned/renamed copies live next to them
+# and are committed; raw source files + zips stay local for re-export only.
+public/publications/Logos/
+public/Logos-*.zip

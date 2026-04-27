@@ -6,26 +6,27 @@
 // `domain` is the public-facing site. `logoFile` is the masthead asset when we have
 // a dedicated one; when null the UI falls back to a color+code badge.
 export const sites = [
-  { id: 'wvnews', code: 'WV', name: 'WV News', domain: 'wvnews.com', slug: 'wvnews', logoFile: '/logo-wvnews.png', color: '#1a2c5b', primary: true, market: 'North Central WV' },
+  { id: 'wvnews', code: 'WV', name: 'WV News', domain: 'wvnews.com', slug: 'wvnews', logoFile: '/publications/wvnews.png', color: '#1a2c5b', primary: true, market: 'North Central WV' },
   { id: 'exponent', code: 'EXP', name: 'Exponent Telegram', domain: 'theet.com', slug: 'theet', logoFile: '/publications/theet.png', color: '#8b2500', market: 'Clarksburg' },
   { id: 'dominion', code: 'MN', name: 'Morgantown News', domain: 'morgantownnews.com', slug: 'morgantownnews', logoFile: '/publications/morgantownnews.png', color: '#c0392b', market: 'Morgantown' },
-  { id: 'statejournal', code: 'STJ', name: 'The State Journal', domain: 'statejournal.com', slug: 'statejournal', logoFile: null, color: '#7b2d8b', market: 'Business / Statewide' },
+  { id: 'statejournal', code: 'STJ', name: 'The State Journal', domain: 'statejournal.com', slug: 'statejournal', logoFile: '/publications/statejournal.png', color: '#7b2d8b', market: 'Business / Statewide' },
+  // Blue & Gold News logo not yet supplied — falls back to color+code badge.
   { id: 'bluegold', code: 'BGN', name: 'Blue & Gold News', domain: 'bluegoldnews.com', slug: 'bluegoldnews', logoFile: null, color: '#002855', market: 'WVU Athletics' },
   { id: 'bridgeport', code: 'BPN', name: 'Bridgeport News', domain: 'bridgeportnews.com', slug: 'bridgeportnews', logoFile: '/publications/bridgeportnews.png', color: '#0d4a8f', market: 'Bridgeport' },
-  { id: 'recorddelta', code: 'RD', name: 'The Record Delta', domain: 'recorddelta.com', slug: 'recorddelta', logoFile: null, color: '#3b7d3b', market: 'Buckhannon / Upshur Co.' },
-  { id: 'weston', code: 'WES', name: 'Weston Democrat', domain: 'westondemocrat.com', slug: 'westondemocrat', logoFile: null, color: '#2d6a4f', market: 'Weston / Lewis Co.' },
-  { id: 'jackson', code: 'JAC', name: 'Jackson Star & Herald', domain: 'jacksonstar.com', slug: 'jacksonnews', logoFile: null, color: '#1a4d80', market: 'Jackson Co.' },
-  { id: 'preston', code: 'PJN', name: 'Preston News & Journal', domain: 'prestonnj.com', slug: 'prestonnews', logoFile: null, color: '#6b4226', market: 'Preston Co.' },
-  { id: 'braxtondem', code: 'BD', name: 'Braxton Democrat', domain: 'braxtondemocrat.com', slug: 'braxtonnews', logoFile: null, color: '#4a5d23', market: 'Braxton Co.' },
-  { id: 'braxtoncit', code: 'BC', name: 'Braxton Citizens\' News', domain: 'braxtoncitizens.com', slug: 'braxtoncit', logoFile: null, color: '#7d5a27', market: 'Braxton Co.' },
-  { id: 'mtnstates', code: 'MS', name: 'Mountain Statesman', domain: 'mountainstatesman.com', slug: 'mountainstatesman', logoFile: null, color: '#5d4a2a', market: 'Grafton / Taylor Co.' },
-  { id: 'mineral', code: 'MNT', name: 'Mineral News & Tribune', domain: 'mineraldaily.com', slug: 'mineralnews', logoFile: null, color: '#2d4a5d', market: 'Keyser / Mineral Co.' },
-  { id: 'rivercities', code: 'RTR', name: 'River Cities News', domain: 'rivercitiesnews.com', slug: 'rivercities', logoFile: null, color: '#2a5d6b', market: 'New/Stonewood' },
-  { id: 'roane', code: 'SR', name: 'Roane County Reporter', domain: 'roanereporter.com', slug: 'roanereporter', logoFile: null, color: '#6b2a5d', market: 'Roane Co.' },
-  { id: 'spencer', code: 'ST', name: 'Spencer Times Record', domain: 'spencertimes.com', slug: 'spencernews', logoFile: null, color: '#8b5a2b', market: 'Spencer / Roane Co.' },
-  { id: 'garrett', code: 'RPB', name: 'Garrett County Republican', domain: 'gcnews.com', slug: 'garrettrepublican', logoFile: null, color: '#2d3e7b', market: 'Garrett Co., MD' },
-  { id: 'bulletin', code: 'YBB', name: 'Your Bulletin Board', domain: 'yourbulletinboard.com', slug: 'bulletinboard', logoFile: null, color: '#7b7b2d', market: 'Community Events' },
-  { id: 'fmn', code: 'FMN', name: 'Fairmont News', domain: 'fairmontnews.com', slug: 'fairmontnews', logoFile: '/publications/fairmontnews.jpg', color: '#5d2a4a', market: 'Fairmont / Marion Co.' },
+  { id: 'recorddelta', code: 'RD', name: 'The Record Delta', domain: 'recorddelta.com', slug: 'recorddelta', logoFile: '/publications/recorddelta.png', color: '#3b7d3b', market: 'Buckhannon / Upshur Co.' },
+  { id: 'weston', code: 'WES', name: 'Weston Democrat', domain: 'westondemocrat.com', slug: 'westondemocrat', logoFile: '/publications/weston.png', color: '#2d6a4f', market: 'Weston / Lewis Co.' },
+  { id: 'jackson', code: 'JAC', name: 'Jackson Star & Herald', domain: 'jacksonstar.com', slug: 'jacksonnews', logoFile: '/publications/jackson.png', color: '#1a4d80', market: 'Jackson Co.' },
+  { id: 'preston', code: 'PJN', name: 'Preston News & Journal', domain: 'prestonnj.com', slug: 'prestonnews', logoFile: '/publications/preston.png', color: '#6b4226', market: 'Preston Co.' },
+  { id: 'braxtondem', code: 'BD', name: 'Braxton Democrat', domain: 'braxtondemocrat.com', slug: 'braxtonnews', logoFile: '/publications/braxtondem.png', color: '#4a5d23', market: 'Braxton Co.' },
+  { id: 'braxtoncit', code: 'BC', name: 'Braxton Citizens\' News', domain: 'braxtoncitizens.com', slug: 'braxtoncit', logoFile: '/publications/braxtoncit.png', color: '#7d5a27', market: 'Braxton Co.' },
+  { id: 'mtnstates', code: 'MS', name: 'Mountain Statesman', domain: 'mountainstatesman.com', slug: 'mountainstatesman', logoFile: '/publications/mtnstates.png', color: '#5d4a2a', market: 'Grafton / Taylor Co.' },
+  { id: 'mineral', code: 'MNT', name: 'Mineral News & Tribune', domain: 'mineraldaily.com', slug: 'mineralnews', logoFile: '/publications/mineral.png', color: '#2d4a5d', market: 'Keyser / Mineral Co.' },
+  { id: 'rivercities', code: 'RTR', name: 'River Cities News', domain: 'rivercitiesnews.com', slug: 'rivercities', logoFile: '/publications/rivercities.png', color: '#2a5d6b', market: 'New/Stonewood' },
+  { id: 'roane', code: 'SR', name: 'Roane County Reporter', domain: 'roanereporter.com', slug: 'roanereporter', logoFile: '/publications/roane.png', color: '#6b2a5d', market: 'Roane Co.' },
+  { id: 'spencer', code: 'ST', name: 'Spencer Times Record', domain: 'spencertimes.com', slug: 'spencernews', logoFile: '/publications/spencer.png', color: '#8b5a2b', market: 'Spencer / Roane Co.' },
+  { id: 'garrett', code: 'RPB', name: 'Garrett County Republican', domain: 'gcnews.com', slug: 'garrettrepublican', logoFile: '/publications/garrett.png', color: '#2d3e7b', market: 'Garrett Co., MD' },
+  { id: 'bulletin', code: 'YBB', name: 'Your Bulletin Board', domain: 'yourbulletinboard.com', slug: 'bulletinboard', logoFile: '/publications/bulletin.png', color: '#7b7b2d', market: 'Community Events' },
+  { id: 'fmn', code: 'FMN', name: 'Fairmont News', domain: 'fairmontnews.com', slug: 'fairmontnews', logoFile: '/publications/fairmontnews.png', color: '#5d2a4a', market: 'Fairmont / Marion Co.' },
 ];
 
 export const sections = [
