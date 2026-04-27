@@ -2,12 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,800;1,400;1,600&family=Source+Sans+3:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500&display=swap');
-
+/* Fonts: Source Serif 4 (display) + Inter (body) are loaded via next/font
+   in src/app/layout.js — no @import URL here. The CSS variables
+   --font-display / --font-body are set on the <html> element. */
 :root {
-  --font-display: 'Playfair Display', Georgia, serif;
-  --font-body: 'Source Sans 3', system-ui, sans-serif;
-  --font-mono: 'JetBrains Mono', monospace;
   --brand-primary: #1e3a5f;
   --brand-accent: #c0392b;
   --brand-gold: #d4a843;
@@ -20,7 +18,7 @@
 html { scroll-behavior: smooth; }
 
 body {
-  font-family: var(--font-body);
+  font-family: var(--font-body), system-ui, sans-serif;
   color: var(--ink);
   background: var(--surface);
   -webkit-font-smoothing: antialiased;
@@ -28,7 +26,8 @@ body {
 }
 
 h1, h2, h3, h4, h5, h6 {
-  font-family: var(--font-display);
+  font-family: var(--font-display), Georgia, serif;
+  letter-spacing: -0.01em; /* tighter tracking for serif headlines */
 }
 
 /* Scrollbar */
@@ -44,32 +43,98 @@ h1, h2, h3, h4, h5, h6 {
   pointer-events: none;
 }
 
-/* Article body styles */
+/* Article body — Atlantic-clean prose. Serif body for long-form, generous
+   line-height + paragraph spacing, restrained max width. Drop cap on the
+   first paragraph for editorial feel. */
+.article-body {
+  font-family: var(--font-display), Georgia, serif;
+  font-size: 1.1875rem;        /* ~19px */
+  line-height: 1.7;
+  color: #1f2429;
+  max-width: 40rem;            /* matches tailwind max-w-prose */
+}
+
 .article-body p {
-  font-size: 1.125rem;
-  line-height: 1.8;
-  margin-bottom: 1.25rem;
-  color: #2d2d2d;
+  margin: 0 0 1.4rem;
+}
+
+.article-body p:first-of-type::first-letter {
+  font-family: var(--font-display), Georgia, serif;
+  font-weight: 700;
+  font-size: 4.4em;
+  line-height: 0.85;
+  float: left;
+  margin: 0.05em 0.08em 0 0;
+  color: var(--brand-primary);
 }
 
 .article-body h2 {
-  font-size: 1.5rem;
+  font-family: var(--font-display), Georgia, serif;
+  font-size: 1.6rem;
   font-weight: 700;
-  margin: 2rem 0 1rem;
+  margin: 2.4rem 0 0.9rem;
+  letter-spacing: -0.01em;
 }
 
+.article-body h3 {
+  font-family: var(--font-display), Georgia, serif;
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin: 2rem 0 0.6rem;
+}
+
+.article-body a {
+  color: var(--brand-primary);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+}
+.article-body a:hover { color: var(--brand-accent); }
+
 .article-body blockquote {
-  border-left: 3px solid var(--brand-accent);
-  padding-left: 1.25rem;
-  margin: 1.5rem 0;
+  border-left: 3px solid var(--brand-gold);
+  padding: 0.4rem 0 0.4rem 1.4rem;
+  margin: 1.8rem 0;
   font-style: italic;
-  color: #555;
+  font-size: 1.25rem;
+  color: #3a3f45;
+  line-height: 1.55;
 }
 
 .article-body img {
   width: 100%;
-  border-radius: 4px;
+  border-radius: 2px;
+  margin: 2rem 0 0.5rem;
+}
+
+.article-body figcaption {
+  font-family: var(--font-body), system-ui, sans-serif;
+  font-size: 0.8125rem;
+  color: #6a6f76;
+  margin: 0 0 1.6rem;
+  line-height: 1.4;
+}
+
+/* Ad block — tiny "Advertisement" eyebrow + faint surround so ads sit
+   distinctly between editorial without yelling. AdSlot.js already labels;
+   this is for ad wrappers we don't want to label themselves. */
+.ad-frame {
+  border-top: 1px solid #ececef;
+  border-bottom: 1px solid #ececef;
+  padding: 0.75rem 0;
   margin: 1.5rem 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: #fbfbfd;
+}
+.ad-eyebrow {
+  font-family: var(--font-body), system-ui, sans-serif;
+  font-size: 0.625rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #97a0aa;
+  margin-bottom: 0.4rem;
 }
 
 /* Admin sidebar */

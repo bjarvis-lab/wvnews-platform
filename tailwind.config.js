@@ -47,9 +47,20 @@ module.exports = {
         },
       },
       fontFamily: {
-        display: ['Georgia', 'Times New Roman', 'serif'],
-        body: ['system-ui', '-apple-system', 'Segoe UI', 'sans-serif'],
-        mono: ['JetBrains Mono', 'Fira Code', 'monospace'],
+        // Source Serif 4 — Atlantic-clean newsy serif for headlines + lead text.
+        // CSS var is supplied by next/font in src/app/layout.js.
+        display: ['var(--font-display)', 'Source Serif Pro', 'Charter', 'Georgia', 'serif'],
+        // Inter for body, UI, captions.
+        body:    ['var(--font-body)', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'sans-serif'],
+        mono:    ['JetBrains Mono', 'Fira Code', 'monospace'],
+      },
+      // News-site-friendly type ramp + tracking. Tailwind's defaults are
+      // good for product UI but a touch loose for editorial.
+      letterSpacing: {
+        eyebrow: '0.14em',
+      },
+      maxWidth: {
+        prose: '40rem', // 640px — comfortable single-column reading width
       },
     },
   },

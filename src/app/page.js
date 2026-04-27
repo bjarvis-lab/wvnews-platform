@@ -1,7 +1,7 @@
-// Homepage — server component. Renders published native stories from
-// Firestore, mixed with mock.js seeds so the layout stays populated while
-// your reporters ramp up authoring in the new CMS. Native stories always
-// win over mock when both exist at the same slug.
+// Homepage — Atlantic-clean editorial layout. Server component, blends
+// native + ingested + mock stories. Ad inventory: top leaderboard,
+// in-feed banner, two right-rail units (sticky on desktop). Mobile drops
+// the rail and shifts ads inline.
 
 import Link from 'next/link';
 import PublicHeader from '@/components/public/Header';
@@ -16,19 +16,18 @@ export const dynamic = 'force-dynamic';
 function timeAgo(dateStr) {
   if (!dateStr) return '';
   const diff = Date.now() - new Date(dateStr).getTime();
-  const hours = Math.floor(diff / 3600000);
-  if (hours < 1) return 'Just now';
-  if (hours < 24) return `${hours}h ago`;
+  const mins = Math.max(0, Math.floor(diff / 60000));
+  if (mins < 1) return 'Just now';
+  if (mins < 60) return `${mins} min ago`;
+  const hours = Math.floor(mins / 60);
+  if (hours < 24) return `${hours} hr ago`;
   return `${Math.floor(hours / 24)}d ago`;
 }
 
-// Merge native + mock, native wins. Mock entries fill the visual space
-// while the real CMS is populated; they show up clearly with slug links
-// that still resolve (articles/[slug] falls back to mock seeds).
 async function blendStories() {
   let native = [];
   try {
-    native = await listPublishedStories({ limit: 40 });
+    native = await listPublishedStories({ limit: 60 });
   } catch {
     native = [];
   }
@@ -37,114 +36,144 @@ async function blendStories() {
   return [...native, ...mocks];
 }
 
-function StoryCard({ story, size = 'medium' }) {
-  const section = sections.find(s => s.id === story.section);
-
-  const accessBadge = story.accessLevel === 'premium'
-    ? <span className="inline-block px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider bg-brand-950 text-white rounded">Subscriber</span>
-    : story.accessLevel === 'metered'
-    ? <span className="inline-block px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider bg-gold-500 text-white rounded">Premium</span>
-    : null;
-
-  const heroImg = story.image?.url;
-
-  if (size === 'hero') {
-    return (
-      <Link href={`/article/${story.slug}`} className="group block">
-        <div className="relative overflow-hidden rounded-lg bg-ink-900 aspect-[16/9]">
-          {heroImg && (
-            // eslint-disable-next-line @next/next/no-img-element
-            <img src={heroImg} alt={story.image?.alt || ''} className="absolute inset-0 w-full h-full object-cover" />
-          )}
-          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent z-10" />
-          {!heroImg && <div className="absolute inset-0 bg-brand-950/40" />}
-          <div className="absolute bottom-0 left-0 right-0 p-6 md:p-8 z-20">
-            {story.breaking && (
-              <span className="inline-block px-3 py-1 text-xs font-bold uppercase tracking-widest bg-red-600 text-white rounded mb-3 animate-pulse">
-                Breaking News
-              </span>
-            )}
-            <div className="flex items-center gap-2 mb-2">
-              {accessBadge}
-              <span className="text-white/70 text-xs uppercase tracking-wider font-medium">
-                {section?.name}
-              </span>
-            </div>
-            <h2 className="font-display text-2xl md:text-4xl font-bold text-white leading-tight group-hover:text-gold-400 transition-colors">
-              {story.headline}
-            </h2>
-            {story.deck && (
-              <p className="mt-2 text-white/80 text-sm md:text-base max-w-2xl line-clamp-2">{story.deck}</p>
-            )}
-            <div className="mt-3 flex items-center gap-3 text-white/60 text-xs">
-              <span className="font-medium text-white/80">{story.author?.name}</span>
-              <span>·</span>
-              <span>{timeAgo(story.publishedAt)}</span>
-            </div>
-          </div>
-        </div>
-      </Link>
-    );
-  }
-
-  if (size === 'large') {
-    return (
-      <Link href={`/article/${story.slug}`} className="group block">
-        <div className="relative overflow-hidden rounded bg-ink-200 aspect-[16/10] mb-3">
-          {heroImg ? (
-            // eslint-disable-next-line @next/next/no-img-element
-            <img src={heroImg} alt="" className="absolute inset-0 w-full h-full object-cover group-hover:scale-[1.02] transition-transform" />
-          ) : (
-            <div className="absolute inset-0 bg-brand-950/20 group-hover:bg-brand-950/10 transition-colors" />
-          )}
-        </div>
-        <div className="flex items-center gap-2 mb-1">
-          {accessBadge}
-          <span className="text-brand-700 text-[11px] uppercase tracking-wider font-semibold">
-            {section?.name}
-          </span>
-        </div>
-        <h3 className="font-display text-xl font-bold leading-snug text-ink-900 group-hover:text-brand-700 transition-colors">
-          {story.headline}
-        </h3>
-        {story.deck && <p className="mt-1 text-ink-600 text-sm line-clamp-2">{story.deck}</p>}
-        <div className="mt-2 flex items-center gap-2 text-ink-500 text-xs">
-          <span className="font-medium">{story.author?.name}</span>
-          <span>·</span>
-          <span>{timeAgo(story.publishedAt)}</span>
-        </div>
-      </Link>
-    );
-  }
-
+function Eyebrow({ section, breaking }) {
+  const sec = sections.find(s => s.id === section);
   return (
-    <Link href={`/article/${story.slug}`} className="group flex gap-4 py-4 border-b border-ink-200 last:border-0">
-      <div className="flex-1 min-w-0">
-        <div className="flex items-center gap-2 mb-1">
-          {accessBadge}
-          <span className="text-brand-700 text-[10px] uppercase tracking-wider font-semibold">
-            {section?.name}
-          </span>
-          {story.breaking && <span className="text-[10px] font-bold text-red-600">● BREAKING</span>}
+    <div className="flex items-center gap-2 mb-2">
+      {breaking && (
+        <span className="inline-block px-2 py-0.5 text-[10px] font-bold uppercase tracking-eyebrow bg-red-600 text-white rounded-sm">
+          ● Breaking
+        </span>
+      )}
+      {sec && (
+        <span className="text-[10px] font-bold uppercase tracking-eyebrow text-brand-700">
+          {sec.name}
+        </span>
+      )}
+    </div>
+  );
+}
+
+function Byline({ author, publishedAt }) {
+  return (
+    <div className="text-xs text-ink-500 font-body">
+      <span className="font-medium text-ink-700">{author?.name || ''}</span>
+      {author?.name && publishedAt && <span className="mx-1.5">·</span>}
+      {publishedAt && <span>{timeAgo(publishedAt)}</span>}
+    </div>
+  );
+}
+
+function HeroStory({ story }) {
+  if (!story) return null;
+  const heroImg = story.image?.url;
+  return (
+    <Link href={`/article/${story.slug}`} className="group block">
+      <div className="relative overflow-hidden bg-ink-900 aspect-[16/9] mb-5">
+        {heroImg && (
+          // eslint-disable-next-line @next/next/no-img-element
+          <img src={heroImg} alt={story.image?.alt || ''} className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-[1.02]" />
+        )}
+        {!heroImg && <div className="absolute inset-0 bg-gradient-to-br from-brand-900 to-brand-950" />}
+      </div>
+      <Eyebrow section={story.section} breaking={story.breaking} />
+      <h1 className="font-display text-3xl md:text-5xl font-bold leading-[1.05] text-ink-900 group-hover:text-brand-700 transition-colors">
+        {story.headline}
+      </h1>
+      {story.deck && (
+        <p className="mt-3 text-base md:text-lg text-ink-600 leading-snug max-w-3xl">{story.deck}</p>
+      )}
+      <div className="mt-3"><Byline author={story.author} publishedAt={story.publishedAt} /></div>
+    </Link>
+  );
+}
+
+function SecondaryStory({ story }) {
+  const heroImg = story.image?.url;
+  return (
+    <Link href={`/article/${story.slug}`} className="group block">
+      {heroImg && (
+        <div className="relative overflow-hidden bg-ink-200 aspect-[16/10] mb-3">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src={heroImg} alt="" className="absolute inset-0 w-full h-full object-cover" />
         </div>
-        <h3 className="font-display text-base font-bold leading-snug text-ink-900 group-hover:text-brand-700 transition-colors line-clamp-2">
+      )}
+      <Eyebrow section={story.section} breaking={story.breaking} />
+      <h2 className="font-display text-xl md:text-2xl font-bold leading-snug text-ink-900 group-hover:text-brand-700 transition-colors">
+        {story.headline}
+      </h2>
+      {story.deck && <p className="mt-2 text-sm text-ink-600 line-clamp-2">{story.deck}</p>}
+      <div className="mt-2"><Byline author={story.author} publishedAt={story.publishedAt} /></div>
+    </Link>
+  );
+}
+
+function RiverItem({ story }) {
+  const heroImg = story.image?.url;
+  return (
+    <Link href={`/article/${story.slug}`} className="group flex gap-4 py-5 border-b border-ink-200 last:border-0">
+      <div className="flex-1 min-w-0">
+        <Eyebrow section={story.section} breaking={story.breaking} />
+        <h3 className="font-display text-base md:text-lg font-bold leading-snug text-ink-900 group-hover:text-brand-700 transition-colors line-clamp-3">
           {story.headline}
         </h3>
-        <div className="mt-1 flex items-center gap-2 text-ink-500 text-xs">
-          <span>{story.author?.name}</span>
-          <span>·</span>
-          <span>{timeAgo(story.publishedAt)}</span>
-        </div>
+        <div className="mt-1.5"><Byline author={story.author} publishedAt={story.publishedAt} /></div>
       </div>
-      <div className="w-24 h-20 flex-shrink-0 rounded bg-ink-200 overflow-hidden">
-        {heroImg ? (
-          // eslint-disable-next-line @next/next/no-img-element
+      {heroImg && (
+        <div className="w-28 h-24 sm:w-32 sm:h-28 flex-shrink-0 bg-ink-200 overflow-hidden">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src={heroImg} alt="" className="w-full h-full object-cover" />
-        ) : (
-          <div className="w-full h-full bg-brand-950/10" />
-        )}
-      </div>
+        </div>
+      )}
     </Link>
+  );
+}
+
+function MostRead({ stories }) {
+  return (
+    <section className="bg-white border border-ink-200 p-5">
+      <h3 className="text-[11px] font-bold uppercase tracking-eyebrow text-ink-500 mb-4 pb-2 border-b border-ink-200">
+        Most Read
+      </h3>
+      <ol className="space-y-4">
+        {stories.map((story, i) => (
+          <li key={story.id || story.slug} className="flex gap-3 items-start">
+            <span className="font-display text-2xl font-bold text-brand-300 leading-none w-6 flex-shrink-0">{i + 1}</span>
+            <Link href={`/article/${story.slug}`} className="font-display text-sm font-semibold leading-snug text-ink-800 hover:text-brand-700 transition-colors">
+              {story.headline}
+            </Link>
+          </li>
+        ))}
+      </ol>
+    </section>
+  );
+}
+
+function ReaderServices() {
+  const items = [
+    { label: 'Submit an Obituary', href: '/submit?form=obituary' },
+    { label: 'Submit a Letter', href: '/submit?form=letter' },
+    { label: 'Send a News Tip', href: '/submit?form=tip' },
+    { label: 'Place a Classified Ad', href: '/submit?form=classified' },
+    { label: 'Subscribe', href: '/subscribe' },
+    { label: 'E-Edition', href: '/e-edition' },
+    { label: 'Manage My Account', href: '/account' },
+  ];
+  return (
+    <section className="bg-white border border-ink-200 p-5">
+      <h3 className="text-[11px] font-bold uppercase tracking-eyebrow text-ink-500 mb-3 pb-2 border-b border-ink-200">
+        Reader Services
+      </h3>
+      <ul className="space-y-1">
+        {items.map(item => (
+          <li key={item.label}>
+            <Link href={item.href} className="block py-1.5 text-sm text-ink-700 hover:text-brand-700 transition-colors">
+              {item.label} <span className="text-ink-400">→</span>
+            </Link>
+          </li>
+        ))}
+      </ul>
+    </section>
   );
 }
 
@@ -152,8 +181,11 @@ export default async function HomePage() {
   const all = await blendStories();
 
   const breaking = all.find(s => s.breaking) || null;
-  const featured = all.filter(s => s.featured && !s.breaking).slice(0, 4);
-  const latest = all.filter(s => !s.featured && !s.breaking).slice(0, 20);
+  const featured = all.filter(s => s.featured && !s.breaking);
+  const lead = breaking || featured[0] || all[0];
+  const secondaries = (breaking ? featured : featured.slice(1)).slice(0, 4);
+  const usedIds = new Set([lead, ...secondaries].filter(Boolean).map(s => s.id || s.slug));
+  const river = all.filter(s => !usedIds.has(s.id || s.slug)).slice(0, 18);
   const mostRead = [...all].sort((a, b) => (b.stats?.views || 0) - (a.stats?.views || 0)).slice(0, 5);
 
   const adTargeting = { page: 'home', breaking: breaking ? 'yes' : 'no' };
@@ -162,112 +194,81 @@ export default async function HomePage() {
     <div className="min-h-screen">
       <PublicHeader />
 
-      {/* Top-of-page ad slot — desktop leaderboard / mobile banner */}
-      <div className="max-w-7xl mx-auto px-4 pt-3">
-        <AdSlot placement="home-top" site="wvnews" targeting={adTargeting} />
+      {/* Top leaderboard. Sits below the header, above editorial. */}
+      <div className="border-b border-ink-200 bg-white">
+        <div className="max-w-7xl mx-auto px-4 py-3">
+          <AdSlot placement="home-top" site="wvnews" targeting={adTargeting} />
+        </div>
       </div>
 
-      <main className="max-w-7xl mx-auto px-4 py-6">
-        {/* Hero Section */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+      <main className="max-w-7xl mx-auto px-4 lg:px-6 py-8 lg:py-10">
+        {/* Lead block: hero left, two secondary right (desktop). Stacks on mobile. */}
+        <section className="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-10 pb-10 border-b border-ink-300">
           <div className="lg:col-span-2">
-            {breaking ? (
-              <StoryCard story={breaking} size="hero" />
-            ) : featured[0] ? (
-              <StoryCard story={featured[0]} size="hero" />
-            ) : all[0] ? (
-              <StoryCard story={all[0]} size="hero" />
-            ) : null}
+            <HeroStory story={lead} />
           </div>
-          <div className="space-y-4">
-            {featured.slice(breaking ? 0 : 1, breaking ? 3 : 4).map(story => (
-              <StoryCard key={story.id || story.slug} story={story} size="medium" />
+          <div className="space-y-6 lg:border-l lg:border-ink-200 lg:pl-8">
+            {secondaries.slice(0, 2).map(story => (
+              <SecondaryStory key={story.id || story.slug} story={story} />
             ))}
           </div>
-        </div>
+        </section>
 
-        {/* Section Divider */}
-        <div className="flex items-center gap-4 mb-6">
-          <h2 className="font-display text-xl font-bold text-ink-900 whitespace-nowrap">Latest Stories</h2>
-          <div className="flex-1 h-px bg-ink-200" />
-          <div className="flex gap-2">
-            {sections.slice(0, 5).map(section => (
-              <Link
-                key={section.id}
-                href={`/section/${section.slug}`}
-                className="px-3 py-1 text-xs font-medium text-ink-600 hover:text-brand-700 hover:bg-brand-50 rounded-full transition-colors"
-              >
-                {section.name}
+        {/* Story river + right rail. Rail is sticky on desktop. */}
+        <section className="grid grid-cols-1 lg:grid-cols-3 gap-10 mt-10">
+          <div className="lg:col-span-2">
+            <header className="flex items-baseline justify-between mb-2 pb-3 border-b-2 border-ink-900">
+              <h2 className="font-display text-2xl font-bold text-ink-900">Latest from West Virginia</h2>
+              <Link href="/section/news" className="text-xs font-semibold uppercase tracking-eyebrow text-brand-700 hover:text-brand-900">
+                See All →
               </Link>
-            ))}
-          </div>
-        </div>
+            </header>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          <div className="lg:col-span-2">
-            {featured.length > 3 && (
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-                {featured.slice(3).map(story => (
-                  <StoryCard key={story.id || story.slug} story={story} size="large" />
-                ))}
-              </div>
-            )}
-            <div className="border-t border-ink-200">
-              {latest.map(story => (
-                <StoryCard key={story.id || story.slug} story={story} size="medium" />
+            {/* First chunk of river */}
+            <div>
+              {river.slice(0, 6).map(story => (
+                <RiverItem key={story.id || story.slug} story={story} />
               ))}
             </div>
-            <div className="my-6">
+
+            {/* In-feed ad break */}
+            <div className="my-8">
               <AdSlot placement="home-in-feed" site="wvnews" targeting={adTargeting} />
             </div>
+
+            {/* Second chunk + featured callouts */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-8 my-8">
+              {secondaries.slice(2).map(story => (
+                <SecondaryStory key={story.id || story.slug} story={story} />
+              ))}
+            </div>
+
+            <div>
+              {river.slice(6).map(story => (
+                <RiverItem key={story.id || story.slug} story={story} />
+              ))}
+            </div>
           </div>
 
-          <div className="space-y-6">
-            <WeatherWidget />
+          {/* Right rail — desktop only */}
+          <aside className="hidden lg:block space-y-6">
+            <div className="sticky top-4 space-y-6">
+              <AdSlot placement="home-sidebar-1" site="wvnews" targeting={adTargeting} />
+              <MostRead stories={mostRead} />
+              <NewsletterSignup />
+              <WeatherWidget />
+              <AdSlot placement="home-sidebar-2" site="wvnews" targeting={adTargeting} />
+              <ReaderServices />
+            </div>
+          </aside>
+
+          {/* Mobile-only: collapse sidebar widgets below river */}
+          <div className="lg:hidden space-y-6 mt-10">
             <NewsletterSignup />
-
-            <div className="bg-white rounded-lg p-4 shadow-sm border border-ink-100">
-              <h3 className="text-xs font-bold uppercase tracking-wider text-ink-500 mb-3">Most Read Today</h3>
-              <ol className="space-y-3">
-                {mostRead.map((story, i) => (
-                  <li key={story.id || story.slug} className="flex gap-3">
-                    <span className="text-2xl font-display font-bold text-brand-200">{i + 1}</span>
-                    <Link href={`/article/${story.slug}`} className="text-sm font-medium text-ink-800 hover:text-brand-700 leading-tight">
-                      {story.headline}
-                    </Link>
-                  </li>
-                ))}
-              </ol>
-            </div>
-
-            <div className="bg-white rounded-lg p-4 shadow-sm border border-ink-100">
-              <h3 className="text-xs font-bold uppercase tracking-wider text-ink-500 mb-3">Reader Services</h3>
-              <div className="space-y-2">
-                {[
-                  { label: 'Submit an Obituary', href: '/submit?form=obituary' },
-                  { label: 'Submit a Letter', href: '/submit?form=letter' },
-                  { label: 'Send a News Tip', href: '/submit?form=tip' },
-                  { label: 'Post an Event', href: '/submit?form=event' },
-                  { label: 'Place a Classified Ad', href: '/submit?form=classified' },
-                  { label: 'Advertise With Us', href: '/submit?form=advertise' },
-                  { label: 'Subscribe', href: '/subscribe' },
-                  { label: 'E-Edition', href: '/e-edition' },
-                  { label: 'Manage My Account', href: '/account' },
-                ].map(item => (
-                  <Link
-                    key={item.label}
-                    href={item.href}
-                    className="block px-3 py-2 text-sm text-ink-700 hover:text-brand-700 hover:bg-brand-50 rounded transition-colors"
-                  >
-                    {item.label} →
-                  </Link>
-                ))}
-              </div>
-            </div>
-
-            <AdSlot placement="home-sidebar-1" site="wvnews" targeting={adTargeting} />
+            <MostRead stories={mostRead} />
+            <ReaderServices />
           </div>
-        </div>
+        </section>
       </main>
 
       <Footer />
