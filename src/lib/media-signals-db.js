@@ -87,21 +87,19 @@ export async function listStaleSources({ hours = 24 } = {}) {
 // gets bumped every time the collector re-sees a member URL in an
 // RSS feed and would make 4-day-old stories look minutes old.
 //
-// Backwards compat: cluster docs written before newestPublishedAt was
-// added fall back to firstSeenAt (oldest member's first-seen) for the
-// gate. That's conservative — a long-lived cluster will be dropped
-// even if its newest member is fresh — but it's safer than the old
-// lastSeenAt behavior. The next clusterer run repopulates the field.
+// We REQUIRE newestPublishedAt now. Cluster docs without it are from the
+// old clusterer (pre publishedAt-fix) and their other date fields can't
+// be trusted — they used lastSeenAt fallbacks that made 5-day-old
+// stories look minutes old. Skip them and let the next clusterer run
+// re-create the legitimate clusters.
 export async function listClusters({ limit = 30, breakingOnly = false, trendingOnly = false, since } = {}) {
   let q = db.collection('mediaClusters').orderBy('lastSeenAt', 'desc').limit(limit * 4);
   const snap = await q.get();
   let rows = snap.docs.map(serialize);
+  rows = rows.filter(r => !!r.newestPublishedAt);
   if (since) {
     const sinceMs = new Date(since).getTime();
-    rows = rows.filter(r => {
-      const fresh = r.newestPublishedAt || r.firstSeenAt;
-      return fresh && new Date(fresh).getTime() >= sinceMs;
-    });
+    rows = rows.filter(r => new Date(r.newestPublishedAt).getTime() >= sinceMs);
   }
   if (breakingOnly) rows = rows.filter(r => r.isBreaking);
   if (trendingOnly) rows = rows.filter(r => r.isTrending || r.isBreaking);
