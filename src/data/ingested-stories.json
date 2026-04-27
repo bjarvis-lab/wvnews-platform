@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-04-27T21:46:21.003Z",
+  "fetchedAt": "2026-04-27T22:41:12.502Z",
   "source": "wvnews.com RSS + section HTML backfill",
   "target": 10,
   "siteCounts": {
@@ -1183,6 +1183,18 @@
         "source": "section"
       },
       {
+        "id": "72231a1d-7bae-4e6f-8c10-5a83bfadf2dd",
+        "slug": "3-north-marion-students-sign-letters-of-intent",
+        "title": "3 North Marion students sign letters of intent",
+        "description": "",
+        "pubDate": null,
+        "author": "",
+        "image": null,
+        "sourceUrl": "https://www.wvnews.com/fairmontnews/sports/3-north-marion-students-sign-letters-of-intent/article_72231a1d-7bae-4e6f-8c10-5a83bfadf2dd.html",
+        "prefix": "fairmontnews",
+        "source": "section"
+      },
+      {
         "id": "7e701932-2f4f-4cec-963c-679461d4af07",
         "slug": "east-fairmonts-owen-music-has-no-problems-being-the-leadoff-man",
         "title": "East Fairmont's Owen Music has no problems being the leadoff man",
@@ -1191,18 +1203,6 @@
         "author": "",
         "image": null,
         "sourceUrl": "https://www.wvnews.com/fairmontnews/sports/east-fairmonts-owen-music-has-no-problems-being-the-leadoff-man/article_7e701932-2f4f-4cec-963c-679461d4af07.html",
-        "prefix": "fairmontnews",
-        "source": "section"
-      },
-      {
-        "id": "261274ae-3bf0-4e21-a5ac-ef7c3504bb14",
-        "slug": "country-church-project-st-peter-the-fisherman-archives-preserve-fairmont-s-immigrant-history-through-sacramental",
-        "title": "Country Church Project: St. Peter the Fisherman archives preserve Fairmont’s immigrant history through sacramental records",
-        "description": "",
-        "pubDate": null,
-        "author": "",
-        "image": null,
-        "sourceUrl": "https://www.wvnews.com/fairmontnews/news/local/country-church-project-st-peter-the-fisherman-archives-preserve-fairmont-s-immigrant-history-through-sacramental/article_261274ae-3bf0-4e21-a5ac-ef7c3504bb14.html",
         "prefix": "fairmontnews",
         "source": "section"
       }
