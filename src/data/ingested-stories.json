@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-04-27T20:52:53.048Z",
+  "fetchedAt": "2026-04-27T21:46:21.003Z",
   "source": "wvnews.com RSS + section HTML backfill",
   "target": 10,
   "siteCounts": {
@@ -706,14 +706,14 @@
         "source": "section"
       },
       {
-        "id": "459123b2-943a-43ac-b78b-732868fac0cf",
-        "slug": "ripley-track-teams-compete-at-cline-stansberry-invitational-in-west-union",
-        "title": "Ripley track teams compete at Cline Stansberry Invitational in West Union",
+        "id": "5169365d-3fd5-49d4-9d68-a1b8158930f8",
+        "slug": "ravenswood-track-and-field-teams-sweep-third-place-finishes-at-lindsey-mann-invitational",
+        "title": "Ravenswood track and field teams sweep third place finishes at Lindsey Mann Invitational",
         "description": "",
         "pubDate": null,
         "author": "",
         "image": null,
-        "sourceUrl": "https://www.wvnews.com/jacksonnews/ripley-track-teams-compete-at-cline-stansberry-invitational-in-west-union/article_459123b2-943a-43ac-b78b-732868fac0cf.html",
+        "sourceUrl": "https://www.wvnews.com/jacksonnews/ravenswood-track-and-field-teams-sweep-third-place-finishes-at-lindsey-mann-invitational/article_5169365d-3fd5-49d4-9d68-a1b8158930f8.html",
         "prefix": "jacksonnews",
         "source": "section"
       }
@@ -1049,6 +1049,18 @@
         "source": "section"
       },
       {
+        "id": "a8843a9c-2afb-44cc-970b-3e825df51970",
+        "slug": "the-history-of-taylor-county-chapter-548-michael-tucker-dies",
+        "title": "The History of Taylor County Chapter 548 Michael Tucker Dies",
+        "description": "",
+        "pubDate": null,
+        "author": "",
+        "image": null,
+        "sourceUrl": "https://www.wvnews.com/mountainstatesman/the-history-of-taylor-county-chapter-548-michael-tucker-dies/article_a8843a9c-2afb-44cc-970b-3e825df51970.html",
+        "prefix": "mountainstatesman",
+        "source": "section"
+      },
+      {
         "id": "4f6f7be6-c6b6-4e95-8ded-04ba9a397b10",
         "slug": "notes-from-nicki-grudges-only-harm-the-holder",
         "title": "Notes from Nicki: Grudges only harm the holder",
@@ -1069,18 +1081,6 @@
         "author": "",
         "image": null,
         "sourceUrl": "https://www.wvnews.com/mountainstatesman/the-write-place-take-heed/article_06c9955e-2ef7-4512-a877-30774707a706.html",
-        "prefix": "mountainstatesman",
-        "source": "section"
-      },
-      {
-        "id": "793c6905-a854-4a59-8d88-841a7cb77d12",
-        "slug": "a-woman-of-the-most-high-god-love-thy-neighbor-as-thyself",
-        "title": "A Woman of the Most High God: Love thy neighbor as thyself",
-        "description": "",
-        "pubDate": null,
-        "author": "",
-        "image": null,
-        "sourceUrl": "https://www.wvnews.com/mountainstatesman/a-woman-of-the-most-high-god-love-thy-neighbor-as-thyself/article_793c6905-a854-4a59-8d88-841a7cb77d12.html",
         "prefix": "mountainstatesman",
         "source": "section"
       }
