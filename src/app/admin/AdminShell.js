@@ -7,7 +7,7 @@ import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { sites } from '@/data/mock';
 import Logo from '@/components/public/Logo';
-import { visibleNavItems } from '@/lib/permissions';
+import { visibleNavItems, visibleExternalApps } from '@/lib/permissions';
 
 export default function AdminShell({ user, children }) {
   const pathname = usePathname();
@@ -25,6 +25,7 @@ export default function AdminShell({ user, children }) {
     icon: item.icon,
     ...(item.key === 'stories' ? { badge: '3' } : {}),
   }));
+  const externalApps = visibleExternalApps(user);
 
   const initials = (user?.name || user?.email || 'U')
     .split(/\s+/).slice(0, 2).map(s => s[0]?.toUpperCase()).join('');
@@ -105,6 +106,34 @@ export default function AdminShell({ user, children }) {
               </Link>
             );
           })}
+
+          {externalApps.length > 0 && (
+            <div className="pt-3 mt-3 border-t border-white/10">
+              {!collapsed && (
+                <div className="px-3 pb-1 text-[10px] uppercase tracking-wider text-white/40">
+                  Other apps
+                </div>
+              )}
+              {externalApps.map(app => (
+                <a
+                  key={app.key}
+                  href={app.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-3 px-3 py-2 rounded-lg text-sm text-white/60 hover:text-white hover:bg-white/5 transition-colors"
+                  title={collapsed ? app.label : app.description}
+                >
+                  <span className="text-base flex-shrink-0">{app.icon}</span>
+                  {!collapsed && (
+                    <>
+                      <span className="flex-1">{app.label}</span>
+                      <span className="text-white/30 text-xs">↗</span>
+                    </>
+                  )}
+                </a>
+              ))}
+            </div>
+          )}
         </nav>
 
         {!collapsed && (
@@ -118,7 +147,7 @@ export default function AdminShell({ user, children }) {
               )}
               <div className="min-w-0">
                 <div className="text-xs font-medium truncate">{user?.name || 'Signed in'}</div>
-                <div className="text-[10px] text-white/50 capitalize truncate">{user?.role || 'editor'}</div>
+                <div className="text-[10px] text-white/50 truncate">{(user?.role || 'editor').replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase())}</div>
               </div>
             </div>
             <div className="flex gap-2">

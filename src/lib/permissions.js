@@ -36,44 +36,66 @@ export const MODULES = [
 // All module keys — convenience for "admin" role.
 export const ALL_MODULES = MODULES.map(m => m.key);
 
-// Role → default permissions. Overrides on the user doc win.
-// Structured so each role has a clear, story-driven scope.
+// Role → default permissions for the PLATFORM app's modules.
+// Same role names are used in `crm/` and `printmanager/` (via SCHEMAS.md);
+// each app maps the role to its OWN module set. So a sales_manager has
+// rich access in CRM but minimal access in platform.
+//
+// SCHEMAS.md is the canonical contract for which roles exist and what
+// they mean across all three apps. Keep this in sync.
 export const ROLE_DEFAULTS = {
+  // ─── Universal ─────────────────────────────────────────────────────
   admin: ALL_MODULES,
 
-  // Editor-in-chief / managing editor: everything except subscriber billing
-  // and the user-permissions console (the "who can see what" decision sits
-  // with the platform owner / IT, not editorial).
+  // ─── Platform / editorial ─────────────────────────────────────────
   editor: [
     'dashboard', 'stories', 'mediadesk', 'layout', 'media', 'budget',
     'analytics', 'airewriter', 'newsletters', 'social', 'forms',
-    'contests', 'ads', 'eedition', 'sites', 'seo', 'import', 'settings',
+    'contests', 'eedition', 'sites', 'seo', 'import', 'settings',
   ],
-
-  // Beat reporter: writes stories, watches media desk, sees their own
-  // analytics (enforced downstream by filtering the analytics module's
-  // data to the signed-in author, not at this permission layer).
   reporter: [
     'dashboard', 'stories', 'mediadesk', 'media', 'budget',
     'airewriter', 'analytics',
   ],
 
-  // Ad sales rep: sees advertisers, orders, rate card, subscriber-facing
-  // forms; does NOT see editorial or CMS internals.
-  salesrep: [
-    'dashboard', 'ads', 'pricing', 'forms', 'subscribers',
-    'contests', 'analytics',
-  ],
+  // ─── CRM / sales ──────────────────────────────────────────────────
+  // These roles primarily live in crm/. In platform/ they get a slim
+  // dashboard + the ads module so they can see the production queue.
+  sales_manager: ['dashboard', 'ads', 'pricing', 'analytics', 'contests'],
+  sales_rep:     ['dashboard', 'ads', 'forms'],
+  ad_taker:      ['dashboard', 'ads', 'forms'],
 
-  // Graphic designer / ad builder: creative queue, media library, e-edition.
-  designer: [
-    'dashboard', 'ads', 'media', 'eedition', 'layout',
-  ],
+  // ─── Circulation / PrintManager ───────────────────────────────────
+  // These roles primarily live in printmanager/. Platform exposes only
+  // the subscribers nav so they can cross-check digital records.
+  circulation_manager: ['dashboard', 'subscribers', 'analytics'],
+  circulation_clerk:   ['dashboard', 'subscribers'],
 
-  // Custom — no defaults, rely entirely on explicit `permissions` array.
-  // Useful for staff who span multiple roles.
+  // ─── Production / creative ───────────────────────────────────────
+  designer: ['dashboard', 'ads', 'media', 'eedition', 'layout'],
+
+  // ─── Read-only ────────────────────────────────────────────────────
+  viewer: ['dashboard', 'analytics'],
+
+  // ─── Custom ───────────────────────────────────────────────────────
+  // Rely entirely on the explicit `permissions` array on the user doc.
   custom: [],
 };
+
+// Legacy role names that may still exist on user docs from earlier
+// development. Resolve them to the canonical role at read time so we
+// don't have to migrate Firestore data immediately.
+const LEGACY_ROLE_ALIASES = {
+  salesrep: 'sales_rep',     // platform's pre-canonical naming
+  manager: 'sales_manager',  // CRM's pre-canonical naming
+  rep: 'sales_rep',          // CRM's pre-canonical naming
+  adtaker: 'ad_taker',       // CRM's pre-canonical naming
+};
+
+export function canonicalRole(role) {
+  if (!role) return 'reporter';
+  return LEGACY_ROLE_ALIASES[role] || role;
+}
 
 // Resolve what a user actually sees. Explicit `permissions` on the user doc
 // wins entirely when set; otherwise fall back to the role's defaults.
@@ -82,7 +104,7 @@ export function effectivePermissions(profile) {
   if (Array.isArray(profile.permissions) && profile.permissions.length > 0) {
     return profile.permissions;
   }
-  return ROLE_DEFAULTS[profile.role] || ROLE_DEFAULTS.reporter;
+  return ROLE_DEFAULTS[canonicalRole(profile.role)] || ROLE_DEFAULTS.reporter;
 }
 
 export function hasPermission(profile, moduleKey) {
@@ -94,6 +116,33 @@ export function hasPermission(profile, moduleKey) {
 export function visibleNavItems(profile) {
   const allowed = new Set(effectivePermissions(profile));
   return MODULES.filter(m => allowed.has(m.key));
+}
+
+// External apps in the WV News stack. Surfaced in the admin sidebar so
+// staff who work across modules can hop between them. Visibility is driven
+// by canonical role — see SCHEMAS.md for which roles primarily live where.
+export const EXTERNAL_APPS = [
+  {
+    key: 'crm',
+    label: 'CRM',
+    icon: '💼',
+    href: 'https://wvnews-crm.vercel.app',
+    description: 'Sales, advertisers, ad orders',
+    roles: ['admin', 'sales_manager', 'sales_rep', 'ad_taker', 'designer', 'editor', 'circulation_manager'],
+  },
+  {
+    key: 'printmanager',
+    label: 'PrintManager',
+    icon: '🚚',
+    href: 'https://printmanager.vercel.app',
+    description: 'Subscribers, carriers, renewals',
+    roles: ['admin', 'circulation_manager', 'circulation_clerk', 'sales_manager', 'editor'],
+  },
+];
+
+export function visibleExternalApps(profile) {
+  const role = canonicalRole(profile?.role);
+  return EXTERNAL_APPS.filter(app => app.roles.includes(role));
 }
 
 // Map path → module key so server guards can check by request path.
