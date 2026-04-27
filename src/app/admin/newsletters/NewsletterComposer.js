@@ -101,10 +101,18 @@ export default function NewsletterComposer({ sites, userEmail }) {
               onChange={e => setPublication(e.target.value)}
               className="w-full px-3 py-2 border border-ink-200 rounded text-sm bg-white"
             >
-              {sites.map(s => (
-                <option key={s.id} value={s.id}>{s.name}</option>
-              ))}
+              <option value="wvnews">WV News (all 20 papers — aggregator)</option>
+              <optgroup label="Per-publication">
+                {sites.filter(s => s.id !== 'wvnews').map(s => (
+                  <option key={s.id} value={s.id}>{s.name}</option>
+                ))}
+              </optgroup>
             </select>
+            <span className="text-[10px] text-ink-500 mt-1 block">
+              {publication === 'wvnews'
+                ? 'Pulls top stories from every paper, capped at 2 per paper for variety.'
+                : 'Only stories tagged for this publication.'}
+            </span>
           </label>
           <label className="block mt-3">
             <span className="text-xs font-semibold text-ink-700 mb-1 block">Content window</span>

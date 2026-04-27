@@ -19,6 +19,13 @@ const HOUR = 3600_000;
 
 // ─── Story selection ──────────────────────────────────────────────────────
 
+// Publications that aggregate from all the others. When the newsletter
+// is for one of these, we do NOT filter by site — we pull the best of
+// every paper. (The ingest script assigns each story to its specific
+// publication; nothing is tagged as "wvnews", so without this carve-out
+// the wvnews umbrella newsletter would be permanently empty.)
+const AGGREGATOR_PUBLICATIONS = new Set(['wvnews', 'all']);
+
 export async function selectStoriesForNewsletter({
   publication = 'wvnews',
   hoursBack = 24,
@@ -27,7 +34,10 @@ export async function selectStoriesForNewsletter({
   // Pull a generous over-fetch and rank in memory — Firestore composite
   // indexes aren't worth setting up for a once-a-day batch.
   const cutoff = Date.now() - hoursBack * HOUR;
-  const overfetch = Math.max(count * 5, 50);
+  const isAggregator = AGGREGATOR_PUBLICATIONS.has(publication);
+  // Aggregator pulls from a wider over-fetch so the score sort has
+  // enough candidates across 20 papers to pick from.
+  const overfetch = Math.max(count * (isAggregator ? 25 : 5), 80);
   const snap = await db.collection('stories')
     .orderBy('publishedAt', 'desc')
     .limit(overfetch)
@@ -39,7 +49,9 @@ export async function selectStoriesForNewsletter({
     const pubMs = d.publishedAt?.toDate?.()?.getTime?.() || 0;
     if (pubMs < cutoff) continue;
     if (d.status && d.status !== 'published') continue;
-    if (publication && Array.isArray(d.sites) && d.sites.length > 0 && !d.sites.includes(publication)) continue;
+    // Per-publication newsletter: require exact site match. Aggregator
+    // newsletter: accept any story.
+    if (!isAggregator && publication && Array.isArray(d.sites) && d.sites.length > 0 && !d.sites.includes(publication)) continue;
     // Native and ingested both eligible.
     candidates.push({
       id: d.id,
@@ -64,17 +76,59 @@ export async function selectStoriesForNewsletter({
     });
   }
 
-  // Score: breaking +100, featured +50, +1 per 10 views, +10 if recent (<6h).
+  // Score: breaking +100, featured +50, +1 per 10 views, +10 recent (<6h),
+  // +5 if has image (slight nudge — prettier email).
   const scored = candidates.map(c => {
     let score = 0;
     if (c.breaking) score += 100;
     if (c.featured) score += 50;
     score += Math.min(c.views / 10, 80);
     if (Date.now() - c.publishedAt < 6 * HOUR) score += 10;
+    if (c.image) score += 5;
     return { ...c, score };
   }).sort((a, b) => b.score - a.score);
 
-  return scored.slice(0, count);
+  // Aggregator: enforce per-site diversity so one paper doesn't monopolize
+  // the daily roundup. Pick greedily, capping each site at PER_SITE_CAP
+  // until we hit the requested count.
+  const PER_SITE_CAP = 2;
+  let picked;
+  if (isAggregator) {
+    const seen = new Map();
+    picked = [];
+    for (const story of scored) {
+      const site = (story.sites && story.sites[0]) || '_';
+      const used = seen.get(site) || 0;
+      if (used >= PER_SITE_CAP) continue;
+      picked.push(story);
+      seen.set(site, used + 1);
+      if (picked.length >= count) break;
+    }
+    // If we underfilled (e.g. only 3 papers had recent stories), backfill
+    // from the remaining scored list ignoring the cap.
+    if (picked.length < count) {
+      const have = new Set(picked.map(s => s.id));
+      for (const story of scored) {
+        if (have.has(story.id)) continue;
+        picked.push(story);
+        if (picked.length >= count) break;
+      }
+    }
+  } else {
+    picked = scored.slice(0, count);
+  }
+
+  // Promote a story with an image to the lead position if the current
+  // lead has none — readers expect the top of the email to look complete.
+  if (picked.length > 1 && !picked[0].image) {
+    const firstWithImage = picked.findIndex(s => s.image);
+    if (firstWithImage > 0) {
+      const [withImage] = picked.splice(firstWithImage, 1);
+      picked.unshift(withImage);
+    }
+  }
+
+  return picked;
 }
 
 function extractFirstHref(html) {
