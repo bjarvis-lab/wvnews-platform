@@ -32,8 +32,9 @@ export async function POST(request) {
   const {
     publication: pubId = 'wvnews',
     hoursBack = 24,
-    storyCount = 8,
-    adCount = 2,
+    storyCount = 12,
+    adCadence = 3,
+    sectioned = true,
   } = body;
 
   const publication = sites.find(s => s.id === pubId) || sites[0];
@@ -45,10 +46,11 @@ export async function POST(request) {
   } catch (err) {
     return NextResponse.json({ error: `Story selection failed: ${err.message}` }, { status: 500 });
   }
+  // Pull at least 4 ads — the renderer rotates if there are more
+  // story-gaps than ads, so a small cache is fine.
   try {
-    ads = await selectAdsForNewsletter({ count: adCount, publication: pubId });
+    ads = await selectAdsForNewsletter({ count: 8, publication: pubId });
   } catch (err) {
-    // Ads are optional; missing ad source shouldn't block the preview.
     console.warn('[newsletters/preview] ad selection failed:', err.message);
   }
 
@@ -57,6 +59,8 @@ export async function POST(request) {
     publication,
     stories,
     ads,
+    adCadence: Number(adCadence) || 3,
+    sectioned: !!sectioned,
     siteBaseUrl: publication.domain ? `https://${publication.domain}` : siteBaseUrl,
   });
 

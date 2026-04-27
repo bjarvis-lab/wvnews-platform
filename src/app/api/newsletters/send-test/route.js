@@ -36,8 +36,9 @@ export async function POST(request) {
   const {
     publication: pubId = 'wvnews',
     hoursBack = 24,
-    storyCount = 8,
-    adCount = 2,
+    storyCount = 12,
+    adCadence = 3,
+    sectioned = true,
     to,
   } = body;
 
@@ -62,7 +63,7 @@ export async function POST(request) {
     return NextResponse.json({ error: `Story selection failed: ${err.message}` }, { status: 500 });
   }
   try {
-    ads = await selectAdsForNewsletter({ count: adCount, publication: pubId });
+    ads = await selectAdsForNewsletter({ count: 8, publication: pubId });
   } catch {/* ads optional */}
 
   if (!stories.length) {
@@ -74,8 +75,9 @@ export async function POST(request) {
     publication,
     stories,
     ads,
+    adCadence: Number(adCadence) || 3,
+    sectioned: !!sectioned,
     siteBaseUrl,
-    // Test sends don't have CC merge tags — point unsubscribe to a noop.
     unsubscribeUrl: `${siteBaseUrl}/unsubscribe`,
     preferencesUrl: `${siteBaseUrl}/account`,
   });

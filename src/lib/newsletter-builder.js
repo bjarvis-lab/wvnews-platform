@@ -17,6 +17,36 @@ import { db } from './firebase-admin';
 
 const HOUR = 3600_000;
 
+// Editorial priority order — sections render in this order in the email
+// (the lead story floats above all of these). Sections with no recent
+// stories are skipped so we don't ship empty headers.
+export const SECTION_ORDER = [
+  'news',
+  'politics',
+  'crime',
+  'business',
+  'education',
+  'sports',
+  'opinion',
+  'lifestyle',
+  'community',
+  'obituaries',
+];
+
+// Display names — keep IDs short (matches mock.js sections), expand here.
+export const SECTION_LABELS = {
+  news:        'News',
+  politics:    'Politics',
+  crime:       'Crime & Courts',
+  business:    'Business',
+  education:   'Education',
+  sports:      'Sports',
+  opinion:     'Opinion',
+  lifestyle:   'Lifestyle',
+  community:   'Community',
+  obituaries:  'Obituaries',
+};
+
 // ─── Story selection ──────────────────────────────────────────────────────
 
 // Publications that aggregate from all the others. When the newsletter
@@ -118,17 +148,64 @@ export async function selectStoriesForNewsletter({
     picked = scored.slice(0, count);
   }
 
-  // Promote a story with an image to the lead position if the current
-  // lead has none — readers expect the top of the email to look complete.
-  if (picked.length > 1 && !picked[0].image) {
-    const firstWithImage = picked.findIndex(s => s.image);
-    if (firstWithImage > 0) {
-      const [withImage] = picked.splice(firstWithImage, 1);
-      picked.unshift(withImage);
+  // Lead picker: most viewed at the time of sending, per editor's rule.
+  // Fall back to score-based pick when view counts are all zero (common
+  // for ingested stories during the first 24h, since views accumulate
+  // on wvnews.com but we don't ingest those counts). Then prefer an
+  // imaged story for the lead so the email's top block looks complete.
+  if (picked.length > 1) {
+    const maxViews = picked.reduce((m, s) => Math.max(m, s.views || 0), 0);
+    let leadIdx = 0;
+    if (maxViews > 0) {
+      // True "most viewed" pick.
+      leadIdx = picked.findIndex(s => (s.views || 0) === maxViews);
+    } else if (!picked[0].image) {
+      // No view data — keep the top-scored story unless it lacks an
+      // image, in which case promote the first imaged candidate.
+      const idx = picked.findIndex(s => s.image);
+      if (idx > 0) leadIdx = idx;
+    }
+    if (leadIdx > 0) {
+      const [lead] = picked.splice(leadIdx, 1);
+      picked.unshift(lead);
     }
   }
 
   return picked;
+}
+
+// ─── Section grouping ────────────────────────────────────────────────────
+
+// Splits a flat scored story list into per-section buckets ordered by
+// SECTION_ORDER. Returns:
+//   { lead, groups: [{ id, name, stories: [...] }] }
+// Stories in unrecognized sections are bucketed under 'news'.
+export function groupBySection(stories, { perSectionMax = 4 } = {}) {
+  if (!stories || !stories.length) return { lead: null, groups: [] };
+
+  const [lead, ...rest] = stories;
+
+  // Bucket
+  const buckets = new Map();
+  for (const id of SECTION_ORDER) buckets.set(id, []);
+  for (const s of rest) {
+    let id = s.section || 'news';
+    if (!buckets.has(id)) id = 'news';
+    buckets.get(id).push(s);
+  }
+
+  // Build ordered groups (skip empties, cap per-section count)
+  const groups = [];
+  for (const id of SECTION_ORDER) {
+    const list = buckets.get(id) || [];
+    if (!list.length) continue;
+    groups.push({
+      id,
+      name: SECTION_LABELS[id] || id,
+      stories: list.slice(0, perSectionMax),
+    });
+  }
+  return { lead, groups };
 }
 
 function extractFirstHref(html) {
@@ -193,18 +270,19 @@ export async function selectAdsForNewsletter({ count = 2, publication = 'wvnews'
 
 export function renderNewsletterHtml({
   publication,                // { id, name, domain, ... }
-  stories,                    // [story]
-  ads,                        // [ad]
+  stories,                    // [story] — flat scored list; lead is index 0
+  ads,                        // [ad]   — rotates if there are more story-gaps than ads
+  adCadence = 3,              // insert an ad after every N stories
   date = new Date(),
   siteBaseUrl = 'https://wvnews.com',
   unsubscribeUrl = '%%unsubscribe_url%%',  // CC merge tag
   preferencesUrl = '%%preferences_url%%',  // CC merge tag
+  sectioned = true,           // render section headers between groups
 } = {}) {
-  const [lead, ...rest] = stories;
-  const secondary = rest.slice(0, 5);
-  const tail = rest.slice(5, 9);
-  const adA = ads[0] || null;
-  const adB = ads[1] || null;
+  // Group stories by section so the email reads "News … Sports …
+  // Opinion …" instead of one undifferentiated river. Lead floats above.
+  const grouped = sectioned ? groupBySection(stories) : { lead: stories[0], groups: [{ id: 'all', name: '', stories: stories.slice(1) }] };
+  const lead = grouped.lead;
 
   const niceDate = date.toLocaleDateString('en-US', {
     weekday: 'long', month: 'long', day: 'numeric', year: 'numeric',
@@ -212,6 +290,27 @@ export function renderNewsletterHtml({
   const editionName = publication?.name || 'WV News';
   const accent = '#0f1d3d';
   const gold = '#c08f2e';
+
+  // Walk every section's stories in order, render rows, and insert an
+  // ad row every `adCadence` stories. We rotate through `ads` so we
+  // never leave a gap empty even if CRM has fewer ad orders than slots.
+  let storyCounter = 0;
+  let adIdx = 0;
+  const adsAvailable = (ads && ads.length) ? ads : [];
+  const sectionsHtml = grouped.groups.map(group => {
+    const rows = [];
+    if (sectioned && group.name) rows.push(renderSectionHeader(group.name, accent));
+    for (const story of group.stories) {
+      rows.push(renderSecondaryRow(story, siteBaseUrl, accent));
+      storyCounter++;
+      if (adCadence > 0 && adsAvailable.length && storyCounter % adCadence === 0) {
+        const ad = adsAvailable[adIdx % adsAvailable.length];
+        adIdx++;
+        rows.push(renderAdRow(ad));
+      }
+    }
+    return rows.join('\n');
+  }).join('\n');
 
   return `<!doctype html>
 <html lang="en">
@@ -239,19 +338,23 @@ export function renderNewsletterHtml({
 
       <table role="presentation" class="email-shell" cellpadding="0" cellspacing="0" border="0" width="600" style="width:600px;max-width:600px;background:#ffffff;border:1px solid #e3e5ea;">
 
-        <!-- Masthead -->
+        <!-- Masthead — logo if available, wordmark fallback. Logo URL is
+             absolutized against the platform site since email clients can't
+             resolve relative paths. -->
         <tr><td class="padcol" style="padding:24px 32px 18px;border-bottom:3px solid ${accent};">
           <table role="presentation" width="100%"><tr>
-            <td style="font-family:Georgia,serif;font-size:24px;font-weight:700;color:${accent};letter-spacing:-0.01em;">
-              ${escapeHtml(editionName)}
+            <td valign="middle" style="font-family:Georgia,serif;font-size:24px;font-weight:700;color:${accent};letter-spacing:-0.01em;">
+              ${publication?.logoFile
+                ? `<img src="${escapeAttr(absoluteAsset(siteBaseUrl, publication.logoFile))}" alt="${escapeAttr(editionName)}" height="40" style="display:block;height:40px;width:auto;border:0;">`
+                : escapeHtml(editionName)}
             </td>
-            <td align="right" style="font-family:Arial,Helvetica,sans-serif;font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:#6a6f76;">
+            <td valign="middle" align="right" style="font-family:Arial,Helvetica,sans-serif;font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:#6a6f76;">
               ${niceDate}
             </td>
           </tr></table>
         </td></tr>
 
-        <!-- Lead story -->
+        <!-- Lead story (most viewed at time of send; falls back to top-scored) -->
         ${lead ? `
         <tr><td class="padcol" style="padding:28px 32px 8px;">
           <a href="${absUrl(siteBaseUrl, lead.url)}" style="text-decoration:none;color:inherit;">
@@ -259,7 +362,8 @@ export function renderNewsletterHtml({
             <img class="full-width" src="${escapeAttr(lead.image)}" alt="" width="536" style="display:block;width:100%;max-width:536px;height:auto;border:0;margin-bottom:14px;">
             ` : ''}
             <div style="font-family:Arial,Helvetica,sans-serif;font-size:11px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:${accent};margin-bottom:6px;">
-              ${lead.breaking ? '<span style="color:#c0392b;">● Breaking</span> &nbsp;·&nbsp; ' : ''}${escapeHtml(lead.section || 'News')}
+              ${lead.breaking ? '<span style="color:#c0392b;">● Breaking</span> &nbsp;·&nbsp; ' : ''}Top story
+              ${lead.section ? ` &nbsp;·&nbsp; ${escapeHtml(SECTION_LABELS[lead.section] || lead.section)}` : ''}
             </div>
             <h1 class="lead-headline" style="font-family:Georgia,serif;font-size:30px;font-weight:700;line-height:1.12;margin:0 0 10px;color:${accent};letter-spacing:-0.01em;">
               ${escapeHtml(lead.headline)}
@@ -272,36 +376,8 @@ export function renderNewsletterHtml({
           </a>
         </td></tr>` : ''}
 
-        <!-- Ad slot A -->
-        ${adA ? renderAdRow(adA) : ''}
-
-        <!-- Section divider -->
-        <tr><td class="padcol" style="padding:28px 32px 4px;border-top:1px solid #e3e5ea;">
-          <div style="font-family:Arial,Helvetica,sans-serif;font-size:11px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:#6a6f76;">
-            More from ${escapeHtml(editionName)}
-          </div>
-        </td></tr>
-
-        <!-- Secondary stories -->
-        ${secondary.map(s => renderSecondaryRow(s, siteBaseUrl, accent)).join('\n')}
-
-        <!-- Ad slot B -->
-        ${adB ? renderAdRow(adB) : ''}
-
-        <!-- Tail stories — title-only -->
-        ${tail.length ? `
-        <tr><td class="padcol" style="padding:24px 32px 8px;border-top:1px solid #e3e5ea;">
-          <div style="font-family:Arial,Helvetica,sans-serif;font-size:11px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:#6a6f76;margin-bottom:14px;">
-            Also today
-          </div>
-          ${tail.map(s => `
-          <div style="margin-bottom:12px;">
-            <a href="${absUrl(siteBaseUrl, s.url)}" style="font-family:Georgia,serif;font-size:16px;font-weight:600;line-height:1.3;color:${accent};text-decoration:none;">
-              ${escapeHtml(s.headline)}
-            </a>
-            ${s.author ? `<div style="font-family:Arial,Helvetica,sans-serif;font-size:11px;color:#6a6f76;margin-top:2px;">By ${escapeHtml(s.author)}</div>` : ''}
-          </div>`).join('')}
-        </td></tr>` : ''}
+        <!-- Section blocks (News / Sports / Opinion / etc), ads interleaved every N -->
+        ${sectionsHtml}
 
         <!-- Closing CTA -->
         <tr><td class="padcol" align="center" style="padding:28px 32px 32px;border-top:1px solid #e3e5ea;background:#fbfbfd;">
@@ -339,6 +415,19 @@ export function renderNewsletterHtml({
   </table>
 </body>
 </html>`;
+}
+
+// Section header — small uppercase eyebrow + thin gold underline so the
+// reader's eye catches the section break without it shouting.
+function renderSectionHeader(name, accent) {
+  return `
+        <tr><td class="padcol" style="padding:30px 32px 6px;">
+          <div style="border-top:2px solid ${accent};padding-top:12px;">
+            <div style="font-family:Arial,Helvetica,sans-serif;font-size:11px;font-weight:700;letter-spacing:0.16em;text-transform:uppercase;color:${accent};">
+              ${escapeHtml(name)}
+            </div>
+          </div>
+        </td></tr>`;
 }
 
 function renderAdRow(ad) {
@@ -390,4 +479,20 @@ function absUrl(base, path) {
   if (/^https?:/i.test(path)) return path;
   if (path.startsWith('/')) return `${base}${path}`;
   return path;
+}
+
+// Logo files like "/logo-wvnews.png" live in the platform's public/ dir.
+// Each publication's email is sent with siteBaseUrl set to its own
+// domain (e.g. https://theet.com), but the asset is hosted on the
+// platform — so we resolve assets against the platform host explicitly
+// rather than the per-publication base.
+function absoluteAsset(siteBaseUrl, assetPath) {
+  if (!assetPath) return '';
+  if (/^https?:/i.test(assetPath)) return assetPath;
+  // Hard-coded fallback for now — logos always live with the platform.
+  // When publications get their own asset CDNs we can switch to a per-
+  // publication map.
+  const platformBase = process.env.NEXT_PUBLIC_SITE_URL
+    || (typeof siteBaseUrl === 'string' ? siteBaseUrl : 'https://wvnews-platform-lgg2.vercel.app');
+  return `${platformBase}${assetPath.startsWith('/') ? '' : '/'}${assetPath}`;
 }

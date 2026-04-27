@@ -12,8 +12,9 @@ const HOURS_OPTIONS = [
 export default function NewsletterComposer({ sites, userEmail }) {
   const [publication, setPublication] = useState('wvnews');
   const [hoursBack, setHoursBack] = useState(24);
-  const [storyCount, setStoryCount] = useState(8);
-  const [adCount, setAdCount] = useState(2);
+  const [storyCount, setStoryCount] = useState(14);
+  const [adCadence, setAdCadence] = useState(3);
+  const [sectioned, setSectioned] = useState(true);
 
   const [previewHtml, setPreviewHtml] = useState('');
   const [meta, setMeta] = useState(null); // { stories, ads, generatedAt, publication }
@@ -23,7 +24,13 @@ export default function NewsletterComposer({ sites, userEmail }) {
   const [sendMsg, setSendMsg] = useState('');
   const [testTo, setTestTo] = useState(userEmail || '');
 
-  const body = { publication, hoursBack: Number(hoursBack), storyCount: Number(storyCount), adCount: Number(adCount) };
+  const body = {
+    publication,
+    hoursBack: Number(hoursBack),
+    storyCount: Number(storyCount),
+    adCadence: Number(adCadence),
+    sectioned,
+  };
 
   async function generate() {
     setLoading(true);
@@ -126,16 +133,21 @@ export default function NewsletterComposer({ sites, userEmail }) {
           </label>
           <div className="grid grid-cols-2 gap-3 mt-3">
             <label className="block">
-              <span className="text-xs font-semibold text-ink-700 mb-1 block">Stories</span>
-              <input type="number" min="1" max="20" value={storyCount} onChange={e => setStoryCount(e.target.value)}
+              <span className="text-xs font-semibold text-ink-700 mb-1 block">Total stories</span>
+              <input type="number" min="1" max="40" value={storyCount} onChange={e => setStoryCount(e.target.value)}
                      className="w-full px-3 py-2 border border-ink-200 rounded text-sm bg-white"/>
             </label>
             <label className="block">
-              <span className="text-xs font-semibold text-ink-700 mb-1 block">Ads</span>
-              <input type="number" min="0" max="4" value={adCount} onChange={e => setAdCount(e.target.value)}
+              <span className="text-xs font-semibold text-ink-700 mb-1 block">Ad every N stories</span>
+              <input type="number" min="0" max="10" value={adCadence} onChange={e => setAdCadence(e.target.value)}
                      className="w-full px-3 py-2 border border-ink-200 rounded text-sm bg-white"/>
+              <span className="text-[10px] text-ink-500 mt-1 block">0 disables ads. Ads rotate from CRM if cadence outpaces inventory.</span>
             </label>
           </div>
+          <label className="flex items-center gap-2 mt-3">
+            <input type="checkbox" checked={sectioned} onChange={e => setSectioned(e.target.checked)} />
+            <span className="text-xs text-ink-700">Group by section (News / Sports / Opinion / etc.)</span>
+          </label>
           <button
             onClick={generate}
             disabled={loading}
@@ -149,20 +161,47 @@ export default function NewsletterComposer({ sites, userEmail }) {
         {meta && (
           <section className="bg-white rounded-lg border border-ink-200 p-5">
             <h3 className="text-xs font-bold uppercase tracking-eyebrow text-ink-500 mb-3">Selected content</h3>
-            <div className="text-xs text-ink-600 space-y-2">
+            <div className="text-xs text-ink-600 space-y-3">
               <div>
                 <strong className="text-ink-800">{meta.stories.length}</strong> stories ·{' '}
-                <strong className="text-ink-800">{meta.ads.length}</strong> ads
+                <strong className="text-ink-800">{meta.ads.length}</strong> ads in pool
               </div>
-              <ol className="list-decimal pl-4 space-y-1">
-                {meta.stories.slice(0, 8).map(s => (
-                  <li key={s.id} className="line-clamp-2 leading-snug">
-                    {s.headline}
-                    {s.breaking && <span className="ml-1 text-red-600 font-bold">●</span>}
-                    {s.featured && <span className="ml-1 text-gold-600">★</span>}
-                  </li>
-                ))}
-              </ol>
+              {meta.stories.length > 0 && (
+                <div>
+                  <div className="text-[10px] font-bold uppercase tracking-eyebrow text-ink-500 mb-1">Top story</div>
+                  <div className="font-display text-sm font-semibold text-ink-800 leading-snug">
+                    {meta.stories[0].headline}
+                  </div>
+                  <div className="text-[10px] text-ink-500 mt-1">
+                    {meta.stories[0].views > 0
+                      ? `${meta.stories[0].views.toLocaleString()} views`
+                      : 'no view data — picked by score'}
+                    {' · '}{meta.stories[0].sites?.[0] || '?'}
+                  </div>
+                </div>
+              )}
+              {(() => {
+                const buckets = {};
+                meta.stories.slice(1).forEach(s => {
+                  const id = s.section || 'news';
+                  buckets[id] = (buckets[id] || 0) + 1;
+                });
+                const entries = Object.entries(buckets).sort((a, b) => b[1] - a[1]);
+                if (!entries.length) return null;
+                return (
+                  <div>
+                    <div className="text-[10px] font-bold uppercase tracking-eyebrow text-ink-500 mb-1">By section</div>
+                    <ul className="space-y-1">
+                      {entries.map(([id, n]) => (
+                        <li key={id} className="flex justify-between">
+                          <span className="capitalize">{id.replace('-', ' & ')}</span>
+                          <span className="text-ink-500">{n}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                );
+              })()}
             </div>
           </section>
         )}
