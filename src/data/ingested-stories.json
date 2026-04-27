@@ -1,10 +1,10 @@
 {
-  "fetchedAt": "2026-04-27T11:44:14.489Z",
+  "fetchedAt": "2026-04-27T13:08:35.738Z",
   "source": "wvnews.com RSS + section HTML backfill",
   "target": 10,
   "siteCounts": {
     "exponent": 10,
-    "bridgeport": 6,
+    "bridgeport": 7,
     "dominion": 10,
     "bluegold": 10,
     "recorddelta": 10,
@@ -36,30 +36,6 @@
         "source": "section"
       },
       {
-        "id": "d644e1f1-959b-438a-bf7f-f5662336c54c",
-        "slug": "fast-casual-dining-overtakes-mom-pop-restaurants-but-offers-familiar-options-to-out-of-state",
-        "title": "Fast casual dining overtakes mom & pop restaurants but offers familiar options to out of state travelers",
-        "description": "",
-        "pubDate": null,
-        "author": "",
-        "image": null,
-        "sourceUrl": "https://www.wvnews.com/theet/news/local/fast-casual-dining-overtakes-mom-pop-restaurants-but-offers-familiar-options-to-out-of-state/article_d644e1f1-959b-438a-bf7f-f5662336c54c.html",
-        "prefix": "theet",
-        "source": "section"
-      },
-      {
-        "id": "614326ab-724a-4863-bdcc-70c65f79846a",
-        "slug": "west-virginia-boys-girls-state-programs-build-civic-skills-leadership",
-        "title": "West Virginia Boys, Girls State programs build civic skills, leadership",
-        "description": "",
-        "pubDate": null,
-        "author": "",
-        "image": null,
-        "sourceUrl": "https://www.wvnews.com/theet/news/local/west-virginia-boys-girls-state-programs-build-civic-skills-leadership/article_614326ab-724a-4863-bdcc-70c65f79846a.html",
-        "prefix": "theet",
-        "source": "section"
-      },
-      {
         "id": "5c5b4733-70ae-4e23-8215-e7ef00471e5f",
         "slug": "services-stymied-at-harrison-county-government-offices-as-staff-deal-with-cybersecurity-attack",
         "title": "Services stymied at Harrison County government offices as staff deal with cybersecurity attack",
@@ -84,6 +60,30 @@
         "source": "section"
       },
       {
+        "id": "d644e1f1-959b-438a-bf7f-f5662336c54c",
+        "slug": "fast-casual-dining-overtakes-mom-pop-restaurants-but-offers-familiar-options-to-out-of-state",
+        "title": "Fast casual dining overtakes mom & pop restaurants but offers familiar options to out of state travelers",
+        "description": "",
+        "pubDate": null,
+        "author": "",
+        "image": null,
+        "sourceUrl": "https://www.wvnews.com/theet/news/local/fast-casual-dining-overtakes-mom-pop-restaurants-but-offers-familiar-options-to-out-of-state/article_d644e1f1-959b-438a-bf7f-f5662336c54c.html",
+        "prefix": "theet",
+        "source": "section"
+      },
+      {
+        "id": "614326ab-724a-4863-bdcc-70c65f79846a",
+        "slug": "west-virginia-boys-girls-state-programs-build-civic-skills-leadership",
+        "title": "West Virginia Boys, Girls State programs build civic skills, leadership",
+        "description": "",
+        "pubDate": null,
+        "author": "",
+        "image": null,
+        "sourceUrl": "https://www.wvnews.com/theet/news/local/west-virginia-boys-girls-state-programs-build-civic-skills-leadership/article_614326ab-724a-4863-bdcc-70c65f79846a.html",
+        "prefix": "theet",
+        "source": "section"
+      },
+      {
         "id": "dd89d4f7-8b35-4999-bb57-85d575137144",
         "slug": "farmers-markets-across-north-central-west-virginia-grow-as-community-hubs",
         "title": "Farmers markets across North-Central West Virginia grow as community hubs",
@@ -92,30 +92,6 @@
         "author": "",
         "image": null,
         "sourceUrl": "https://www.wvnews.com/theet/news/local/farmers-markets-across-north-central-west-virginia-grow-as-community-hubs/article_dd89d4f7-8b35-4999-bb57-85d575137144.html",
-        "prefix": "theet",
-        "source": "section"
-      },
-      {
-        "id": "00501a8d-c2e4-4405-baaf-4f157246384e",
-        "slug": "ncwv-leaders-working-to-complete-their-sections-of-p2p-trail",
-        "title": "NCWV leaders working to complete their sections of P2P trail",
-        "description": "",
-        "pubDate": null,
-        "author": "",
-        "image": null,
-        "sourceUrl": "https://www.wvnews.com/theet/news/local/ncwv-leaders-working-to-complete-their-sections-of-p2p-trail/article_00501a8d-c2e4-4405-baaf-4f157246384e.html",
-        "prefix": "theet",
-        "source": "section"
-      },
-      {
-        "id": "62d27113-a218-4d8b-80e1-1b2fcfbccb58",
-        "slug": "clarksburg-city-parks-to-host-an-array-of-low-cost-amphitheater-shows-this-summer",
-        "title": "Clarksburg City Parks to host an array of low-cost amphitheater shows this summer",
-        "description": "",
-        "pubDate": null,
-        "author": "",
-        "image": null,
-        "sourceUrl": "https://www.wvnews.com/theet/news/local/clarksburg-city-parks-to-host-an-array-of-low-cost-amphitheater-shows-this-summer/article_62d27113-a218-4d8b-80e1-1b2fcfbccb58.html",
         "prefix": "theet",
         "source": "section"
       },
@@ -142,9 +118,45 @@
         "sourceUrl": "https://www.wvnews.com/theet/news/bridgeport-middle-students-make-west-virginia-history-with-national-investwrite-wins/article_51be89b7-3b8f-44ad-be02-ae211bb99f84.html",
         "prefix": "theet",
         "source": "section"
+      },
+      {
+        "id": "3717c398-f209-4bc8-a54b-1fae0c4e4edb",
+        "slug": "clarksburg-city-council-questions-opioid-settlement-spending-on-proposed-community-center-architectural-drawings",
+        "title": "Clarksburg city council questions opioid settlement spending on proposed community center architectural drawings",
+        "description": "",
+        "pubDate": null,
+        "author": "",
+        "image": null,
+        "sourceUrl": "https://www.wvnews.com/theet/news/clarksburg-city-council-questions-opioid-settlement-spending-on-proposed-community-center-architectural-drawings/article_3717c398-f209-4bc8-a54b-1fae0c4e4edb.html",
+        "prefix": "theet",
+        "source": "section"
+      },
+      {
+        "id": "00501a8d-c2e4-4405-baaf-4f157246384e",
+        "slug": "ncwv-leaders-working-to-complete-their-sections-of-p2p-trail",
+        "title": "NCWV leaders working to complete their sections of P2P trail",
+        "description": "",
+        "pubDate": null,
+        "author": "",
+        "image": null,
+        "sourceUrl": "https://www.wvnews.com/theet/news/local/ncwv-leaders-working-to-complete-their-sections-of-p2p-trail/article_00501a8d-c2e4-4405-baaf-4f157246384e.html",
+        "prefix": "theet",
+        "source": "section"
       }
     ],
     "bridgeport": [
+      {
+        "id": "7a2fbe84-31fa-435d-a6f0-caf20122b504",
+        "slug": "bridgeport-walk-for-autism-draws-crowd-despite-rain-connects-families-to-resources",
+        "title": "Bridgeport Walk for Autism draws crowd despite rain, connects families to resources",
+        "description": "",
+        "pubDate": null,
+        "author": "",
+        "image": null,
+        "sourceUrl": "https://www.wvnews.com/bridgeportnews/news/bridgeport-walk-for-autism-draws-crowd-despite-rain-connects-families-to-resources/article_7a2fbe84-31fa-435d-a6f0-caf20122b504.html",
+        "prefix": "bridgeportnews",
+        "source": "section"
+      },
       {
         "id": "f34aa831-a4d6-4a9e-b15f-4ca874d9cdaf",
         "slug": "free-admission-3k-in-prizes-trading-card-show-set-for-the-bridge-sports-complex-may",
@@ -512,14 +524,14 @@
         "source": "section"
       },
       {
-        "id": "69e207f1-afe9-4730-a30e-61ae3e451908",
-        "slug": "upshur-county-board-of-education-approves-2027-levy-rates",
-        "title": "Upshur County Board of Education approves 2027 levy rates",
+        "id": "4b318aeb-2d85-49b0-a211-f10d261505d0",
+        "slug": "sunset-graphics-makes-the-most-of-debut-claims-early-lead-in-bob-cupp-memorial-golf",
+        "title": "Sunset Graphics makes the most of debut, claims early lead in Bob Cupp Memorial Golf League standings",
         "description": "",
         "pubDate": null,
         "author": "",
         "image": null,
-        "sourceUrl": "https://www.wvnews.com/recorddelta/news/upshur-county-board-of-education-approves-2027-levy-rates/article_69e207f1-afe9-4730-a30e-61ae3e451908.html",
+        "sourceUrl": "https://www.wvnews.com/recorddelta/sports/sunset-graphics-makes-the-most-of-debut-claims-early-lead-in-bob-cupp-memorial-golf/article_4b318aeb-2d85-49b0-a211-f10d261505d0.html",
         "prefix": "recorddelta",
         "source": "section"
       },
@@ -560,14 +572,14 @@
         "source": "section"
       },
       {
-        "id": "95129daa-b1fe-4749-98d1-a77ba4da9531",
-        "slug": "west-virginia-wesleyan-womens-tennis-battles-in-loss-to-slippery-rock-5-2",
-        "title": "West Virginia Wesleyan women's tennis battles in loss to Slippery Rock, 5-2",
+        "id": "69e207f1-afe9-4730-a30e-61ae3e451908",
+        "slug": "upshur-county-board-of-education-approves-2027-levy-rates",
+        "title": "Upshur County Board of Education approves 2027 levy rates",
         "description": "",
         "pubDate": null,
         "author": "",
         "image": null,
-        "sourceUrl": "https://www.wvnews.com/recorddelta/sports/west-virginia-wesleyan-womens-tennis-battles-in-loss-to-slippery-rock-5-2/article_95129daa-b1fe-4749-98d1-a77ba4da9531.html",
+        "sourceUrl": "https://www.wvnews.com/recorddelta/news/upshur-county-board-of-education-approves-2027-levy-rates/article_69e207f1-afe9-4730-a30e-61ae3e451908.html",
         "prefix": "recorddelta",
         "source": "section"
       },
@@ -793,18 +805,6 @@
         "source": "section"
       },
       {
-        "id": "21c4c274-c795-4e29-8b8c-aaf4af073b02",
-        "slug": "planting-with-a-purpose-marylanders-invited-to-help-reach-five-million-trees-by-2031",
-        "title": "Planting with a purpose: Marylanders invited to help reach five million trees by 2031",
-        "description": "",
-        "pubDate": null,
-        "author": "",
-        "image": null,
-        "sourceUrl": "https://www.wvnews.com/garrettrepublican/news/planting-with-a-purpose-marylanders-invited-to-help-reach-five-million-trees-by-2031/article_21c4c274-c795-4e29-8b8c-aaf4af073b02.html",
-        "prefix": "garrettrepublican",
-        "source": "section"
-      },
-      {
         "id": "93055146-bc60-11ed-8edc-934e2a34c0ee",
         "slug": "caffeine-awareness-how-much-are-you-getting",
         "title": "Caffeine awareness: How much are you getting?",
@@ -825,6 +825,18 @@
         "author": "",
         "image": null,
         "sourceUrl": "https://www.wvnews.com/garrettrepublican/lifestyles/sustainable-and-healthy-nutrition-practices/article_e64bc38c-b78b-11ed-ae15-a309c59b8e69.html",
+        "prefix": "garrettrepublican",
+        "source": "section"
+      },
+      {
+        "id": "0d0d5cc8-abd5-11ed-90ee-f37f4bac8d5e",
+        "slug": "life-s-simple-7-for-a-healthy-heart",
+        "title": "Life’s Simple 7 for a healthy heart",
+        "description": "",
+        "pubDate": null,
+        "author": "",
+        "image": null,
+        "sourceUrl": "https://www.wvnews.com/garrettrepublican/lifestyles/life-s-simple-7-for-a-healthy-heart/article_0d0d5cc8-abd5-11ed-90ee-f37f4bac8d5e.html",
         "prefix": "garrettrepublican",
         "source": "section"
       }
@@ -891,18 +903,6 @@
         "source": "section"
       },
       {
-        "id": "71244650-49d4-4174-872d-b5b0ae9197c5",
-        "slug": "despite-three-losses-bcms-baseball-has-highlights",
-        "title": "Despite three losses, BCMS baseball has highlights",
-        "description": "",
-        "pubDate": null,
-        "author": "",
-        "image": null,
-        "sourceUrl": "https://www.wvnews.com/braxtonnews/sports/despite-three-losses-bcms-baseball-has-highlights/article_71244650-49d4-4174-872d-b5b0ae9197c5.html",
-        "prefix": "braxtonnews",
-        "source": "section"
-      },
-      {
         "id": "b98827de-9704-4d37-af8f-effac6669c8b",
         "slug": "mountaineer-food-bank-four-decades-of-feeding-west-virginia",
         "title": "Mountaineer Food Bank: four decades of feeding West Virginia",
@@ -915,14 +915,14 @@
         "source": "section"
       },
       {
-        "id": "d1b1570c-1e05-430d-a225-7fe03fa456c3",
-        "slug": "county-to-capitol",
-        "title": "County to Capitol",
+        "id": "71244650-49d4-4174-872d-b5b0ae9197c5",
+        "slug": "despite-three-losses-bcms-baseball-has-highlights",
+        "title": "Despite three losses, BCMS baseball has highlights",
         "description": "",
         "pubDate": null,
         "author": "",
         "image": null,
-        "sourceUrl": "https://www.wvnews.com/braxtonnews/news/county-to-capitol/article_d1b1570c-1e05-430d-a225-7fe03fa456c3.html",
+        "sourceUrl": "https://www.wvnews.com/braxtonnews/sports/despite-three-losses-bcms-baseball-has-highlights/article_71244650-49d4-4174-872d-b5b0ae9197c5.html",
         "prefix": "braxtonnews",
         "source": "section"
       },
@@ -947,6 +947,18 @@
         "author": "",
         "image": null,
         "sourceUrl": "https://www.wvnews.com/braxtonnews/sports/braxton-hs-baseball-hitting-better-but-still-plagued-by-errors/article_dba21fba-8da7-4322-b386-11d718640074.html",
+        "prefix": "braxtonnews",
+        "source": "section"
+      },
+      {
+        "id": "d1b1570c-1e05-430d-a225-7fe03fa456c3",
+        "slug": "county-to-capitol",
+        "title": "County to Capitol",
+        "description": "",
+        "pubDate": null,
+        "author": "",
+        "image": null,
+        "sourceUrl": "https://www.wvnews.com/braxtonnews/news/county-to-capitol/article_d1b1570c-1e05-430d-a225-7fe03fa456c3.html",
         "prefix": "braxtonnews",
         "source": "section"
       }
@@ -1049,18 +1061,6 @@
         "source": "section"
       },
       {
-        "id": "49a68fb0-563c-4c6e-8020-712a259a16e0",
-        "slug": "careportal-launched-in-taylor-county-to-address-west-virginia-foster-care-crisis",
-        "title": "CarePortal launched in Taylor County to address West Virginia foster care crisis",
-        "description": "",
-        "pubDate": null,
-        "author": "",
-        "image": null,
-        "sourceUrl": "https://www.wvnews.com/mountainstatesman/careportal-launched-in-taylor-county-to-address-west-virginia-foster-care-crisis/article_49a68fb0-563c-4c6e-8020-712a259a16e0.html",
-        "prefix": "mountainstatesman",
-        "source": "section"
-      },
-      {
         "id": "6f639cad-e659-4eb4-ab83-f9914bb77f11",
         "slug": "grafton-softball-posts-1-2-record-over-3-game-slate",
         "title": "Grafton softball posts 1-2 record over 3-game slate",
@@ -1071,9 +1071,33 @@
         "sourceUrl": "https://www.wvnews.com/mountainstatesman/sports/grafton-softball-posts-1-2-record-over-3-game-slate/article_6f639cad-e659-4eb4-ab83-f9914bb77f11.html",
         "prefix": "mountainstatesman",
         "source": "section"
+      },
+      {
+        "id": "c68e7f0a-b584-4570-a64f-c8d89f4ce757",
+        "slug": "grafton-baseball-downs-robert-c-byrd-parkersburg-buckhannon-upshur-falls-to-bridgeport",
+        "title": "Grafton baseball downs Robert C. Byrd, Parkersburg, Buckhannon-Upshur; falls to Bridgeport",
+        "description": "",
+        "pubDate": null,
+        "author": "",
+        "image": null,
+        "sourceUrl": "https://www.wvnews.com/mountainstatesman/sports/grafton-baseball-downs-robert-c-byrd-parkersburg-buckhannon-upshur-falls-to-bridgeport/article_c68e7f0a-b584-4570-a64f-c8d89f4ce757.html",
+        "prefix": "mountainstatesman",
+        "source": "section"
       }
     ],
     "fmn": [
+      {
+        "id": "846fad78-ef31-428f-a72e-25fc8ad45c3a",
+        "slug": "seven-candidates-to-vie-for-three-open-marion-co-board-of-education-seats",
+        "title": "Seven candidates to vie for three open Marion Co. Board of Education seats",
+        "description": "",
+        "pubDate": null,
+        "author": "",
+        "image": null,
+        "sourceUrl": "https://www.wvnews.com/fairmontnews/news/seven-candidates-to-vie-for-three-open-marion-co-board-of-education-seats/article_846fad78-ef31-428f-a72e-25fc8ad45c3a.html",
+        "prefix": "fairmontnews",
+        "source": "section"
+      },
       {
         "id": "e9650dbb-5ec9-465c-bbb2-32394eab33a6",
         "slug": "white-hall-elementarys-jessica-ford-named-marion-co-teacher-of-the-year",
@@ -1099,18 +1123,6 @@
         "source": "section"
       },
       {
-        "id": "2f1095c4-caa9-42d2-abc9-fc5392ddfefa",
-        "slug": "city-of-fairmont-announces-wv-doh-plans-to-lessen-palatine-park-intersection-delineators",
-        "title": "City of Fairmont announces WV DOH plans to lessen Palatine Park intersection delineators",
-        "description": "",
-        "pubDate": null,
-        "author": "",
-        "image": null,
-        "sourceUrl": "https://www.wvnews.com/fairmontnews/news/city-of-fairmont-announces-wv-doh-plans-to-lessen-palatine-park-intersection-delineators/article_2f1095c4-caa9-42d2-abc9-fc5392ddfefa.html",
-        "prefix": "fairmontnews",
-        "source": "section"
-      },
-      {
         "id": "10ff0258-e8d1-4ad0-91ec-d7196b3640d9",
         "slug": "palatine-park-has-blossomed-into-marion-county-hub-for-fun",
         "title": "Palatine Park has blossomed into Marion County hub for fun",
@@ -1123,14 +1135,14 @@
         "source": "section"
       },
       {
-        "id": "261274ae-3bf0-4e21-a5ac-ef7c3504bb14",
-        "slug": "country-church-project-st-peter-the-fisherman-archives-preserve-fairmont-s-immigrant-history-through-sacramental",
-        "title": "Country Church Project: St. Peter the Fisherman archives preserve Fairmont’s immigrant history through sacramental records",
+        "id": "2f1095c4-caa9-42d2-abc9-fc5392ddfefa",
+        "slug": "city-of-fairmont-announces-wv-doh-plans-to-lessen-palatine-park-intersection-delineators",
+        "title": "City of Fairmont announces WV DOH plans to lessen Palatine Park intersection delineators",
         "description": "",
         "pubDate": null,
         "author": "",
         "image": null,
-        "sourceUrl": "https://www.wvnews.com/fairmontnews/news/local/country-church-project-st-peter-the-fisherman-archives-preserve-fairmont-s-immigrant-history-through-sacramental/article_261274ae-3bf0-4e21-a5ac-ef7c3504bb14.html",
+        "sourceUrl": "https://www.wvnews.com/fairmontnews/news/city-of-fairmont-announces-wv-doh-plans-to-lessen-palatine-park-intersection-delineators/article_2f1095c4-caa9-42d2-abc9-fc5392ddfefa.html",
         "prefix": "fairmontnews",
         "source": "section"
       },
@@ -1171,14 +1183,14 @@
         "source": "section"
       },
       {
-        "id": "1be815f7-8048-4b09-9974-b6ed2dcbc35d",
-        "slug": "city-of-fairmont-mcparc-to-celebrate-trails-day-with-local-events-this-weekend",
-        "title": "City of Fairmont, MCPARC to celebrate Trails Day with local events this weekend",
+        "id": "261274ae-3bf0-4e21-a5ac-ef7c3504bb14",
+        "slug": "country-church-project-st-peter-the-fisherman-archives-preserve-fairmont-s-immigrant-history-through-sacramental",
+        "title": "Country Church Project: St. Peter the Fisherman archives preserve Fairmont’s immigrant history through sacramental records",
         "description": "",
         "pubDate": null,
         "author": "",
         "image": null,
-        "sourceUrl": "https://www.wvnews.com/fairmontnews/news/city-of-fairmont-mcparc-to-celebrate-trails-day-with-local-events-this-weekend/article_1be815f7-8048-4b09-9974-b6ed2dcbc35d.html",
+        "sourceUrl": "https://www.wvnews.com/fairmontnews/news/local/country-church-project-st-peter-the-fisherman-archives-preserve-fairmont-s-immigrant-history-through-sacramental/article_261274ae-3bf0-4e21-a5ac-ef7c3504bb14.html",
         "prefix": "fairmontnews",
         "source": "section"
       },
@@ -1245,6 +1257,18 @@
         "source": "section"
       },
       {
+        "id": "6518653b-5793-4745-ba4c-b253d86d55eb",
+        "slug": "fridays-sports-recap-blue-devils-conquer-rock-hill",
+        "title": "Friday's sports recap: Blue Devils conquer Rock Hill",
+        "description": "",
+        "pubDate": null,
+        "author": "",
+        "image": null,
+        "sourceUrl": "https://www.wvnews.com/rivercities/gallipolis/sports/fridays-sports-recap-blue-devils-conquer-rock-hill/article_6518653b-5793-4745-ba4c-b253d86d55eb.html",
+        "prefix": "rivercities",
+        "source": "section"
+      },
+      {
         "id": "d39e180e-bffd-46bc-b711-ec4bbae73a53",
         "slug": "meigs-senior-natalie-goode-throws-no-hitter-in-12-0-shutout-of-athens",
         "title": "Meigs senior Natalie Goode throws no-hitter in 12-0 shutout of Athens",
@@ -1301,18 +1325,6 @@
         "author": "",
         "image": null,
         "sourceUrl": "https://www.wvnews.com/rivercities/jackson-county-native-tom-evans-honored-as-child-of-appalachia-by-fao/article_399a9394-5841-4136-ba1a-a0d3cba89d09.html",
-        "prefix": "rivercities",
-        "source": "section"
-      },
-      {
-        "id": "d0d7712c-bb72-4231-9181-5f0e3ec9611c",
-        "slug": "meigs-health-matters-preventing-cervical-cancer",
-        "title": "Meigs Health Matters: Preventing cervical cancer",
-        "description": "",
-        "pubDate": null,
-        "author": "",
-        "image": null,
-        "sourceUrl": "https://www.wvnews.com/rivercities/news/meigs-health-matters-preventing-cervical-cancer/article_d0d7712c-bb72-4231-9181-5f0e3ec9611c.html",
         "prefix": "rivercities",
         "source": "section"
       }
