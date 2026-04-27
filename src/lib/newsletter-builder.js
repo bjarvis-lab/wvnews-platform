@@ -14,8 +14,17 @@
 //   4. Newest — fallback
 
 import { db } from './firebase-admin';
+import { sites as PUBLICATIONS } from '@/data/mock';
 
 const HOUR = 3600_000;
+
+// Look up the publication logo for a given site id. Used as a fallback
+// image when an ingested article doesn't have its own photo, so every
+// story row in the email gets a visual.
+function publicationLogoFor(siteId) {
+  const pub = PUBLICATIONS.find(p => p.id === siteId);
+  return pub?.logoFile || null;
+}
 
 // Editorial priority order — sections render in this order in the email
 // (the lead story floats above all of these). Sections with no recent
@@ -83,12 +92,20 @@ export async function selectStoriesForNewsletter({
     // newsletter: accept any story.
     if (!isAggregator && publication && Array.isArray(d.sites) && d.sites.length > 0 && !d.sites.includes(publication)) continue;
     // Native and ingested both eligible.
+    const articleImage = d.image?.url || null;
+    const primarySite = (d.sites && d.sites[0]) || null;
+    const fallbackLogo = publicationLogoFor(primarySite);
     candidates.push({
       id: d.id,
       slug: d.slug,
       headline: d.headline,
       deck: d.deck || '',
-      image: d.image?.url || null,
+      // Real article image, with publication-logo fallback so every row
+      // in the newsletter has a visual. `imageIsLogo` lets the renderer
+      // pick `object-fit:contain` for logos vs `cover` for photos.
+      image: articleImage,
+      fallbackImage: fallbackLogo,
+      imageIsLogo: !articleImage && !!fallbackLogo,
       author: d.author?.name || '',
       section: d.section || '',
       breaking: !!d.breaking,
@@ -180,6 +197,12 @@ export async function selectStoriesForNewsletter({
 // SECTION_ORDER. Returns:
 //   { lead, groups: [{ id, name, stories: [...] }] }
 // Stories in unrecognized sections are bucketed under 'news'.
+//
+// Within each section, stories are sorted by:
+//   1. views DESC — most viewed in that local market floats to the top
+//   2. publishedAt DESC — recency is the tiebreaker
+// This matches editorial expectations: the section's most-read article
+// leads, with the rest in reverse-chronological order.
 export function groupBySection(stories, { perSectionMax = 4 } = {}) {
   if (!stories || !stories.length) return { lead: null, groups: [] };
 
@@ -192,6 +215,15 @@ export function groupBySection(stories, { perSectionMax = 4 } = {}) {
     let id = s.section || 'news';
     if (!buckets.has(id)) id = 'news';
     buckets.get(id).push(s);
+  }
+
+  // Sort each bucket: views DESC, publishedAt DESC.
+  for (const list of buckets.values()) {
+    list.sort((a, b) => {
+      const dv = (b.views || 0) - (a.views || 0);
+      if (dv !== 0) return dv;
+      return (b.publishedAt || 0) - (a.publishedAt || 0);
+    });
   }
 
   // Build ordered groups (skip empties, cap per-section count)
@@ -354,13 +386,13 @@ export function renderNewsletterHtml({
           </tr></table>
         </td></tr>
 
-        <!-- Lead story (most viewed at time of send; falls back to top-scored) -->
+        <!-- Lead story (most viewed at time of send; falls back to top-scored).
+             Lead always shows an image: real article photo if present,
+             else publication logo, else a colored placeholder. -->
         ${lead ? `
         <tr><td class="padcol" style="padding:28px 32px 8px;">
           <a href="${absUrl(siteBaseUrl, lead.url)}" style="text-decoration:none;color:inherit;">
-            ${lead.image ? `
-            <img class="full-width" src="${escapeAttr(lead.image)}" alt="" width="536" style="display:block;width:100%;max-width:536px;height:auto;border:0;margin-bottom:14px;">
-            ` : ''}
+            ${renderLeadImage(lead, siteBaseUrl, accent)}
             <div style="font-family:Arial,Helvetica,sans-serif;font-size:11px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:${accent};margin-bottom:6px;">
               ${lead.breaking ? '<span style="color:#c0392b;">● Breaking</span> &nbsp;·&nbsp; ' : ''}Top story
               ${lead.section ? ` &nbsp;·&nbsp; ${escapeHtml(SECTION_LABELS[lead.section] || lead.section)}` : ''}
@@ -417,6 +449,23 @@ export function renderNewsletterHtml({
 </html>`;
 }
 
+// Lead image — full-bleed photo if the article has one. Falls back to
+// the publication logo on a brand-tinted background, then to a plain
+// brand-color placeholder. Always renders something so the lead block
+// never looks half-empty.
+function renderLeadImage(story, siteBaseUrl, accent) {
+  if (story.image) {
+    return `<img class="full-width" src="${escapeAttr(story.image)}" alt="" width="536" style="display:block;width:100%;max-width:536px;height:auto;border:0;margin-bottom:14px;">`;
+  }
+  if (story.fallbackImage) {
+    const logoUrl = absoluteAsset(siteBaseUrl, story.fallbackImage);
+    return `<table role="presentation" width="100%" style="margin-bottom:14px;border-collapse:collapse;"><tr><td align="center" style="padding:48px 24px;background:${accent};">
+      <img src="${escapeAttr(logoUrl)}" alt="" height="56" style="display:block;height:56px;width:auto;border:0;margin:0 auto;">
+    </td></tr></table>`;
+  }
+  return `<div style="height:160px;background:${accent};margin-bottom:14px;"></div>`;
+}
+
 // Section header — small uppercase eyebrow + thin gold underline so the
 // reader's eye catches the section break without it shouting.
 function renderSectionHeader(name, accent) {
@@ -443,22 +492,42 @@ function renderAdRow(ad) {
 }
 
 function renderSecondaryRow(story, siteBaseUrl, accent) {
+  // Always show an image column. Real photo > publication logo (with
+  // tinted background + contain so the brand mark isn't cropped) > a
+  // plain brand-color block. Keeps every row visually balanced.
+  let thumbCell;
+  if (story.image) {
+    thumbCell = `
+              <td valign="top" align="right" width="120" style="width:120px;">
+                <img src="${escapeAttr(story.image)}" alt="" width="120" height="80" style="display:block;width:120px;height:80px;object-fit:cover;border:0;">
+              </td>`;
+  } else if (story.fallbackImage) {
+    const logoUrl = absoluteAsset(siteBaseUrl, story.fallbackImage);
+    thumbCell = `
+              <td valign="top" align="right" width="120" style="width:120px;">
+                <table role="presentation" width="120" height="80" style="width:120px;height:80px;border-collapse:collapse;"><tr><td align="center" valign="middle" style="background:${accent};width:120px;height:80px;">
+                  <img src="${escapeAttr(logoUrl)}" alt="" height="40" style="display:block;height:40px;width:auto;max-width:96px;border:0;margin:0 auto;">
+                </td></tr></table>
+              </td>`;
+  } else {
+    thumbCell = `
+              <td valign="top" align="right" width="120" style="width:120px;">
+                <div style="width:120px;height:80px;background:${accent};"></div>
+              </td>`;
+  }
   return `
         <tr><td class="padcol" style="padding:16px 32px;border-top:1px solid #e3e5ea;">
           <a href="${absUrl(siteBaseUrl, story.url)}" style="text-decoration:none;color:inherit;display:block;">
             <table role="presentation" width="100%" cellpadding="0" cellspacing="0"><tr>
               <td valign="top" style="padding-right:14px;">
-                ${story.section ? `<div style="font-family:Arial,Helvetica,sans-serif;font-size:10px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:${accent};margin-bottom:4px;">${escapeHtml(story.section)}</div>` : ''}
+                ${story.section ? `<div style="font-family:Arial,Helvetica,sans-serif;font-size:10px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:${accent};margin-bottom:4px;">${escapeHtml(SECTION_LABELS[story.section] || story.section)}</div>` : ''}
                 <div style="font-family:Georgia,serif;font-size:18px;font-weight:700;line-height:1.25;color:${accent};margin-bottom:4px;">
                   ${escapeHtml(story.headline)}
                 </div>
                 ${story.deck ? `<p style="font-family:Georgia,serif;font-size:14px;line-height:1.5;color:#3a3f45;margin:0 0 4px;">${escapeHtml(story.deck)}</p>` : ''}
                 ${story.author ? `<div style="font-family:Arial,Helvetica,sans-serif;font-size:11px;color:#6a6f76;">By ${escapeHtml(story.author)}</div>` : ''}
               </td>
-              ${story.image ? `
-              <td valign="top" align="right" width="120" style="width:120px;">
-                <img src="${escapeAttr(story.image)}" alt="" width="120" height="80" style="display:block;width:120px;height:80px;object-fit:cover;border:0;">
-              </td>` : ''}
+              ${thumbCell}
             </tr></table>
           </a>
         </td></tr>`;

@@ -8,7 +8,7 @@
 export const sites = [
   { id: 'wvnews', code: 'WV', name: 'WV News', domain: 'wvnews.com', slug: 'wvnews', logoFile: '/logo-wvnews.png', color: '#1a2c5b', primary: true, market: 'North Central WV' },
   { id: 'exponent', code: 'EXP', name: 'Exponent Telegram', domain: 'theet.com', slug: 'theet', logoFile: '/publications/theet.png', color: '#8b2500', market: 'Clarksburg' },
-  { id: 'dominion', code: 'DP', name: 'The Dominion Post', domain: 'dominionpost.com', slug: 'morgantownnews', logoFile: '/publications/morgantownnews.png', color: '#c0392b', market: 'Morgantown' },
+  { id: 'dominion', code: 'MN', name: 'Morgantown News', domain: 'morgantownnews.com', slug: 'morgantownnews', logoFile: '/publications/morgantownnews.png', color: '#c0392b', market: 'Morgantown' },
   { id: 'statejournal', code: 'STJ', name: 'The State Journal', domain: 'statejournal.com', slug: 'statejournal', logoFile: null, color: '#7b2d8b', market: 'Business / Statewide' },
   { id: 'bluegold', code: 'BGN', name: 'Blue & Gold News', domain: 'bluegoldnews.com', slug: 'bluegoldnews', logoFile: null, color: '#002855', market: 'WVU Athletics' },
   { id: 'bridgeport', code: 'BPN', name: 'Bridgeport News', domain: 'bridgeportnews.com', slug: 'bridgeportnews', logoFile: '/publications/bridgeportnews.png', color: '#0d4a8f', market: 'Bridgeport' },
