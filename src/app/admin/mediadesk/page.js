@@ -22,11 +22,19 @@ async function loadStats(doc) {
   } catch { return null; }
 }
 
+// Server-side recency floor — anything older than this gets dropped before
+// it reaches the client. We pull a generous 48h here and then the client
+// applies tighter windows (4h for breaking, 24h for trending + feed) so a
+// cluster whose `lastSeenAt` was bumped seconds ago is the only thing that
+// makes the breaking row.
+const RECENT_HOURS_FETCH = 48;
+
 export default async function MediaDeskPage() {
   let signals = [];
   let clusters = [];
-  try { signals  = strip(await listRecentSignals({ limit: 200 })); } catch {}
-  try { clusters = strip(await listClusters({ limit: 20 })); } catch {}
+  const since = new Date(Date.now() - RECENT_HOURS_FETCH * 3600_000).toISOString();
+  try { signals  = strip(await listRecentSignals({ limit: 200, since })); } catch {}
+  try { clusters = strip(await listClusters({ limit: 20, since })); } catch {}
 
   // Pre-load every cluster's member signals so the UI expands instantly
   // without needing a per-cluster API fetch. One batch read covers them all.

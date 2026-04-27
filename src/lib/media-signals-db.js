@@ -44,13 +44,22 @@ export async function upsertSignal(signal) {
 }
 
 export async function listRecentSignals({ limit = 100, source, kind, topic, since } = {}) {
-  let q = db.collection(COL).orderBy('lastSeenAt', 'desc').limit(Math.max(limit * 2, 100));
+  let q = db.collection(COL).orderBy('lastSeenAt', 'desc').limit(Math.max(limit * 4, 200));
   const snap = await q.get();
   let rows = snap.docs.map(serialize);
   if (source) rows = rows.filter(r => r.sourceId === source);
   if (kind)   rows = rows.filter(r => r.kind === kind);
   if (topic)  rows = rows.filter(r => r.topic === topic);
-  if (since)  rows = rows.filter(r => new Date(r.lastSeenAt) >= new Date(since));
+  if (since) {
+    const sinceMs = new Date(since).getTime();
+    // Gate on max(firstSeenAt, publishedAt) so re-syndicated old items
+    // don't look new just because lastSeenAt was bumped this morning.
+    rows = rows.filter(r => {
+      const candidates = [r.firstSeenAt, r.publishedAt].filter(Boolean).map(t => new Date(t).getTime());
+      const newest = candidates.length ? Math.max(...candidates) : 0;
+      return newest >= sinceMs;
+    });
+  }
   return rows.slice(0, limit);
 }
 
@@ -70,10 +79,18 @@ export async function listStaleSources({ hours = 24 } = {}) {
 
 // Clusters — detected stories that ≥2 signals cover. Surfaced in the
 // Media Desk as "Trending" / "Breaking" sections at the top.
-export async function listClusters({ limit = 30, breakingOnly = false, trendingOnly = false } = {}) {
+//
+// `since` is an ISO string: clusters whose lastSeenAt is older than that
+// are dropped. The Media Desk uses this so we don't surface yesterday's
+// breaking news as if it were still breaking.
+export async function listClusters({ limit = 30, breakingOnly = false, trendingOnly = false, since } = {}) {
   let q = db.collection('mediaClusters').orderBy('lastSeenAt', 'desc').limit(limit * 2);
   const snap = await q.get();
   let rows = snap.docs.map(serialize);
+  if (since) {
+    const sinceMs = new Date(since).getTime();
+    rows = rows.filter(r => r.lastSeenAt && new Date(r.lastSeenAt).getTime() >= sinceMs);
+  }
   if (breakingOnly) rows = rows.filter(r => r.isBreaking);
   if (trendingOnly) rows = rows.filter(r => r.isTrending || r.isBreaking);
   return rows.slice(0, limit);

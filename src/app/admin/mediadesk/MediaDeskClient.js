@@ -1,11 +1,17 @@
 'use client';
 // Live feed of incoming WV media signals. Filter by source type, beat, or
 // keyword. Stats bar up top shows total sources monitored + last collector run.
-//
-// Trending detection + alerts come in the next session; for now this is a
-// clean feed you can scan every morning.
 
 import { useState, useMemo } from 'react';
+
+// Hard recency windows. The clusterer can mark something `isBreaking` for
+// whatever reason it likes, but we won't show it on this page unless its
+// lastSeenAt is genuinely recent. Same for the bottom feed: nothing older
+// than 24 hours appears, even if it bubbled into the recent list because
+// of re-syndication.
+const BREAKING_HOURS = 4;
+const RECENT_HOURS   = 24;
+const HOUR = 3600_000;
 
 function fmtAgo(iso) {
   if (!iso) return '';
@@ -40,23 +46,44 @@ export default function MediaDeskClient({ signals, clusters = [], memberSignals 
   const [topicFilter, setTopicFilter] = useState('all');
   const [expandedCluster, setExpandedCluster] = useState(null);
 
-  const trending = clusters.filter(c => c.isTrending || c.isBreaking);
-  const breaking = clusters.filter(c => c.isBreaking);
+  const now = Date.now();
+  const breakingCutoff = now - BREAKING_HOURS * HOUR;
+  const recentCutoff   = now - RECENT_HOURS   * HOUR;
+
+  const isFresh = (cluster, cutoff) => {
+    if (!cluster.lastSeenAt) return false;
+    return new Date(cluster.lastSeenAt).getTime() >= cutoff;
+  };
+
+  // Breaking only counts when (a) the clusterer flagged it AND (b) the
+  // cluster has been touched in the last few hours. A cluster from
+  // yesterday that still has isBreaking on it gets dropped here.
+  const breaking = clusters.filter(c => c.isBreaking && isFresh(c, breakingCutoff));
+  // Trending = breaking + isTrending, both with a 24h floor.
+  const trending = clusters.filter(c => (c.isTrending || c.isBreaking) && isFresh(c, recentCutoff));
+
+  // Bottom feed: drop anything we first saw (or that was published) more
+  // than 24h ago. lastSeenAt would let re-syndication revive old content.
+  const recentSignals = useMemo(() => signals.filter(s => {
+    const candidates = [s.firstSeenAt, s.publishedAt].filter(Boolean).map(t => new Date(t).getTime());
+    if (!candidates.length) return false;
+    return Math.max(...candidates) >= recentCutoff;
+  }), [signals, recentCutoff]);
 
   const allKinds = useMemo(() => {
-    const set = new Set(signals.map(s => s.kind).filter(Boolean));
+    const set = new Set(recentSignals.map(s => s.kind).filter(Boolean));
     return Array.from(set).sort();
-  }, [signals]);
+  }, [recentSignals]);
   const allSources = useMemo(() => {
-    const set = new Set(signals.map(s => s.sourceName).filter(Boolean));
+    const set = new Set(recentSignals.map(s => s.sourceName).filter(Boolean));
     return Array.from(set).sort();
-  }, [signals]);
+  }, [recentSignals]);
   const allTopics = useMemo(() => {
-    const set = new Set(signals.map(s => s.topic).filter(Boolean));
+    const set = new Set(recentSignals.map(s => s.topic).filter(Boolean));
     return Array.from(set).sort();
-  }, [signals]);
+  }, [recentSignals]);
 
-  const filtered = signals.filter(s => {
+  const filtered = recentSignals.filter(s => {
     if (kindFilter !== 'all' && s.kind !== kindFilter) return false;
     if (sourceFilter !== 'all' && s.sourceName !== sourceFilter) return false;
     if (topicFilter !== 'all' && s.topic !== topicFilter) return false;
@@ -85,7 +112,7 @@ export default function MediaDeskClient({ signals, clusters = [], memberSignals 
           <Stat label="Live RSS feeds" value={stats.withRss} />
           <Stat label="Google News topics" value={stats.queries} />
           <Stat label="FB pages registered" value={stats.fbPages} />
-          <Stat label="Signals in feed" value={signals.length} tone="bg-brand-50 border-brand-200" />
+          <Stat label={`Signals (last ${RECENT_HOURS}h)`} value={recentSignals.length} tone="bg-brand-50 border-brand-200" />
           <Stat
             label="Last collected"
             value={collectorStats?.runAt ? fmtAgo(collectorStats.runAt) : '—'}
@@ -123,7 +150,7 @@ export default function MediaDeskClient({ signals, clusters = [], memberSignals 
           <div className="flex items-center gap-2 mb-3">
             <span className="text-xl">🔥</span>
             <span className="font-bold text-ink-900 tracking-wider text-sm uppercase">Trending across WV</span>
-            <span className="text-xs text-ink-500">≥3 sources, &lt;2 hours</span>
+            <span className="text-xs text-ink-500">last {RECENT_HOURS}h</span>
             <span className="ml-auto text-xs text-ink-500">
               {clusterStats?.runAt ? `clustered ${fmtAgo(clusterStats.runAt)}` : 'clusterer hasn\'t run yet'}
             </span>
@@ -170,7 +197,7 @@ export default function MediaDeskClient({ signals, clusters = [], memberSignals 
           <option value="all">All topics</option>
           {allTopics.map(t => <option key={t} value={t}>{t}</option>)}
         </select>
-        <span className="text-xs text-ink-500 ml-auto">Showing {filtered.length} of {signals.length}</span>
+        <span className="text-xs text-ink-500 ml-auto">Showing {filtered.length} of {recentSignals.length} (last {RECENT_HOURS}h)</span>
       </div>
 
       {/* Feed */}
@@ -184,6 +211,14 @@ export default function MediaDeskClient({ signals, clusters = [], memberSignals 
             <code className="inline-block mt-2 px-2 py-1 bg-ink-100 rounded text-xs font-mono">
               GOOGLE_APPLICATION_CREDENTIALS=~/secrets/wvnews-crm-sa.json node scripts/collect-media-signals.mjs
             </code>
+          </p>
+        </div>
+      ) : recentSignals.length === 0 ? (
+        <div className="bg-white rounded-xl border border-ink-200 p-10 text-center">
+          <div className="text-5xl mb-3">🕒</div>
+          <h3 className="font-display text-xl font-bold text-ink-900">Nothing fresh in the last {RECENT_HOURS} hours</h3>
+          <p className="text-sm text-ink-600 mt-2 max-w-md mx-auto">
+            The collector has older items on file but none from the last {RECENT_HOURS} hours yet. Wait for the next cron run, or kick off the collector manually.
           </p>
         </div>
       ) : (
