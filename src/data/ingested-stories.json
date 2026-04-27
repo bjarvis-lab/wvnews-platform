@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-04-27T22:41:12.502Z",
+  "fetchedAt": "2026-04-27T23:36:45.508Z",
   "source": "wvnews.com RSS + section HTML backfill",
   "target": 10,
   "siteCounts": {
@@ -354,6 +354,18 @@
     ],
     "bluegold": [
       {
+        "id": "614e2330-1055-4c83-828a-98090cf93849",
+        "slug": "matt-sieg-could-play-on-the-offensive-side-of-the-ball",
+        "title": "Matt Sieg could play on the offensive side of the ball",
+        "description": "",
+        "pubDate": null,
+        "author": "",
+        "image": null,
+        "sourceUrl": "https://www.wvnews.com/bluegoldnews/matt-sieg-could-play-on-the-offensive-side-of-the-ball/article_614e2330-1055-4c83-828a-98090cf93849.html",
+        "prefix": "bluegoldnews",
+        "source": "section"
+      },
+      {
         "id": "3ad689f0-c5ee-488d-a19e-74b3760152d1",
         "slug": "hudgins-latest-addition-to-wvu-womens-hoops-roster",
         "title": "Hudgins latest addition to WVU women's hoops roster",
@@ -458,18 +470,6 @@
         "author": "",
         "image": null,
         "sourceUrl": "https://www.wvnews.com/bluegoldnews/wvu-baseball-drops-rubber-match-to-cincinnati/article_dbfdb839-be4e-46ad-8a83-fb228fb289d2.html",
-        "prefix": "bluegoldnews",
-        "source": "section"
-      },
-      {
-        "id": "745d2aa7-aebe-4edd-9c0a-b8a56f60242f",
-        "slug": "wvu-stymied-at-plate-in-5-2-loss-to-cincinnati",
-        "title": "WVU stymied at plate in 5-2 loss to Cincinnati",
-        "description": "",
-        "pubDate": null,
-        "author": "",
-        "image": null,
-        "sourceUrl": "https://www.wvnews.com/bluegoldnews/wvu-stymied-at-plate-in-5-2-loss-to-cincinnati/article_745d2aa7-aebe-4edd-9c0a-b8a56f60242f.html",
         "prefix": "bluegoldnews",
         "source": "section"
       }
