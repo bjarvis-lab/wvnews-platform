@@ -25,6 +25,7 @@ import {
   renderNewsletterHtml,
 } from '@/lib/newsletter-builder';
 import { refreshAccessToken, createDraftCampaign } from '@/lib/cc-client';
+import { getListIdForPublication } from '@/lib/newsletter-lists-db';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -103,11 +104,25 @@ export async function POST(request) {
     }, { status: 502 });
   }
 
-  // Resolve list IDs — pick the explicit listId from the request, or
-  // fall back to the default. CC accepts a draft campaign with no list,
-  // so this is best-effort.
-  const targetList = listId || process.env.CC_DEFAULT_LIST_ID;
-  const listIds = targetList ? [targetList] : [];
+  // Resolve which CC list to send to. Priority:
+  //   1. Explicit listId in the request body
+  //   2. Per-publication mapping in Firestore (settings/newsletterLists)
+  //   3. CC_DEFAULT_LIST_ID env fallback
+  //   4. None — draft is created without a list, send-from-CC requires
+  //      the editor to pick before sending.
+  let resolvedListId = listId || null;
+  let listSource = listId ? 'request' : null;
+  if (!resolvedListId) {
+    try {
+      const mapped = await getListIdForPublication(pubId);
+      if (mapped) { resolvedListId = mapped; listSource = 'mapping'; }
+    } catch { /* mapping read is best-effort */ }
+  }
+  if (!resolvedListId && process.env.CC_DEFAULT_LIST_ID) {
+    resolvedListId = process.env.CC_DEFAULT_LIST_ID;
+    listSource = 'env-default';
+  }
+  const listIds = resolvedListId ? [resolvedListId] : [];
 
   const niceDate = new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
   const campaignName = `${publication.name} — ${niceDate}`;
@@ -136,7 +151,11 @@ export async function POST(request) {
     campaignId: result.campaignId,
     name: result.name,
     listIds,
+    listSource,
+    listResolved: !!resolvedListId,
     dashboardUrl: `https://app.constantcontact.com/pages/campaigns/email-details/details/activity/${result.activities?.[0]?.campaign_activity_id || result.campaignId}`,
-    next: 'Open Constant Contact, review the draft, and click Send when ready.',
+    next: resolvedListId
+      ? 'Open Constant Contact, review the draft, and click Send when ready.'
+      : `No list mapped for ${publication.name}. Open the draft in CC and pick a list before sending. Or set the mapping at /admin/newsletters/lists.`,
   });
 }

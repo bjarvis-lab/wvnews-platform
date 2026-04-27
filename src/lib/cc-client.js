@@ -110,8 +110,42 @@ async function apiFetch(path, { accessToken, ...init } = {}) {
 }
 
 export async function listContactLists({ accessToken }) {
-  const data = await apiFetch('/contact_lists?limit=100', { accessToken });
+  const data = await apiFetch('/contact_lists?limit=500', { accessToken });
   return data.lists || [];
+}
+
+// ───────── Reporting / stats ─────────
+
+// Recent email campaigns. CC v3 paginates; we take the most recent page
+// (newest first by default). For each campaign we get name, status,
+// scheduled time, and id. To get send/open/click stats we also call
+// the per-activity reporting endpoint below.
+export async function listEmailCampaigns({ accessToken, limit = 50 } = {}) {
+  const data = await apiFetch(`/emails?limit=${Math.min(limit, 500)}&order=desc`, { accessToken });
+  return data.campaigns || [];
+}
+
+// Aggregate stats for one campaign. CC keys these on the
+// campaign_activity_id, not the parent campaign_id, so callers need to
+// resolve the activity id first (it's on the campaign object as
+// campaign_activities[].campaign_activity_id where role === 'primary_email').
+export async function getCampaignActivityStats({ accessToken, campaignActivityId }) {
+  // The summary report endpoint accepts comma-separated activity ids.
+  const data = await apiFetch(
+    `/reports/summary_reports/email_campaign_summaries?email_campaign_activity_ids=${encodeURIComponent(campaignActivityId)}`,
+    { accessToken },
+  );
+  return (data.bulk_email_campaign_summaries || [])[0] || null;
+}
+
+// Bulk variant — pass a list of activity ids, get all stats in one call.
+export async function getCampaignActivityStatsBulk({ accessToken, campaignActivityIds = [] }) {
+  if (!campaignActivityIds.length) return [];
+  const data = await apiFetch(
+    `/reports/summary_reports/email_campaign_summaries?email_campaign_activity_ids=${encodeURIComponent(campaignActivityIds.join(','))}`,
+    { accessToken },
+  );
+  return data.bulk_email_campaign_summaries || [];
 }
 
 // Create a draft email campaign. CC's v3 model: an "email_campaign" has
