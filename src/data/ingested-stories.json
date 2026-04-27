@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-04-27T01:51:54.795Z",
+  "fetchedAt": "2026-04-27T05:00:53.839Z",
   "source": "wvnews.com RSS + section HTML backfill",
   "target": 10,
   "siteCounts": {
@@ -24,18 +24,6 @@
   "stories": {
     "exponent": [
       {
-        "id": "00501a8d-c2e4-4405-baaf-4f157246384e",
-        "slug": "ncwv-leaders-working-to-complete-their-sections-of-p2p-trail",
-        "title": "NCWV leaders working to complete their sections of P2P trail",
-        "description": "",
-        "pubDate": null,
-        "author": "",
-        "image": null,
-        "sourceUrl": "https://www.wvnews.com/theet/news/local/ncwv-leaders-working-to-complete-their-sections-of-p2p-trail/article_00501a8d-c2e4-4405-baaf-4f157246384e.html",
-        "prefix": "theet",
-        "source": "section"
-      },
-      {
         "id": "af3d9c9b-d8f0-4d14-af5c-d5446a739ea1",
         "slug": "local-fairs-and-festivals-gear-up-for-summer-months-packed-with-celebrations",
         "title": "Local fairs and festivals gear up for summer months packed with celebrations",
@@ -56,6 +44,18 @@
         "author": "",
         "image": null,
         "sourceUrl": "https://www.wvnews.com/theet/news/local/fast-casual-dining-overtakes-mom-pop-restaurants-but-offers-familiar-options-to-out-of-state/article_d644e1f1-959b-438a-bf7f-f5662336c54c.html",
+        "prefix": "theet",
+        "source": "section"
+      },
+      {
+        "id": "614326ab-724a-4863-bdcc-70c65f79846a",
+        "slug": "west-virginia-boys-girls-state-programs-build-civic-skills-leadership",
+        "title": "West Virginia Boys, Girls State programs build civic skills, leadership",
+        "description": "",
+        "pubDate": null,
+        "author": "",
+        "image": null,
+        "sourceUrl": "https://www.wvnews.com/theet/news/local/west-virginia-boys-girls-state-programs-build-civic-skills-leadership/article_614326ab-724a-4863-bdcc-70c65f79846a.html",
         "prefix": "theet",
         "source": "section"
       },
@@ -84,18 +84,6 @@
         "source": "section"
       },
       {
-        "id": "614326ab-724a-4863-bdcc-70c65f79846a",
-        "slug": "west-virginia-boys-girls-state-programs-build-civic-skills-leadership",
-        "title": "West Virginia Boys, Girls State programs build civic skills, leadership",
-        "description": "",
-        "pubDate": null,
-        "author": "",
-        "image": null,
-        "sourceUrl": "https://www.wvnews.com/theet/news/local/west-virginia-boys-girls-state-programs-build-civic-skills-leadership/article_614326ab-724a-4863-bdcc-70c65f79846a.html",
-        "prefix": "theet",
-        "source": "section"
-      },
-      {
         "id": "dd89d4f7-8b35-4999-bb57-85d575137144",
         "slug": "farmers-markets-across-north-central-west-virginia-grow-as-community-hubs",
         "title": "Farmers markets across North-Central West Virginia grow as community hubs",
@@ -104,6 +92,18 @@
         "author": "",
         "image": null,
         "sourceUrl": "https://www.wvnews.com/theet/news/local/farmers-markets-across-north-central-west-virginia-grow-as-community-hubs/article_dd89d4f7-8b35-4999-bb57-85d575137144.html",
+        "prefix": "theet",
+        "source": "section"
+      },
+      {
+        "id": "00501a8d-c2e4-4405-baaf-4f157246384e",
+        "slug": "ncwv-leaders-working-to-complete-their-sections-of-p2p-trail",
+        "title": "NCWV leaders working to complete their sections of P2P trail",
+        "description": "",
+        "pubDate": null,
+        "author": "",
+        "image": null,
+        "sourceUrl": "https://www.wvnews.com/theet/news/local/ncwv-leaders-working-to-complete-their-sections-of-p2p-trail/article_00501a8d-c2e4-4405-baaf-4f157246384e.html",
         "prefix": "theet",
         "source": "section"
       },
@@ -1429,6 +1429,30 @@
     ],
     "mineral": [
       {
+        "id": "ad48d81d-474a-4dc5-a402-f2622f8c01c5",
+        "slug": "keyser-lady-tornado-use-10-hit-two-home-run-performance-to-rout-northern-10-1",
+        "title": "Keyser Lady Tornado use 10-hit, two home run performance to rout Northern, 10-1",
+        "description": "",
+        "pubDate": null,
+        "author": "",
+        "image": null,
+        "sourceUrl": "https://www.wvnews.com/mineralnews/keyser-lady-tornado-use-10-hit-two-home-run-performance-to-rout-northern-10-1/article_ad48d81d-474a-4dc5-a402-f2622f8c01c5.html",
+        "prefix": "mineralnews",
+        "source": "section"
+      },
+      {
+        "id": "2735a42e-b3ea-4b8d-8150-da5f63f86d5f",
+        "slug": "keyser-splits-mid-week-games-beats-mountain-ridge-after-falling-to-northern",
+        "title": "Keyser splits mid-week games; beats Mountain Ridge after falling to Northern",
+        "description": "",
+        "pubDate": null,
+        "author": "",
+        "image": null,
+        "sourceUrl": "https://www.wvnews.com/mineralnews/keyser-splits-mid-week-games-beats-mountain-ridge-after-falling-to-northern/article_2735a42e-b3ea-4b8d-8150-da5f63f86d5f.html",
+        "prefix": "mineralnews",
+        "source": "section"
+      },
+      {
         "id": "ec212fae-531c-4564-b570-8eb39f838646",
         "slug": "wvde-visiting-team-finds-mineral-county-schools-effective-stable-student-focused",
         "title": "WVDE visiting team finds Mineral County Schools 'effective, stable, student-focused'",
@@ -1521,30 +1545,6 @@
         "author": "",
         "image": null,
         "sourceUrl": "https://www.wvnews.com/mineralnews/celia-cole-is-35th-katharine-church-recipient/article_440e10b1-056c-4b23-ab7f-e981e19f9948.html",
-        "prefix": "mineralnews",
-        "source": "section"
-      },
-      {
-        "id": "6ca4d7a6-780c-4bb0-b916-41adefe2978b",
-        "slug": "governor-signs-landmark-rural-health-legislation-secures-199-million-for-statewide-transformation",
-        "title": "Governor Signs Landmark Rural Health Legislation, Secures $199 Million for Statewide Transformation",
-        "description": "",
-        "pubDate": null,
-        "author": "",
-        "image": null,
-        "sourceUrl": "https://www.wvnews.com/mineralnews/governor-signs-landmark-rural-health-legislation-secures-199-million-for-statewide-transformation/article_6ca4d7a6-780c-4bb0-b916-41adefe2978b.html",
-        "prefix": "mineralnews",
-        "source": "section"
-      },
-      {
-        "id": "98272916-b245-4cef-9b2d-decaa4db90cf",
-        "slug": "local-businesses-support-cycle-the-savage",
-        "title": "Local businesses support Cycle the Savage",
-        "description": "",
-        "pubDate": null,
-        "author": "",
-        "image": null,
-        "sourceUrl": "https://www.wvnews.com/mineralnews/local-businesses-support-cycle-the-savage/article_98272916-b245-4cef-9b2d-decaa4db90cf.html",
         "prefix": "mineralnews",
         "source": "section"
       }
