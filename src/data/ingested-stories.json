@@ -1,11 +1,11 @@
 {
-  "fetchedAt": "2026-04-27T09:59:02.281Z",
+  "fetchedAt": "2026-04-27T11:44:14.489Z",
   "source": "wvnews.com RSS + section HTML backfill",
   "target": 10,
   "siteCounts": {
     "exponent": 10,
     "bridgeport": 6,
-    "dominion": 9,
+    "dominion": 10,
     "bluegold": 10,
     "recorddelta": 10,
     "jackson": 10,
@@ -220,6 +220,18 @@
     ],
     "dominion": [
       {
+        "id": "6e99167d-429c-44ba-a336-cf40c5f689a0",
+        "slug": "wvu-a-cappella-group-to-host-annual-showcase-at-mountainlair",
+        "title": "WVU a cappella group to host annual showcase at Mountainlair",
+        "description": "",
+        "pubDate": null,
+        "author": "",
+        "image": null,
+        "sourceUrl": "https://www.wvnews.com/morgantownnews/news/local/wvu-a-cappella-group-to-host-annual-showcase-at-mountainlair/article_6e99167d-429c-44ba-a336-cf40c5f689a0.html",
+        "prefix": "morgantownnews",
+        "source": "section"
+      },
+      {
         "id": "213272d0-adee-4be5-8e40-2bfca52b993d",
         "slug": "morgantown-farmers-market-opens-summer-season",
         "title": "Morgantown Farmers Market opens summer season",
@@ -330,6 +342,18 @@
     ],
     "bluegold": [
       {
+        "id": "65499dfe-fc36-4866-8e88-6816c558f5fe",
+        "slug": "true-freshmen-make-impressions-for-wvu-this-spring",
+        "title": "True freshmen make impressions for WVU this spring",
+        "description": "",
+        "pubDate": null,
+        "author": "",
+        "image": null,
+        "sourceUrl": "https://www.wvnews.com/bluegoldnews/true-freshmen-make-impressions-for-wvu-this-spring/article_65499dfe-fc36-4866-8e88-6816c558f5fe.html",
+        "prefix": "bluegoldnews",
+        "source": "section"
+      },
+      {
         "id": "dbfdb839-be4e-46ad-8a83-fb228fb289d2",
         "slug": "wvu-baseball-drops-rubber-match-to-cincinnati",
         "title": "WVU baseball drops rubber match to Cincinnati",
@@ -434,18 +458,6 @@
         "author": "",
         "image": null,
         "sourceUrl": "https://www.wvnews.com/bluegoldnews/standings-metrics-point-in-different-directions-as-wvu-heads-to-cincinnati-for-a-weekend-series/article_7b72e3dd-1c9e-4254-b733-eb3e273a4856.html",
-        "prefix": "bluegoldnews",
-        "source": "section"
-      },
-      {
-        "id": "089ba28a-f38e-4fd1-85de-be471dbd0d0e",
-        "slug": "akheem-mesidors-selection-in-the-nfl-draft-is-another-reminder-of-wvu-footballs-decline",
-        "title": "Akheem Mesidor's selection in the NFL draft is another reminder of WVU football's decline",
-        "description": "",
-        "pubDate": null,
-        "author": "",
-        "image": null,
-        "sourceUrl": "https://www.wvnews.com/bluegoldnews/akheem-mesidors-selection-in-the-nfl-draft-is-another-reminder-of-wvu-footballs-decline/article_089ba28a-f38e-4fd1-85de-be471dbd0d0e.html",
         "prefix": "bluegoldnews",
         "source": "section"
       }
@@ -1185,6 +1197,18 @@
     ],
     "rivercities": [
       {
+        "id": "e7c965be-426c-49d5-903a-817bebcdddcc",
+        "slug": "final-boss-con-makes-big-return-to-rio-grande",
+        "title": "Final Boss Con makes big return to Rio Grande",
+        "description": "",
+        "pubDate": null,
+        "author": "",
+        "image": null,
+        "sourceUrl": "https://www.wvnews.com/rivercities/final-boss-con-makes-big-return-to-rio-grande/article_e7c965be-426c-49d5-903a-817bebcdddcc.html",
+        "prefix": "rivercities",
+        "source": "section"
+      },
+      {
         "id": "40c56262-2156-4275-82b2-32a9a14beab6",
         "slug": "money-bomb-morrisey-linked-groups-pour-millions-into-legislative-races",
         "title": "Money Bomb: Morrisey-linked groups pour millions into legislative races",
@@ -1221,14 +1245,14 @@
         "source": "section"
       },
       {
-        "id": "e14a8bbb-8a49-49b3-aad3-3d4f2dd42cef",
-        "slug": "gallia-commissioners-approve-cdbg-application-for-clearview-estates-wastewater-project",
-        "title": "Gallia commissioners approve CDBG application for Clearview Estates wastewater project",
+        "id": "d39e180e-bffd-46bc-b711-ec4bbae73a53",
+        "slug": "meigs-senior-natalie-goode-throws-no-hitter-in-12-0-shutout-of-athens",
+        "title": "Meigs senior Natalie Goode throws no-hitter in 12-0 shutout of Athens",
         "description": "",
         "pubDate": null,
         "author": "",
         "image": null,
-        "sourceUrl": "https://www.wvnews.com/rivercities/gallia-commissioners-approve-cdbg-application-for-clearview-estates-wastewater-project/article_e14a8bbb-8a49-49b3-aad3-3d4f2dd42cef.html",
+        "sourceUrl": "https://www.wvnews.com/rivercities/pomeroy/sports/meigs-senior-natalie-goode-throws-no-hitter-in-12-0-shutout-of-athens/article_d39e180e-bffd-46bc-b711-ec4bbae73a53.html",
         "prefix": "rivercities",
         "source": "section"
       },
@@ -1241,6 +1265,18 @@
         "author": "",
         "image": null,
         "sourceUrl": "https://www.wvnews.com/rivercities/pointpleasant/sports/wahama-falls-to-gilmer-county-in-lkc-softball-championship/article_765f1341-d033-47fb-bdc6-3f7b4a5c8bf6.html",
+        "prefix": "rivercities",
+        "source": "section"
+      },
+      {
+        "id": "e14a8bbb-8a49-49b3-aad3-3d4f2dd42cef",
+        "slug": "gallia-commissioners-approve-cdbg-application-for-clearview-estates-wastewater-project",
+        "title": "Gallia commissioners approve CDBG application for Clearview Estates wastewater project",
+        "description": "",
+        "pubDate": null,
+        "author": "",
+        "image": null,
+        "sourceUrl": "https://www.wvnews.com/rivercities/gallia-commissioners-approve-cdbg-application-for-clearview-estates-wastewater-project/article_e14a8bbb-8a49-49b3-aad3-3d4f2dd42cef.html",
         "prefix": "rivercities",
         "source": "section"
       },
@@ -1277,30 +1313,6 @@
         "author": "",
         "image": null,
         "sourceUrl": "https://www.wvnews.com/rivercities/news/meigs-health-matters-preventing-cervical-cancer/article_d0d7712c-bb72-4231-9181-5f0e3ec9611c.html",
-        "prefix": "rivercities",
-        "source": "section"
-      },
-      {
-        "id": "76a45982-e92f-4ba9-ba4a-58f5fe06177a",
-        "slug": "rio-honors-faculty-for-excellence-in-teaching-service",
-        "title": "Rio honors faculty for excellence in teaching, service",
-        "description": "",
-        "pubDate": null,
-        "author": "",
-        "image": null,
-        "sourceUrl": "https://www.wvnews.com/rivercities/rio-honors-faculty-for-excellence-in-teaching-service/article_76a45982-e92f-4ba9-ba4a-58f5fe06177a.html",
-        "prefix": "rivercities",
-        "source": "section"
-      },
-      {
-        "id": "a6a761ed-3726-4cac-8a79-fd07ed54bbdf",
-        "slug": "gallia-county-student-art-show-draws-praise-community-support-at-french-art-colony",
-        "title": "Gallia County student art show draws praise, community support at French Art Colony",
-        "description": "",
-        "pubDate": null,
-        "author": "",
-        "image": null,
-        "sourceUrl": "https://www.wvnews.com/rivercities/gallia-county-student-art-show-draws-praise-community-support-at-french-art-colony/article_a6a761ed-3726-4cac-8a79-fd07ed54bbdf.html",
         "prefix": "rivercities",
         "source": "section"
       }
