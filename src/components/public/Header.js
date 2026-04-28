@@ -1,29 +1,37 @@
 'use client';
+// Boston Globe-style header. Three stacked rows:
+//   1. Top utility bar — date + publications/contests/e-edition/subscribe links
+//   2. Main nav row — hamburger, small icon, horizontal section nav, search,
+//      sign-in, prominent SUBSCRIBE NOW button
+//   3. (homepage only) Centered masthead — the publication's full wordmark
+//      logo at large size, centered
+//   4. (homepage only) TRENDING strip — red label + pipe-separated topics
+//
+// Inner pages (article, section) skip rows 3 + 4 to keep more screen
+// real estate for the editorial content.
+
 import { useState, useEffect } from 'react';
 import { usePathname } from 'next/navigation';
 import Link from 'next/link';
 import { sections, sites } from '@/data/mock';
 import Logo from './Logo';
 
-export default function PublicHeader({ publicationId = null }) {
+export default function PublicHeader({
+  publicationId = null,
+  showMasthead = false,
+  trendingTopics = [],
+}) {
   const [menuOpen, setMenuOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const [today, setToday] = useState('');
   const pathname = usePathname();
 
-  // Today's date — set client-side so SSR doesn't lock to build time
-  // and the user always sees their local-tz "today".
   useEffect(() => {
     setToday(new Date().toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' }));
   }, []);
 
-  // Highlight the current section in the nav based on the URL.
   const currentSlug = pathname?.startsWith('/section/') ? pathname.slice('/section/'.length).split('/')[0] : null;
 
-  // Resolve which publication's logo to render. Priority:
-  //   1. explicit `publicationId` prop (article pages pass the story's site id)
-  //   2. /p/{slug} routes — read from the URL
-  //   3. otherwise the umbrella WV News mark
   let resolvedPubId = publicationId;
   if (!resolvedPubId && pathname?.startsWith('/p/')) {
     const pSlug = pathname.slice('/p/'.length).split('/')[0];
@@ -34,11 +42,11 @@ export default function PublicHeader({ publicationId = null }) {
 
   return (
     <header className="bg-white border-b border-ink-200 sticky top-0 z-50">
-      {/* Top utility bar */}
+      {/* Row 1: Top utility bar */}
       <div className="bg-brand-950 text-white">
         <div className="max-w-7xl mx-auto px-4 flex items-center justify-between h-8 text-[11px]">
           <div className="flex items-center gap-3 text-white/70 font-body">
-            <span suppressHydrationWarning>{today || ' '}</span>
+            <span suppressHydrationWarning>{today || ' '}</span>
             <span className="text-white/30 hidden sm:inline">|</span>
             <span className="text-white/60 hidden sm:inline">West Virginia</span>
           </div>
@@ -46,79 +54,113 @@ export default function PublicHeader({ publicationId = null }) {
             <Link href="/p" className="text-white/80 hover:text-gold-400 transition-colors">Publications</Link>
             <Link href="/contests" className="text-white/80 hover:text-gold-400 transition-colors">Contests</Link>
             <Link href="/e-edition" className="text-white/80 hover:text-gold-400 transition-colors">E-Edition</Link>
-            <Link href="/subscribe" className="text-gold-400 font-semibold hover:text-gold-300 transition-colors">Subscribe</Link>
             <Link href="/account" className="text-white/80 hover:text-gold-400 transition-colors">Sign In</Link>
             <Link href="/admin" className="text-white/40 hover:text-white transition-colors">Admin</Link>
           </div>
         </div>
       </div>
 
-      {/* Main header — taller to accommodate the larger masthead logo. */}
-      <div className="max-w-7xl mx-auto px-4">
-        <div className="flex items-center justify-between h-20 md:h-24">
-          {/* Mobile menu button */}
-          <button
-            onClick={() => setMenuOpen(!menuOpen)}
-            className="lg:hidden p-2 text-ink-600 hover:text-ink-900"
-            aria-label="Open menu"
-          >
-            <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={menuOpen ? "M6 18L18 6M6 6l12 12" : "M4 6h16M4 12h16M4 18h16"} />
-            </svg>
-          </button>
-
-          {/* Logo — swaps to the publication's brand mark when on a
-              per-publication page (article tagged for that paper, /p/...).
-              Sized large so the masthead reads like a real newspaper
-              flag, not a tiny brand bug. */}
-          <Link href={currentPub ? `/p/${currentPub.slug}` : '/'} aria-label={`${currentPub?.name || 'WV News'} home`} className="flex items-center">
-            <Logo height={64} variant="full" publicationId={resolvedPubId} className="hidden md:block" />
-            <Logo height={56} variant="full" publicationId={resolvedPubId} className="hidden sm:block md:hidden" />
-            <Logo height={48} variant="icon" publicationId={resolvedPubId} className="sm:hidden rounded-full" />
-          </Link>
-
-          {/* Desktop Nav — uppercase eyebrow style, current section underlined in gold */}
-          <nav className="hidden lg:flex items-center">
-            {sections.slice(0, 8).map(section => {
-              const isCurrent = section.slug === currentSlug;
-              return (
-                <Link
-                  key={section.id}
-                  href={`/section/${section.slug}`}
-                  className={`px-3 py-2 text-[11px] font-bold uppercase tracking-eyebrow font-body transition-colors border-b-2 ${
-                    isCurrent
-                      ? 'text-brand-900 border-gold-400'
-                      : 'text-ink-700 border-transparent hover:text-brand-700 hover:border-ink-300'
-                  }`}
-                >
-                  {section.name}
-                </Link>
-              );
-            })}
-          </nav>
-
-          {/* Search & Subscribe */}
-          <div className="flex items-center gap-2">
+      {/* Row 2: Main nav (hamburger + small icon + horizontal sections + search + subscribe) */}
+      <div className="border-b border-ink-200">
+        <div className="max-w-7xl mx-auto px-4">
+          <div className="flex items-center gap-2 h-12">
             <button
-              onClick={() => setSearchOpen(!searchOpen)}
-              className="p-2 text-ink-500 hover:text-ink-900 transition-colors"
-              aria-label="Search"
+              onClick={() => setMenuOpen(!menuOpen)}
+              className="lg:hidden p-1.5 -ml-1.5 text-ink-700 hover:text-ink-900"
+              aria-label="Open menu"
             >
-              <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+              <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="square" strokeLinejoin="miter" strokeWidth={2} d={menuOpen ? "M6 18L18 6M6 6l12 12" : "M4 7h16M4 12h16M4 17h16"} />
               </svg>
+              <span className="block text-[8px] uppercase tracking-eyebrow text-ink-700 mt-0.5">Menu</span>
             </button>
-            <Link
-              href="/subscribe"
-              className="hidden sm:inline-block px-4 py-2 bg-brand-950 text-white text-xs font-bold uppercase tracking-eyebrow rounded-sm hover:bg-brand-800 transition-colors"
-            >
-              Subscribe
+
+            {/* Small home icon — links back to umbrella */}
+            <Link href="/" aria-label="WV News home" className="flex-shrink-0 mr-2">
+              <Logo height={28} variant="icon" className="rounded-sm" />
             </Link>
+
+            {/* Horizontal section nav — Globe-style, separated by thin pipes */}
+            <nav className="hidden lg:flex items-center flex-1 min-w-0 overflow-hidden">
+              {sections.slice(0, 10).map((section, i) => {
+                const isCurrent = section.slug === currentSlug;
+                return (
+                  <span key={section.id} className="flex items-center">
+                    {i > 0 && <span className="px-2 text-ink-300 text-xs">|</span>}
+                    <Link
+                      href={`/section/${section.slug}`}
+                      className={`text-[11px] font-bold uppercase tracking-eyebrow font-body whitespace-nowrap transition-colors ${
+                        isCurrent ? 'text-red-700' : 'text-ink-900 hover:text-red-700'
+                      }`}
+                    >
+                      {section.name}
+                    </Link>
+                  </span>
+                );
+              })}
+            </nav>
+
+            {/* Right side: search + sign-in + subscribe CTA */}
+            <div className="flex items-center gap-3 ml-auto flex-shrink-0">
+              <button
+                onClick={() => setSearchOpen(!searchOpen)}
+                className="p-1.5 text-ink-700 hover:text-ink-900 transition-colors"
+                aria-label="Search"
+              >
+                <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                </svg>
+              </button>
+              <Link href="/account" className="hidden sm:flex items-center gap-1 text-[11px] font-bold uppercase tracking-eyebrow text-ink-700 hover:text-ink-900">
+                Sign In <span aria-hidden>↗</span>
+              </Link>
+              <Link
+                href="/subscribe"
+                className="hidden sm:flex flex-col items-center px-4 md:px-5 py-1.5 bg-blue-700 text-white rounded-full hover:bg-blue-800 transition-colors leading-tight"
+              >
+                <span className="text-[11px] font-bold uppercase tracking-eyebrow">Subscribe Now</span>
+                <span className="text-[9px] font-medium opacity-90">Starting at $1</span>
+              </Link>
+            </div>
           </div>
         </div>
       </div>
 
-      {/* Search bar */}
+      {/* Row 3: Centered masthead — homepage only */}
+      {showMasthead && (
+        <div className="bg-white">
+          <div className="max-w-7xl mx-auto px-4 py-5 md:py-8 flex justify-center">
+            <Link href={currentPub ? `/p/${currentPub.slug}` : '/'} aria-label={`${currentPub?.name || 'WV News'} home`}>
+              <Logo height={88} variant="full" publicationId={resolvedPubId} className="hidden md:block" />
+              <Logo height={64} variant="full" publicationId={resolvedPubId} className="hidden sm:block md:hidden" />
+              <Logo height={48} variant="full" publicationId={resolvedPubId} className="sm:hidden" />
+            </Link>
+          </div>
+        </div>
+      )}
+
+      {/* Row 4: TRENDING strip — homepage only */}
+      {showMasthead && trendingTopics.length > 0 && (
+        <div className="border-y border-ink-200 bg-white">
+          <div className="max-w-7xl mx-auto px-4 py-2.5 flex items-baseline gap-3 overflow-x-auto whitespace-nowrap">
+            <span className="text-[11px] font-bold uppercase tracking-eyebrow text-red-700 flex-shrink-0">
+              Trending:
+            </span>
+            <div className="flex items-baseline gap-2.5 text-[11px] font-bold uppercase tracking-eyebrow text-ink-700">
+              {trendingTopics.map((topic, i) => (
+                <span key={topic.label + i} className="flex items-baseline gap-2.5">
+                  {i > 0 && <span className="text-ink-300">|</span>}
+                  <Link href={topic.href || '#'} className="hover:text-red-700 transition-colors">
+                    {topic.label}
+                  </Link>
+                </span>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Search bar overlay */}
       {searchOpen && (
         <div className="border-t border-ink-100 bg-white">
           <div className="max-w-7xl mx-auto px-4 py-3">

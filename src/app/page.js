@@ -1,9 +1,8 @@
-// Homepage — Boston Globe-style: dense, news-paper feel, multi-column
-// grids, red accent, prominent section dividers. Server component.
-//
-// Reads site settings from Firestore (settings/site-{site}) so the
-// editor can swap the masthead, reorder featured section blocks, and
-// toggle sidebar widgets via /admin/site without a code change.
+// Homepage — Boston Globe layout. Three-column above-the-fold:
+//   col 1 (lead photo + headline)  |  col 2 (stacked stories)  |  col 3 (opinion)
+// Centered blackletter-style masthead in the header. TRENDING strip
+// with red label + pipe-separated topics. Below the fold: featured
+// section blocks (News, Sports, etc.) and the right rail with widgets.
 
 import Link from 'next/link';
 import PublicHeader from '@/components/public/Header';
@@ -64,17 +63,17 @@ async function blendStories() {
 
 // ─── Building blocks ────────────────────────────────────────────────────
 
-function Eyebrow({ section, breaking, color = 'red-700' }) {
+function Eyebrow({ section, breaking }) {
   const sec = sections.find(s => s.id === section);
   return (
     <div className="flex items-center gap-2 mb-2">
       {breaking && (
-        <span className="inline-block px-2 py-0.5 text-[10px] font-bold uppercase tracking-eyebrow bg-red-600 text-white rounded-sm">
+        <span className="inline-block px-2 py-0.5 text-[10px] font-bold uppercase tracking-eyebrow bg-red-700 text-white rounded-sm">
           ● Breaking
         </span>
       )}
-      {sec && (
-        <span className={`text-[11px] font-bold uppercase tracking-eyebrow text-${color}`}>
+      {sec && !breaking && (
+        <span className="text-[11px] font-bold uppercase tracking-eyebrow text-red-700">
           {sec.name}
         </span>
       )}
@@ -82,152 +81,208 @@ function Eyebrow({ section, breaking, color = 'red-700' }) {
   );
 }
 
-function Byline({ author, publishedAt }) {
+function Byline({ author, publishedAt, color = 'text-ink-500' }) {
   return (
-    <div className="text-xs text-ink-500 font-body">
-      {author?.name && <span className="font-medium text-ink-700">{author.name}</span>}
+    <div className={`text-xs font-body ${color}`}>
+      {author?.name && <span className="font-medium text-ink-700">By {author.name}</span>}
       {author?.name && publishedAt && <span className="mx-1.5 text-ink-400">·</span>}
       {publishedAt && <span>{timeAgo(publishedAt)}</span>}
     </div>
   );
 }
 
-// Hero — full-bleed photo with headline overlay, dramatic. The Globe
-// uses this for the day's biggest story.
-function HeroLead({ story }) {
+// COL 1 — Lead photo + headline below. Globe's left column.
+function LeadPhotoStory({ story }) {
   if (!story) return null;
   const heroImg = story.image?.url;
   return (
-    <Link href={`/article/${story.slug}`} className="group block mb-6">
+    <Link href={`/article/${story.slug}`} className="group block">
       <article>
         {heroImg ? (
-          <div className="relative overflow-hidden bg-ink-900 mb-4 aspect-[16/8] md:aspect-[16/7]">
+          <div className="relative overflow-hidden bg-ink-900 mb-4 aspect-[4/3]">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src={heroImg} alt={story.image?.alt || ''} className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.02]" />
           </div>
         ) : (
-          <div className="aspect-[16/7] mb-4 bg-gradient-to-br from-brand-900 to-brand-950" />
+          <div className="aspect-[4/3] mb-4 bg-gradient-to-br from-brand-900 to-brand-950" />
         )}
         <Eyebrow section={story.section} breaking={story.breaking} />
-        <h1 className="font-display text-3xl md:text-5xl lg:text-6xl font-bold leading-[1.02] text-ink-900 group-hover:text-brand-800 transition-colors tracking-tight">
+        <h2 className="font-display text-2xl md:text-[28px] font-bold leading-[1.1] text-ink-900 group-hover:text-brand-800 transition-colors tracking-tight">
           {story.headline}
-        </h1>
+        </h2>
         {story.deck && (
-          <p className="mt-3 text-base md:text-lg text-ink-700 leading-snug max-w-3xl font-display">
+          <p className="mt-2 text-base text-ink-700 leading-snug font-display">
             {story.deck}
           </p>
         )}
-        <div className="mt-3"><Byline author={story.author} publishedAt={story.publishedAt} /></div>
+        <div className="mt-2"><Byline author={story.author} publishedAt={story.publishedAt} /></div>
       </article>
     </Link>
   );
 }
 
-// Compact card — used in the 3-up secondary row + section grids.
-function StoryCard({ story, withImage = true, headlineSize = 'md' }) {
-  const heroImg = story.image?.url;
-  const sizeClass = headlineSize === 'lg'
-    ? 'text-xl md:text-2xl'
-    : headlineSize === 'sm'
-    ? 'text-base'
-    : 'text-lg md:text-xl';
+// COL 2 — Stacked stories. Top one BIG with optional inline deck+thumb.
+function StackedStories({ stories }) {
+  if (!stories.length) return null;
+  const [lead, ...rest] = stories;
   return (
-    <Link href={`/article/${story.slug}`} className="group block">
-      {withImage && (
-        <div className="relative overflow-hidden bg-ink-200 aspect-[16/10] mb-3">
-          {heroImg ? (
-            // eslint-disable-next-line @next/next/no-img-element
-            <img src={heroImg} alt="" className="absolute inset-0 w-full h-full object-cover" />
-          ) : (
-            <div className="absolute inset-0 bg-brand-100" />
+    <div className="space-y-5">
+      {/* Big lead — biggest type on the page */}
+      <Link href={`/article/${lead.slug}`} className="group block pb-5 border-b border-ink-200">
+        <Eyebrow section={lead.section} breaking={lead.breaking} />
+        <h1 className="font-display text-3xl md:text-[34px] font-bold leading-[1.05] text-ink-900 group-hover:text-brand-800 transition-colors tracking-tight">
+          {lead.headline}
+        </h1>
+        {lead.deck && (
+          <div className="mt-4 flex gap-4">
+            <p className="flex-1 text-[15px] text-ink-700 leading-snug font-display italic">{lead.deck}</p>
+            {lead.image?.url && (
+              <div className="w-24 h-20 sm:w-28 sm:h-24 flex-shrink-0 overflow-hidden bg-ink-200">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src={lead.image.url} alt="" className="w-full h-full object-cover" />
+              </div>
+            )}
+          </div>
+        )}
+        <div className="mt-3"><Byline author={lead.author} publishedAt={lead.publishedAt} /></div>
+      </Link>
+
+      {/* Stack — text-only headlines under the lead */}
+      {rest.map(story => (
+        <Link key={story.id || story.slug} href={`/article/${story.slug}`} className="group block pb-4 border-b border-ink-200 last:border-0">
+          <Eyebrow section={story.section} breaking={story.breaking} />
+          <h3 className="font-display text-xl font-bold leading-snug text-ink-900 group-hover:text-brand-800 transition-colors">
+            {story.headline}
+          </h3>
+          <div className="mt-1.5"><Byline author={story.author} publishedAt={story.publishedAt} /></div>
+        </Link>
+      ))}
+    </div>
+  );
+}
+
+// COL 3 — Opinion sidebar. Red OPINION eyebrow, opinion lead with image,
+// red byline labels, then 2 sub-takes side-by-side.
+function OpinionColumn({ stories }) {
+  if (!stories.length) return null;
+  const [lead, ...rest] = stories;
+  const subTakes = rest.slice(0, 2);
+
+  return (
+    <div>
+      <h3 className="text-[11px] font-bold uppercase tracking-eyebrow text-ink-900 pb-2 mb-4 border-b-[3px] border-ink-900">
+        Opinion
+      </h3>
+      {lead && (
+        <Link href={`/article/${lead.slug}`} className="group block mb-5 pb-5 border-b border-ink-200">
+          {lead.image?.url && (
+            <div className="aspect-[4/3] bg-ink-200 overflow-hidden mb-3">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src={lead.image.url} alt="" className="w-full h-full object-cover" />
+            </div>
           )}
+          {lead.author?.name && (
+            <div className="text-[11px] font-bold uppercase tracking-eyebrow text-red-700 mb-1.5">
+              {lead.author.name}
+            </div>
+          )}
+          <h4 className="font-display text-lg font-bold leading-snug text-ink-900 group-hover:text-brand-800 transition-colors">
+            {lead.headline}
+          </h4>
+          {lead.deck && (
+            <p className="mt-2 text-sm text-ink-600 leading-snug">{lead.deck}</p>
+          )}
+        </Link>
+      )}
+      {subTakes.length > 0 && (
+        <div className="grid grid-cols-2 gap-4">
+          {subTakes.map(s => (
+            <Link key={s.id || s.slug} href={`/article/${s.slug}`} className="group block">
+              {s.author?.name && (
+                <div className="text-[10px] font-bold uppercase tracking-eyebrow text-red-700 mb-1">
+                  {s.author.name}
+                </div>
+              )}
+              <h5 className="font-display text-sm font-bold leading-snug text-ink-900 group-hover:text-brand-800 transition-colors">
+                {s.headline}
+              </h5>
+            </Link>
+          ))}
         </div>
       )}
-      <Eyebrow section={story.section} breaking={story.breaking} />
-      <h3 className={`font-display ${sizeClass} font-bold leading-snug text-ink-900 group-hover:text-brand-800 transition-colors`}>
-        {story.headline}
-      </h3>
-      {story.deck && headlineSize !== 'sm' && (
-        <p className="mt-1.5 text-sm text-ink-600 leading-snug line-clamp-2">{story.deck}</p>
-      )}
-      <div className="mt-1.5"><Byline author={story.author} publishedAt={story.publishedAt} /></div>
-    </Link>
+    </div>
   );
 }
 
-// Tight headline-only row — Globe's section "more" lists.
-function HeadlineRow({ story }) {
-  return (
-    <Link href={`/article/${story.slug}`} className="group block py-3 border-b border-ink-200 last:border-0">
-      <h4 className="font-display text-base font-semibold leading-snug text-ink-800 group-hover:text-brand-800 transition-colors">
-        {story.headline}
-      </h4>
-      <div className="mt-1"><Byline author={story.author} publishedAt={story.publishedAt} /></div>
-    </Link>
-  );
-}
-
-// Globe-style red section divider. Big bold serif label, thin red rule,
-// "More" link to the section page.
-function SectionRule({ section, sectionData }) {
-  return (
-    <header className="mb-5 pb-2 border-b-[3px] border-red-700">
-      <div className="flex items-baseline justify-between">
-        <h2 className="font-display text-2xl md:text-3xl font-bold text-ink-900 tracking-tight">
-          <span className="text-red-700 mr-1">{sectionData?.icon}</span>
-          {sectionData?.name || section}
-        </h2>
-        <Link href={`/section/${sectionData?.slug || section}`}
-              className="text-[11px] font-bold uppercase tracking-eyebrow text-red-700 hover:text-red-900">
-          More {sectionData?.name?.toLowerCase()} →
-        </Link>
-      </div>
-    </header>
-  );
-}
-
-// Section block: 1 lead with image + 3 headline rows beside it.
-async function SectionBlock({ sectionId, allStories }) {
+// Section block (below the above-fold) — red rule + section label, lead
+// with photo + 3 headline rows beside it.
+async function SectionBlock({ sectionId, fallbackStories }) {
   const sec = sections.find(s => s.id === sectionId);
   if (!sec) return null;
 
-  // Try Firestore for live stories in this section, fall back to allStories.
   let stories = [];
-  try {
-    stories = await listPublishedBySection(sectionId, { limit: 8 });
-  } catch { /* ignore */ }
+  try { stories = await listPublishedBySection(sectionId, { limit: 8 }); } catch { /* ignore */ }
   if (!stories.length) {
-    stories = allStories.filter(s => s.section === sectionId || (s.secondarySections || []).includes(sectionId));
+    stories = fallbackStories.filter(s => s.section === sectionId || (s.secondarySections || []).includes(sectionId));
   }
   if (!stories.length) return null;
 
   const [lead, ...rest] = stories;
   const sideStories = rest.slice(0, 3);
   return (
-    <section className="py-6 first:pt-0">
-      <SectionRule section={sectionId} sectionData={sec} />
+    <section className="py-7 first:pt-0">
+      <header className="mb-5 pb-2 border-b-[3px] border-red-700">
+        <div className="flex items-baseline justify-between">
+          <h2 className="font-display text-2xl md:text-[28px] font-bold text-ink-900 tracking-tight">
+            {sec.name}
+          </h2>
+          <Link href={`/section/${sec.slug}`}
+                className="text-[11px] font-bold uppercase tracking-eyebrow text-red-700 hover:text-red-900">
+            More {sec.name.toLowerCase()} →
+          </Link>
+        </div>
+      </header>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-x-8 gap-y-5">
         <div className="md:col-span-2">
-          <StoryCard story={lead} headlineSize="lg" />
+          <Link href={`/article/${lead.slug}`} className="group block">
+            {lead.image?.url && (
+              <div className="aspect-[16/10] bg-ink-200 overflow-hidden mb-3">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src={lead.image.url} alt="" className="w-full h-full object-cover" />
+              </div>
+            )}
+            <h3 className="font-display text-xl md:text-2xl font-bold leading-snug text-ink-900 group-hover:text-brand-800">
+              {lead.headline}
+            </h3>
+            {lead.deck && <p className="mt-2 text-sm text-ink-600 line-clamp-2">{lead.deck}</p>}
+            <div className="mt-2"><Byline author={lead.author} publishedAt={lead.publishedAt} /></div>
+          </Link>
         </div>
         <div>
-          {sideStories.map(s => <HeadlineRow key={s.id || s.slug} story={s} />)}
+          {sideStories.map(s => (
+            <Link key={s.id || s.slug} href={`/article/${s.slug}`} className="group block py-3 border-b border-ink-200 last:border-0">
+              <h4 className="font-display text-base font-semibold leading-snug text-ink-800 group-hover:text-brand-800">
+                {s.headline}
+              </h4>
+              <div className="mt-1"><Byline author={s.author} publishedAt={s.publishedAt} /></div>
+            </Link>
+          ))}
         </div>
       </div>
     </section>
   );
 }
 
-// Right-rail widgets, server-rendered shells around client islands.
+// Right-rail widgets
 function MostRead({ stories }) {
   return (
-    <section className="bg-white border-t-[3px] border-red-700">
-      <h3 className="text-[11px] font-bold uppercase tracking-eyebrow text-red-700 mt-3 mb-3">Most read</h3>
+    <section>
+      <h3 className="text-[11px] font-bold uppercase tracking-eyebrow text-ink-900 pb-2 mb-4 border-b-[3px] border-ink-900">Most read</h3>
       <ol className="space-y-3">
         {stories.map((story, i) => (
           <li key={story.id || story.slug} className="flex gap-3 items-start pb-3 border-b border-ink-200 last:border-0">
             <span className="font-display text-2xl font-bold text-red-700 leading-none w-6 flex-shrink-0">{i + 1}</span>
-            <Link href={`/article/${story.slug}`} className="font-display text-sm font-semibold leading-snug text-ink-800 hover:text-brand-800 transition-colors">
+            <Link href={`/article/${story.slug}`} className="font-display text-sm font-semibold leading-snug text-ink-800 hover:text-brand-800">
               {story.headline}
             </Link>
           </li>
@@ -248,12 +303,12 @@ function ReaderServices() {
     { label: 'Manage My Account', href: '/account' },
   ];
   return (
-    <section className="bg-white border-t-[3px] border-red-700">
-      <h3 className="text-[11px] font-bold uppercase tracking-eyebrow text-red-700 mt-3 mb-3">Reader services</h3>
+    <section>
+      <h3 className="text-[11px] font-bold uppercase tracking-eyebrow text-ink-900 pb-2 mb-3 border-b-[3px] border-ink-900">Reader services</h3>
       <ul className="space-y-1">
         {items.map(item => (
           <li key={item.label}>
-            <Link href={item.href} className="block py-1.5 text-sm text-ink-700 hover:text-brand-800">
+            <Link href={item.href} className="block py-1.5 text-sm text-ink-700 hover:text-red-700">
               {item.label} <span className="text-ink-400">→</span>
             </Link>
           </li>
@@ -263,6 +318,26 @@ function ReaderServices() {
   );
 }
 
+// Trending derivation — pull breaking + featured + most-recent, dedupe
+// to short topic labels for the strip in the header.
+function deriveTrending(all) {
+  const seen = new Set();
+  const out = [];
+  const candidates = [
+    ...all.filter(s => s.breaking),
+    ...all.filter(s => s.featured && !s.breaking).slice(0, 8),
+  ];
+  for (const s of candidates) {
+    const tag = (s.tags || [])[0];
+    const label = (tag || s.headline || '').slice(0, 28).trim();
+    if (!label || seen.has(label.toLowerCase())) continue;
+    seen.add(label.toLowerCase());
+    out.push({ label: label.toUpperCase(), href: `/article/${s.slug}` });
+    if (out.length >= 8) break;
+  }
+  return out;
+}
+
 // ─── Page ────────────────────────────────────────────────────────────────
 
 export default async function HomePage() {
@@ -270,30 +345,39 @@ export default async function HomePage() {
 
   const breaking = all.find(s => s.breaking) || null;
   const featured = all.filter(s => s.featured && !s.breaking);
-  const lead = breaking || featured[0] || all[0];
-  const usedIds = new Set([lead].filter(Boolean).map(s => s.id || s.slug));
 
-  // Three-up under the hero — next 3 most important.
-  const threeUp = (breaking ? featured : featured.slice(1))
-    .filter(s => !usedIds.has(s.id || s.slug))
-    .slice(0, 3);
-  threeUp.forEach(s => usedIds.add(s.id || s.slug));
+  // COL 1 — left photo lead. Use the second-best featured story (so the
+  // biggest is in the center stack as the day's "lead").
+  const photoLead = featured[1] || all.find(s => s.image?.url && !s.breaking) || all[0];
 
-  // Story river of recent items not used elsewhere.
-  const river = all.filter(s => !usedIds.has(s.id || s.slug)).slice(0, 14);
+  // COL 2 — center stack. Top is the day's lead, then 3-4 stacked stories.
+  const stackLead = breaking || featured[0] || all[0];
+  const usedIds = new Set([photoLead, stackLead].filter(Boolean).map(s => s.id || s.slug));
+  const stackRest = all
+    .filter(s => !usedIds.has(s.id || s.slug) && s.section !== 'opinion')
+    .slice(0, 4);
+  const stack = [stackLead, ...stackRest];
+  stackRest.forEach(s => usedIds.add(s.id || s.slug));
 
+  // COL 3 — opinion column. Top opinion + 2 sub-takes.
+  const opinions = all.filter(s => s.section === 'opinion').slice(0, 5);
+
+  // Below-the-fold: section blocks
+  const featuredSections = settings.featuredSections.filter(id => id !== 'opinion');
+
+  // Most-read for right rail
   const mostRead = [...all].sort((a, b) => (b.stats?.views || 0) - (a.stats?.views || 0)).slice(0, 5);
-  const adTargeting = { page: 'home', breaking: breaking ? 'yes' : 'no' };
 
-  // Optional masthead from /admin/site
+  const adTargeting = { page: 'home', breaking: breaking ? 'yes' : 'no' };
+  const trendingTopics = deriveTrending(all);
   const masthead = settings.masthead?.imageUrl ? settings.masthead : null;
   const sidebar = settings.sidebar;
 
   return (
-    <div className="min-h-screen">
-      <PublicHeader />
+    <div className="min-h-screen bg-white">
+      <PublicHeader showMasthead trendingTopics={trendingTopics} />
 
-      {/* Optional editor-uploaded masthead banner */}
+      {/* Optional editor-uploaded promotional masthead banner */}
       {masthead && (
         <a href={masthead.linkUrl || '/'} className="block border-b border-ink-200" style={{ background: masthead.bgColor || '#f8f9fa' }}>
           <div className="max-w-7xl mx-auto">
@@ -303,81 +387,43 @@ export default async function HomePage() {
         </a>
       )}
 
-      {/* Top leaderboard */}
+      {/* Top leaderboard ad — Globe puts this above the masthead, but we
+          already have the masthead in the sticky header, so we keep the
+          leaderboard below where it can fill 970x250. */}
       <div className="border-b border-ink-200 bg-white">
         <div className="max-w-7xl mx-auto px-4 py-3">
           <AdSlot placement="home-top" site="wvnews" targeting={adTargeting} />
         </div>
       </div>
 
-      <main className="max-w-7xl mx-auto px-4 lg:px-6 py-7 lg:py-9">
-        {/* Hero + 3-up. Globe puts the day's biggest above smaller secondary cards. */}
-        <section className="pb-8 mb-8 border-b-2 border-ink-900">
-          <HeroLead story={lead} />
-          {threeUp.length > 0 && (
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-x-6 gap-y-6 pt-2">
-              {threeUp.map(story => (
-                <StoryCard key={story.id || story.slug} story={story} headlineSize="md" />
-              ))}
-            </div>
-          )}
+      <main className="max-w-7xl mx-auto px-4 lg:px-6 py-6 lg:py-8">
+        {/* Three-column above-the-fold grid */}
+        <section className="grid grid-cols-1 lg:grid-cols-12 gap-x-8 gap-y-8 pb-8 mb-8 border-b-2 border-ink-900">
+          <div className="lg:col-span-4">
+            <LeadPhotoStory story={photoLead} />
+          </div>
+          <div className="lg:col-span-5 lg:border-x lg:border-ink-200 lg:px-8">
+            <StackedStories stories={stack} />
+          </div>
+          <div className="lg:col-span-3">
+            <OpinionColumn stories={opinions} />
+          </div>
         </section>
 
-        {/* Two-column river + right rail */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-x-10 gap-y-8">
-          <div className="lg:col-span-2 space-y-1">
-            <header className="pb-2 border-b-[3px] border-red-700 mb-4">
-              <h2 className="font-display text-2xl font-bold text-ink-900 tracking-tight">Latest from West Virginia</h2>
-            </header>
-            {river.slice(0, 6).map(story => (
-              <article key={story.id || story.slug} className="grid grid-cols-3 gap-4 py-4 border-b border-ink-200 last:border-0">
-                <Link href={`/article/${story.slug}`} className="group col-span-2">
-                  <Eyebrow section={story.section} breaking={story.breaking} />
-                  <h3 className="font-display text-lg md:text-xl font-bold leading-snug text-ink-900 group-hover:text-brand-800 transition-colors">
-                    {story.headline}
-                  </h3>
-                  {story.deck && <p className="mt-1.5 text-sm text-ink-600 line-clamp-2">{story.deck}</p>}
-                  <div className="mt-1.5"><Byline author={story.author} publishedAt={story.publishedAt} /></div>
-                </Link>
-                {story.image?.url && (
-                  <Link href={`/article/${story.slug}`} className="block">
-                    <div className="bg-ink-200 aspect-[4/3] overflow-hidden">
-                      {/* eslint-disable-next-line @next/next/no-img-element */}
-                      <img src={story.image.url} alt="" className="w-full h-full object-cover" />
-                    </div>
-                  </Link>
-                )}
-              </article>
+        {/* Two-column: section blocks + right rail */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-x-10 gap-y-8">
+          <div className="lg:col-span-9 divide-y divide-ink-200">
+            {featuredSections.map(sectionId => (
+              <SectionBlock key={sectionId} sectionId={sectionId} fallbackStories={all} />
             ))}
 
-            <div className="my-7">
+            <div className="py-6">
               <AdSlot placement="home-in-feed" site="wvnews" targeting={adTargeting} />
             </div>
-
-            {river.slice(6).map(story => (
-              <article key={story.id || story.slug} className="grid grid-cols-3 gap-4 py-4 border-b border-ink-200 last:border-0">
-                <Link href={`/article/${story.slug}`} className="group col-span-2">
-                  <Eyebrow section={story.section} breaking={story.breaking} />
-                  <h3 className="font-display text-lg font-bold leading-snug text-ink-900 group-hover:text-brand-800 transition-colors">
-                    {story.headline}
-                  </h3>
-                  <div className="mt-1.5"><Byline author={story.author} publishedAt={story.publishedAt} /></div>
-                </Link>
-                {story.image?.url && (
-                  <Link href={`/article/${story.slug}`} className="block">
-                    <div className="bg-ink-200 aspect-[4/3] overflow-hidden">
-                      {/* eslint-disable-next-line @next/next/no-img-element */}
-                      <img src={story.image.url} alt="" className="w-full h-full object-cover" />
-                    </div>
-                  </Link>
-                )}
-              </article>
-            ))}
           </div>
 
-          {/* Right rail */}
-          <aside className="hidden lg:block">
-            <div className="sticky top-4 space-y-6">
+          <aside className="hidden lg:block lg:col-span-3">
+            <div className="sticky top-32 space-y-6">
               <AdSlot placement="home-sidebar-1" site="wvnews" targeting={adTargeting} />
               {sidebar.showMostRead && <MostRead stories={mostRead} />}
               {sidebar.showNewsletter && <NewsletterSignup />}
@@ -387,19 +433,11 @@ export default async function HomePage() {
             </div>
           </aside>
 
-          {/* Mobile collapse — sidebar widgets below river */}
-          <div className="lg:hidden space-y-6 mt-2">
+          <div className="lg:hidden space-y-6">
             {sidebar.showNewsletter && <NewsletterSignup />}
             {sidebar.showMostRead && <MostRead stories={mostRead} />}
             {sidebar.showReaderServices && <ReaderServices />}
           </div>
-        </div>
-
-        {/* Featured section blocks — News, Sports, Opinion, etc. — Globe-style */}
-        <div className="mt-12 space-y-3 divide-y divide-ink-200">
-          {settings.featuredSections.map(sectionId => (
-            <SectionBlock key={sectionId} sectionId={sectionId} allStories={all} />
-          ))}
         </div>
       </main>
 
