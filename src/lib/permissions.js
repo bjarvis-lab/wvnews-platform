@@ -13,7 +13,7 @@ export const MODULES = [
   { key: 'dashboard',    label: 'Dashboard',           icon: '📊', href: '/admin',                  description: 'Role-aware home' },
   { key: 'stories',      label: 'Stories',             icon: '📝', href: '/admin/stories',          description: 'Create + edit stories' },
   { key: 'mediadesk',    label: 'Media Desk',          icon: '📡', href: '/admin/mediadesk',        description: 'Live WV news feed + trending' },
-  { key: 'layout',       label: 'Layout Builder',      icon: '🧱', href: '/admin/layout-builder',   description: 'Home/section layout' },
+  { key: 'layout',       label: 'Site Customization',  icon: '🎨', href: '/admin/site',             description: 'Masthead, featured sections, sidebar toggles' },
   { key: 'media',        label: 'Media Library',       icon: '📸', href: '/admin/media',            description: 'Photos, videos, assets' },
   { key: 'budget',       label: 'Editorial Budget',    icon: '📋', href: '/admin/budget',           description: 'Newsroom planning' },
   { key: 'analytics',    label: 'Analytics',           icon: '📈', href: '/admin/analytics',        description: 'Traffic + engagement' },
@@ -174,7 +174,8 @@ export function moduleKeyForPath(pathname) {
     'import': 'import',
     'settings': 'settings',
     'users': 'users',
-    'layout-builder': 'layout',
+    'site': 'layout',
+    'layout-builder': 'layout', // legacy — keep mapping while we cut over
     'signin': null, // always accessible
   };
   return mapping[first] || null;
