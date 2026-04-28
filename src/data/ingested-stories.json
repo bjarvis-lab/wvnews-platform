@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-04-27T23:36:45.508Z",
+  "fetchedAt": "2026-04-28T01:21:58.896Z",
   "source": "wvnews.com RSS + section HTML backfill",
   "target": 10,
   "siteCounts": {
@@ -1087,6 +1087,18 @@
     ],
     "fmn": [
       {
+        "id": "c1678bac-06c3-46b6-be3d-10d3378174ac",
+        "slug": "wvu-president-mike-benson-visits-webster-marion-counties-during-welcome-home-tour",
+        "title": "WVU President Mike Benson visits Webster, Marion counties during \"Welcome Home Tour\"",
+        "description": "",
+        "pubDate": null,
+        "author": "",
+        "image": null,
+        "sourceUrl": "https://www.wvnews.com/fairmontnews/news/wvu-president-mike-benson-visits-webster-marion-counties-during-welcome-home-tour/article_c1678bac-06c3-46b6-be3d-10d3378174ac.html",
+        "prefix": "fairmontnews",
+        "source": "section"
+      },
+      {
         "id": "59b5edcb-3631-410f-b944-9391f7b2bf66",
         "slug": "fairmont-state-university-announces-2026-presidential-scholarship-recipients-expands-program-to-include-out-of-state",
         "title": "Fairmont State University announces 2026 Presidential Scholarship recipients; expands program to include out-of-state students",
@@ -1159,14 +1171,14 @@
         "source": "section"
       },
       {
-        "id": "86bb6947-eae5-4ba5-8ed7-41688e562d1b",
-        "slug": "marion-co-s-crouch-ward-woertz-to-vie-for-republican-house-of-del-district-74",
-        "title": "Marion Co.'s Crouch, Ward, Woertz to vie for Republican House of Del. District 74 nomination",
+        "id": "72231a1d-7bae-4e6f-8c10-5a83bfadf2dd",
+        "slug": "3-north-marion-students-sign-letters-of-intent",
+        "title": "3 North Marion students sign letters of intent",
         "description": "",
         "pubDate": null,
         "author": "",
         "image": null,
-        "sourceUrl": "https://www.wvnews.com/fairmontnews/news/marion-co-s-crouch-ward-woertz-to-vie-for-republican-house-of-del-district-74/article_86bb6947-eae5-4ba5-8ed7-41688e562d1b.html",
+        "sourceUrl": "https://www.wvnews.com/fairmontnews/sports/3-north-marion-students-sign-letters-of-intent/article_72231a1d-7bae-4e6f-8c10-5a83bfadf2dd.html",
         "prefix": "fairmontnews",
         "source": "section"
       },
@@ -1179,18 +1191,6 @@
         "author": "",
         "image": null,
         "sourceUrl": "https://www.wvnews.com/fairmontnews/news/local/palatine-park-has-blossomed-into-marion-county-hub-for-fun/article_10ff0258-e8d1-4ad0-91ec-d7196b3640d9.html",
-        "prefix": "fairmontnews",
-        "source": "section"
-      },
-      {
-        "id": "72231a1d-7bae-4e6f-8c10-5a83bfadf2dd",
-        "slug": "3-north-marion-students-sign-letters-of-intent",
-        "title": "3 North Marion students sign letters of intent",
-        "description": "",
-        "pubDate": null,
-        "author": "",
-        "image": null,
-        "sourceUrl": "https://www.wvnews.com/fairmontnews/sports/3-north-marion-students-sign-letters-of-intent/article_72231a1d-7bae-4e6f-8c10-5a83bfadf2dd.html",
         "prefix": "fairmontnews",
         "source": "section"
       },
