@@ -1,10 +1,10 @@
 {
-  "fetchedAt": "2026-04-28T01:21:58.896Z",
+  "fetchedAt": "2026-04-28T04:50:47.180Z",
   "source": "wvnews.com RSS + section HTML backfill",
   "target": 10,
   "siteCounts": {
     "exponent": 10,
-    "bridgeport": 7,
+    "bridgeport": 6,
     "dominion": 10,
     "bluegold": 10,
     "recorddelta": 10,
@@ -23,6 +23,18 @@
   },
   "stories": {
     "exponent": [
+      {
+        "id": "229dd238-f87e-4423-a81b-237cfb328f5e",
+        "slug": "calendar-of-events-for-tuesday",
+        "title": "Calendar of Events for Tuesday",
+        "description": "",
+        "pubDate": null,
+        "author": "",
+        "image": null,
+        "sourceUrl": "https://www.wvnews.com/theet/calendar/calendar-of-events-for-tuesday/article_229dd238-f87e-4423-a81b-237cfb328f5e.html",
+        "prefix": "theet",
+        "source": "section"
+      },
       {
         "id": "fe0d70ff-613d-4bab-82b4-b4026d14b4d2",
         "slug": "bridgeport-high-school-cleared-after-bomb-threat-prompts-evacuation-lockdowns-and-dismissal",
@@ -84,6 +96,18 @@
         "source": "section"
       },
       {
+        "id": "bd1c1e77-20b7-4721-a4d3-ea8c5ef0995e",
+        "slug": "bridgeport-city-council-swears-in-new-police-officers-approves-design-contracts-for-two-projects",
+        "title": "Bridgeport City Council swears in new police officers, approves design contracts for two projects",
+        "description": "",
+        "pubDate": null,
+        "author": "",
+        "image": null,
+        "sourceUrl": "https://www.wvnews.com/theet/news/bridgeport-city-council-swears-in-new-police-officers-approves-design-contracts-for-two-projects/article_bd1c1e77-20b7-4721-a4d3-ea8c5ef0995e.html",
+        "prefix": "theet",
+        "source": "section"
+      },
+      {
         "id": "5c5b4733-70ae-4e23-8215-e7ef00471e5f",
         "slug": "services-stymied-at-harrison-county-government-offices-as-staff-deal-with-cybersecurity-attack",
         "title": "Services stymied at Harrison County government offices as staff deal with cybersecurity attack",
@@ -116,30 +140,6 @@
         "author": "",
         "image": null,
         "sourceUrl": "https://www.wvnews.com/theet/news/harrison-county-to-alter-ballot-in-general-election-due-to-passing-of-circuit-clerk-albert/article_d75920f8-1dca-4a7c-ba5c-baf38db28087.html",
-        "prefix": "theet",
-        "source": "section"
-      },
-      {
-        "id": "af3d9c9b-d8f0-4d14-af5c-d5446a739ea1",
-        "slug": "local-fairs-and-festivals-gear-up-for-summer-months-packed-with-celebrations",
-        "title": "Local fairs and festivals gear up for summer months packed with celebrations",
-        "description": "",
-        "pubDate": null,
-        "author": "",
-        "image": null,
-        "sourceUrl": "https://www.wvnews.com/theet/news/local/local-fairs-and-festivals-gear-up-for-summer-months-packed-with-celebrations/article_af3d9c9b-d8f0-4d14-af5c-d5446a739ea1.html",
-        "prefix": "theet",
-        "source": "section"
-      },
-      {
-        "id": "d644e1f1-959b-438a-bf7f-f5662336c54c",
-        "slug": "fast-casual-dining-overtakes-mom-pop-restaurants-but-offers-familiar-options-to-out-of-state",
-        "title": "Fast casual dining overtakes mom & pop restaurants but offers familiar options to out of state travelers",
-        "description": "",
-        "pubDate": null,
-        "author": "",
-        "image": null,
-        "sourceUrl": "https://www.wvnews.com/theet/news/local/fast-casual-dining-overtakes-mom-pop-restaurants-but-offers-familiar-options-to-out-of-state/article_d644e1f1-959b-438a-bf7f-f5662336c54c.html",
         "prefix": "theet",
         "source": "section"
       }
@@ -216,18 +216,6 @@
         "sourceUrl": "https://www.wvnews.com/bridgeportnews/sports/bridgeport-wins-5th-straight-game-in-win-over-university/article_2c106344-8933-4aae-b973-44d77e0096c3.html",
         "prefix": "bridgeportnews",
         "source": "section"
-      },
-      {
-        "id": "fc8a9b7b-cb81-40c7-ace1-0d36f1ab2371",
-        "slug": "bridgeport-volleyballs-salam-rajjoub-signs-with-glenville-state",
-        "title": "Bridgeport volleyball's Salam Rajjoub signs with Glenville State",
-        "description": "",
-        "pubDate": null,
-        "author": "",
-        "image": null,
-        "sourceUrl": "https://www.wvnews.com/bridgeportnews/sports/bridgeport-volleyballs-salam-rajjoub-signs-with-glenville-state/article_fc8a9b7b-cb81-40c7-ace1-0d36f1ab2371.html",
-        "prefix": "bridgeportnews",
-        "source": "section"
       }
     ],
     "dominion": [
@@ -292,18 +280,6 @@
         "source": "section"
       },
       {
-        "id": "79a334fc-f906-4a2f-8cd4-518e5658522e",
-        "slug": "morgantown-public-library-system-unveils-new-logo-website-ahead-of-100th-anniversary",
-        "title": "Morgantown Public Library System unveils new logo, website ahead of 100th anniversary",
-        "description": "",
-        "pubDate": null,
-        "author": "",
-        "image": null,
-        "sourceUrl": "https://www.wvnews.com/morgantownnews/news/morgantown-public-library-system-unveils-new-logo-website-ahead-of-100th-anniversary/article_79a334fc-f906-4a2f-8cd4-518e5658522e.html",
-        "prefix": "morgantownnews",
-        "source": "section"
-      },
-      {
         "id": "3b1a531c-6f62-4727-b2c5-c8622d02fd60",
         "slug": "testimony-continues-in-joseph-nevera-murder-trial-in-monongalia-county",
         "title": "Testimony continues in Joseph Nevera murder trial in Monongalia County",
@@ -350,18 +326,30 @@
         "sourceUrl": "https://www.wvnews.com/morgantownnews/news/getmoving-to-host-day-of-play-in-morgantown-to-promote-family-fitness/article_645873b4-b4f8-47ea-9cde-5c82fc1fb5fd.html",
         "prefix": "morgantownnews",
         "source": "section"
-      }
-    ],
-    "bluegold": [
+      },
       {
-        "id": "614e2330-1055-4c83-828a-98090cf93849",
-        "slug": "matt-sieg-could-play-on-the-offensive-side-of-the-ball",
-        "title": "Matt Sieg could play on the offensive side of the ball",
+        "id": "79a334fc-f906-4a2f-8cd4-518e5658522e",
+        "slug": "morgantown-public-library-system-unveils-new-logo-website-ahead-of-100th-anniversary",
+        "title": "Morgantown Public Library System unveils new logo, website ahead of 100th anniversary",
         "description": "",
         "pubDate": null,
         "author": "",
         "image": null,
-        "sourceUrl": "https://www.wvnews.com/bluegoldnews/matt-sieg-could-play-on-the-offensive-side-of-the-ball/article_614e2330-1055-4c83-828a-98090cf93849.html",
+        "sourceUrl": "https://www.wvnews.com/morgantownnews/news/morgantown-public-library-system-unveils-new-logo-website-ahead-of-100th-anniversary/article_79a334fc-f906-4a2f-8cd4-518e5658522e.html",
+        "prefix": "morgantownnews",
+        "source": "section"
+      }
+    ],
+    "bluegold": [
+      {
+        "id": "b052fa82-0a79-4cf6-8190-ab8143ff829d",
+        "slug": "state-native-becomes-ninth-wvu-womens-hoops-inbound-transfer",
+        "title": "State native becomes ninth WVU women's hoops inbound transfer",
+        "description": "",
+        "pubDate": null,
+        "author": "",
+        "image": null,
+        "sourceUrl": "https://www.wvnews.com/bluegoldnews/state-native-becomes-ninth-wvu-womens-hoops-inbound-transfer/article_b052fa82-0a79-4cf6-8190-ab8143ff829d.html",
         "prefix": "bluegoldnews",
         "source": "section"
       },
@@ -414,6 +402,18 @@
         "source": "section"
       },
       {
+        "id": "614e2330-1055-4c83-828a-98090cf93849",
+        "slug": "matt-sieg-could-play-on-the-offensive-side-of-the-ball",
+        "title": "Matt Sieg could play on the offensive side of the ball",
+        "description": "",
+        "pubDate": null,
+        "author": "",
+        "image": null,
+        "sourceUrl": "https://www.wvnews.com/bluegoldnews/matt-sieg-could-play-on-the-offensive-side-of-the-ball/article_614e2330-1055-4c83-828a-98090cf93849.html",
+        "prefix": "bluegoldnews",
+        "source": "section"
+      },
+      {
         "id": "8bb40a38-3bec-423d-a89e-3ea662a9cda7",
         "slug": "wvu-adds-6-7-center-to-womens-basketball-transfer-list",
         "title": "WVU adds 6-7 center to women's basketball transfer list",
@@ -458,18 +458,6 @@
         "author": "",
         "image": null,
         "sourceUrl": "https://www.wvnews.com/bluegoldnews/wvu-in-upper-tier-of-learfield-directors-cup-standings/article_bb70b92a-3fe0-4f75-b611-36fdee5a12ad.html",
-        "prefix": "bluegoldnews",
-        "source": "section"
-      },
-      {
-        "id": "dbfdb839-be4e-46ad-8a83-fb228fb289d2",
-        "slug": "wvu-baseball-drops-rubber-match-to-cincinnati",
-        "title": "WVU baseball drops rubber match to Cincinnati",
-        "description": "",
-        "pubDate": null,
-        "author": "",
-        "image": null,
-        "sourceUrl": "https://www.wvnews.com/bluegoldnews/wvu-baseball-drops-rubber-match-to-cincinnati/article_dbfdb839-be4e-46ad-8a83-fb228fb289d2.html",
         "prefix": "bluegoldnews",
         "source": "section"
       }
@@ -915,6 +903,18 @@
         "source": "section"
       },
       {
+        "id": "35888170-49d6-4149-8b2e-dbe84a36c6b7",
+        "slug": "mcnallys-no-hitter-is-play-of-the-week",
+        "title": "McNally's no-hitter is Play of the Week",
+        "description": "",
+        "pubDate": null,
+        "author": "",
+        "image": null,
+        "sourceUrl": "https://www.wvnews.com/braxtonnews/sports/mcnallys-no-hitter-is-play-of-the-week/article_35888170-49d6-4149-8b2e-dbe84a36c6b7.html",
+        "prefix": "braxtonnews",
+        "source": "section"
+      },
+      {
         "id": "0da2b6d4-05e1-4125-b222-0fd857c42399",
         "slug": "more-news-from-texas",
         "title": "More news from Texas",
@@ -947,18 +947,6 @@
         "author": "",
         "image": null,
         "sourceUrl": "https://www.wvnews.com/braxtonnews/sports/despite-three-losses-bcms-baseball-has-highlights/article_71244650-49d4-4174-872d-b5b0ae9197c5.html",
-        "prefix": "braxtonnews",
-        "source": "section"
-      },
-      {
-        "id": "79d9b576-5488-4016-aa6e-26c7b3290a94",
-        "slug": "braxton-middle-school-track-dominates-sidney-boggs-memorial-meet",
-        "title": "Braxton Middle School track dominates Sidney Boggs Memorial Meet",
-        "description": "",
-        "pubDate": null,
-        "author": "",
-        "image": null,
-        "sourceUrl": "https://www.wvnews.com/braxtonnews/sports/braxton-middle-school-track-dominates-sidney-boggs-memorial-meet/article_79d9b576-5488-4016-aa6e-26c7b3290a94.html",
         "prefix": "braxtonnews",
         "source": "section"
       }
@@ -1257,6 +1245,18 @@
         "source": "section"
       },
       {
+        "id": "29dcb422-8319-434c-99a2-a86a01d4a422",
+        "slug": "redstorm-swept-by-iuc-post-season-hopes-dashed",
+        "title": "RedStorm swept by IUC, post-season hopes dashed",
+        "description": "",
+        "pubDate": null,
+        "author": "",
+        "image": null,
+        "sourceUrl": "https://www.wvnews.com/rivercities/gallipolis/sports/redstorm-swept-by-iuc-post-season-hopes-dashed/article_29dcb422-8319-434c-99a2-a86a01d4a422.html",
+        "prefix": "rivercities",
+        "source": "section"
+      },
+      {
         "id": "5abe7ed5-23cf-490b-a5d5-c40882ddcd2d",
         "slug": "strong-pitching-late-offense-fuels-rio-in-sweep-of-knights",
         "title": "Strong pitching, late offense fuels Rio in sweep of Knights",
@@ -1289,18 +1289,6 @@
         "author": "",
         "image": null,
         "sourceUrl": "https://www.wvnews.com/rivercities/pomeroy/sports/meigs-senior-natalie-goode-throws-no-hitter-in-12-0-shutout-of-athens/article_d39e180e-bffd-46bc-b711-ec4bbae73a53.html",
-        "prefix": "rivercities",
-        "source": "section"
-      },
-      {
-        "id": "765f1341-d033-47fb-bdc6-3f7b4a5c8bf6",
-        "slug": "wahama-falls-to-gilmer-county-in-lkc-softball-championship",
-        "title": "Wahama falls to Gilmer County in LKC softball championship",
-        "description": "",
-        "pubDate": null,
-        "author": "",
-        "image": null,
-        "sourceUrl": "https://www.wvnews.com/rivercities/pointpleasant/sports/wahama-falls-to-gilmer-county-in-lkc-softball-championship/article_765f1341-d033-47fb-bdc6-3f7b4a5c8bf6.html",
         "prefix": "rivercities",
         "source": "section"
       },
@@ -1611,6 +1599,18 @@
         "source": "section"
       },
       {
+        "id": "c860844d-37c4-463d-9995-89d82c41b3fe",
+        "slug": "lewis-county-baseball-and-softball-have-a-busy-week-on-the-diamond",
+        "title": "Lewis County baseball and softball have a busy week on the diamond",
+        "description": "",
+        "pubDate": null,
+        "author": "",
+        "image": null,
+        "sourceUrl": "https://www.wvnews.com/westondemocrat/sports/lewis-county-baseball-and-softball-have-a-busy-week-on-the-diamond/article_c860844d-37c4-463d-9995-89d82c41b3fe.html",
+        "prefix": "westondemocrat",
+        "source": "section"
+      },
+      {
         "id": "ea578cff-e36a-46aa-b6fb-d56937442934",
         "slug": "lewis-county-jr-wrestling-put-four-on-the-podium-at-girl-s-state-tourney",
         "title": "Lewis County Jr. Wrestling put four on the podium at Girl’s State Tourney",
@@ -1647,14 +1647,14 @@
         "source": "section"
       },
       {
-        "id": "29e0739f-52c4-4cd9-9314-d82a3e7fa9f4",
-        "slug": "minutemen-top-elkins-drop-three-in-tough-stretch",
-        "title": "Minutemen Top Elkins; Drop Three in Tough Stretch",
+        "id": "e6ae7fb8-f76e-48a2-9fe4-2fe1a9a0c46c",
+        "slug": "lewis-county-board-of-education-names-teacher-and-service-personnel-of-the-year-hears-concerns",
+        "title": "Lewis County Board of Education names Teacher and Service Personnel of the Year, hears concerns from teachers",
         "description": "",
         "pubDate": null,
         "author": "",
         "image": null,
-        "sourceUrl": "https://www.wvnews.com/westondemocrat/sports/minutemen-top-elkins-drop-three-in-tough-stretch/article_29e0739f-52c4-4cd9-9314-d82a3e7fa9f4.html",
+        "sourceUrl": "https://www.wvnews.com/westondemocrat/news/local/lewis-county-board-of-education-names-teacher-and-service-personnel-of-the-year-hears-concerns/article_e6ae7fb8-f76e-48a2-9fe4-2fe1a9a0c46c.html",
         "prefix": "westondemocrat",
         "source": "section"
       },
@@ -1679,18 +1679,6 @@
         "author": "",
         "image": null,
         "sourceUrl": "https://www.wvnews.com/westondemocrat/opinion/agriculture-topics-carpenter-bee-prevention/article_b3a47826-6859-459d-b9cc-697bb6cf819c.html",
-        "prefix": "westondemocrat",
-        "source": "section"
-      },
-      {
-        "id": "1104acb9-9e7f-4c6b-a1e5-81ac79c273a6",
-        "slug": "united-way-she-shed-giveaway-set-for-may-2",
-        "title": "United Way She Shed giveaway set for May 2",
-        "description": "",
-        "pubDate": null,
-        "author": "",
-        "image": null,
-        "sourceUrl": "https://www.wvnews.com/westondemocrat/news/local/united-way-she-shed-giveaway-set-for-may-2/article_1104acb9-9e7f-4c6b-a1e5-81ac79c273a6.html",
         "prefix": "westondemocrat",
         "source": "section"
       }
