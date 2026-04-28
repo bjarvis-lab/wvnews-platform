@@ -1,9 +1,10 @@
 'use client';
-import { useState, useCallback, useRef } from 'react';
+import { useState, useCallback, useRef, useEffect } from 'react';
 import { stories, sections, sites } from '@/data/mock';
 
 // ─── MODULE TYPES (what editors can drag onto the page) ───
 const MODULE_TYPES = {
+  MASTHEAD: { id: 'masthead', label: 'Masthead Banner', icon: '🏛️', color: '#0f1d3d', desc: 'Custom uploaded masthead image at the top' },
   HERO_STORY: { id: 'hero', label: 'Hero Story', icon: '📰', color: '#1e3a5f', desc: 'Large featured story with image' },
   STORY_GRID: { id: 'grid', label: 'Story Grid', icon: '⊞', color: '#4c6ef5', desc: '2-4 stories in a grid row' },
   STORY_LIST: { id: 'list', label: 'Story List', icon: '☰', color: '#5c7cfa', desc: 'Vertical list of stories' },
@@ -83,6 +84,7 @@ function ModulePreview({ mod, isSelected, onSelect, onMoveUp, onMoveDown, onDele
             {mod.type === 'eedition' && 'Today\'s edition preview'}
             {mod.type === 'submit' && `${mod.config.forms?.length || 0} forms linked`}
             {mod.type === 'social' && mod.config.platform}
+            {mod.type === 'masthead' && (mod.config.imageUrl ? `Image · ${mod.config.altText || 'no alt text'}` : 'No image uploaded yet')}
           </div>
         </div>
         <span className="text-[9px] px-1.5 py-0.5 rounded bg-ink-100 text-ink-500 font-medium uppercase tracking-wider flex-shrink-0">
@@ -345,7 +347,103 @@ function ModuleConfig({ mod, onUpdate }) {
           ))}
         </div>
       )}
+
+      {mod.type === 'masthead' && <MastheadConfig mod={mod} updateConfig={updateConfig} />}
     </div>
+  );
+}
+
+// ─── Masthead config — image upload + alt text + link ───
+function MastheadConfig({ mod, updateConfig }) {
+  const [uploading, setUploading] = useState(false);
+  const [uploadError, setUploadError] = useState('');
+  const fileRef = useRef(null);
+
+  async function pickFile(e) {
+    const f = e.target.files?.[0];
+    if (!f) return;
+    setUploadError('');
+    setUploading(true);
+    try {
+      const fd = new FormData();
+      fd.append('file', f);
+      fd.append('site', 'wvnews');
+      const res = await fetch('/api/layout/upload', { method: 'POST', body: fd });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || `HTTP ${res.status}`);
+      updateConfig('imageUrl', data.url);
+      if (!mod.config.altText) updateConfig('altText', f.name.replace(/\.[a-z0-9]+$/i, ''));
+    } catch (err) {
+      setUploadError(err.message);
+    } finally {
+      setUploading(false);
+      if (fileRef.current) fileRef.current.value = '';
+    }
+  }
+
+  return (
+    <>
+      <div>
+        <label className="text-[10px] font-bold text-ink-500 uppercase tracking-wider block mb-1">Masthead Image</label>
+        {mod.config.imageUrl ? (
+          <div className="space-y-2">
+            <div className="rounded border border-ink-200 bg-ink-50 p-2">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src={mod.config.imageUrl} alt={mod.config.altText || ''} className="block max-w-full h-auto" />
+            </div>
+            <div className="flex gap-2">
+              <button onClick={() => fileRef.current?.click()} className="text-xs text-brand-700 hover:underline">Replace</button>
+              <button onClick={() => updateConfig('imageUrl', '')} className="text-xs text-red-600 hover:underline">Remove</button>
+            </div>
+          </div>
+        ) : (
+          <div
+            onClick={() => fileRef.current?.click()}
+            className="border-2 border-dashed border-ink-300 rounded-lg p-6 text-center cursor-pointer hover:border-brand-300 hover:bg-brand-50/30"
+          >
+            <div className="text-2xl mb-1">📤</div>
+            <div className="text-xs text-ink-700 font-medium">Click to upload</div>
+            <div className="text-[10px] text-ink-500 mt-1">PNG, JPG, SVG up to 25 MB</div>
+          </div>
+        )}
+        <input
+          ref={fileRef}
+          type="file"
+          accept="image/*"
+          onChange={pickFile}
+          className="hidden"
+        />
+        {uploading && <div className="text-[10px] text-ink-500 mt-1">Uploading…</div>}
+        {uploadError && <div className="text-[10px] text-red-600 mt-1">{uploadError}</div>}
+      </div>
+      <div>
+        <label className="text-[10px] font-bold text-ink-500 uppercase tracking-wider block mb-1">Alt Text</label>
+        <input
+          value={mod.config.altText || ''}
+          onChange={e => updateConfig('altText', e.target.value)}
+          placeholder="WV News masthead"
+          className="w-full px-2 py-1.5 bg-white border border-ink-200 rounded text-xs"
+        />
+      </div>
+      <div>
+        <label className="text-[10px] font-bold text-ink-500 uppercase tracking-wider block mb-1">Link Target (optional)</label>
+        <input
+          value={mod.config.linkUrl || ''}
+          onChange={e => updateConfig('linkUrl', e.target.value)}
+          placeholder="/  (defaults to homepage)"
+          className="w-full px-2 py-1.5 bg-white border border-ink-200 rounded text-xs"
+        />
+      </div>
+      <div>
+        <label className="text-[10px] font-bold text-ink-500 uppercase tracking-wider block mb-1">Background Color</label>
+        <input
+          value={mod.config.bgColor || ''}
+          onChange={e => updateConfig('bgColor', e.target.value)}
+          placeholder="#ffffff or transparent"
+          className="w-full px-2 py-1.5 bg-white border border-ink-200 rounded text-xs font-mono"
+        />
+      </div>
+    </>
   );
 }
 
@@ -354,11 +452,42 @@ export default function LayoutBuilderPage() {
   const [layout, setLayout] = useState(DEFAULT_LAYOUT);
   const [selectedId, setSelectedId] = useState(null);
   const [site, setSite] = useState('wvnews');
+  const [template, setTemplate] = useState('homepage');
   const [hasChanges, setHasChanges] = useState(false);
   const [saved, setSaved] = useState(false);
   const [showAddPanel, setShowAddPanel] = useState(false);
+  const [saving, setSaving] = useState(false);
+  const [saveError, setSaveError] = useState('');
+  const [lastSavedInfo, setLastSavedInfo] = useState(null);
 
   const selectedMod = layout.find(m => m.id === selectedId);
+
+  // Load saved layout for the current site/template on mount + when site
+  // changes. Falls back to DEFAULT_LAYOUT if Firestore has nothing yet.
+  useEffect(() => {
+    let cancelled = false;
+    (async () => {
+      try {
+        const res = await fetch(`/api/layout?site=${encodeURIComponent(site)}&template=${encodeURIComponent(template)}`, { cache: 'no-store' });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error || `HTTP ${res.status}`);
+        if (cancelled) return;
+        if (data.exists && Array.isArray(data.modules) && data.modules.length > 0) {
+          setLayout(data.modules);
+          setLastSavedInfo({ at: data.updatedAt, by: data.updatedBy });
+        } else {
+          setLayout(DEFAULT_LAYOUT);
+          setLastSavedInfo(null);
+        }
+        setHasChanges(false);
+        setSelectedId(null);
+      } catch (err) {
+        // Non-fatal — keep DEFAULT_LAYOUT and let editor continue.
+        console.warn('[layout-builder] load failed:', err.message);
+      }
+    })();
+    return () => { cancelled = true; };
+  }, [site, template]);
 
   const moveUp = useCallback((id) => {
     setLayout(prev => {
@@ -400,8 +529,9 @@ export default function LayoutBuilderPage() {
              typeId === 'newsletter' ? { listId: 'daily-digest' } :
              typeId === 'weather' ? { zip: '26301' } :
              typeId === 'submit' ? { forms: ['obituary', 'letter', 'tip'] } :
+             typeId === 'masthead' ? { imageUrl: '', altText: '', linkUrl: '/', bgColor: '' } :
              {},
-      zone: ['ad', 'breaking'].includes(typeId) ? 'full' :
+      zone: ['ad', 'breaking', 'masthead'].includes(typeId) ? 'full' :
             ['weather', 'newsletter', 'mostread', 'eedition', 'social', 'submit'].includes(typeId) ? 'sidebar' : 'main',
     };
     setLayout(prev => [...prev, newMod]);
@@ -415,11 +545,26 @@ export default function LayoutBuilderPage() {
     setHasChanges(true);
   }, []);
 
-  const handleSave = () => {
-    // In production: POST to /api/layout with the layout JSON
-    setSaved(true);
-    setHasChanges(false);
-    setTimeout(() => setSaved(false), 2000);
+  const handleSave = async () => {
+    setSaving(true);
+    setSaveError('');
+    try {
+      const res = await fetch('/api/layout', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ site, template, modules: layout }),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || `HTTP ${res.status}`);
+      setSaved(true);
+      setHasChanges(false);
+      setLastSavedInfo({ at: new Date().toISOString(), by: 'you' });
+      setTimeout(() => setSaved(false), 2500);
+    } catch (err) {
+      setSaveError(err.message);
+    } finally {
+      setSaving(false);
+    }
   };
 
   return (
@@ -428,23 +573,33 @@ export default function LayoutBuilderPage() {
       <div className="flex items-center gap-3 flex-wrap">
         <select value={site} onChange={e => setSite(e.target.value)}
           className="px-3 py-2 bg-white rounded-lg border border-ink-200 text-sm">
-          {sites.map(s => <option key={s.id} value={s.id}>{s.name} Homepage</option>)}
+          {sites.map(s => <option key={s.id} value={s.id}>{s.name}</option>)}
         </select>
-        <select className="px-3 py-2 bg-white rounded-lg border border-ink-200 text-sm">
-          <option>Homepage Layout</option>
-          <option>Section Page Template</option>
-          <option>Article Page Template</option>
+        <select value={template} onChange={e => setTemplate(e.target.value)}
+          className="px-3 py-2 bg-white rounded-lg border border-ink-200 text-sm">
+          <option value="homepage">Homepage Layout</option>
+          <option value="section">Section Page Template</option>
+          <option value="article">Article Page Template</option>
         </select>
         <div className="flex-1" />
-        {saved && <span className="text-green-600 text-sm font-medium">✓ Layout saved!</span>}
-        {hasChanges && <span className="text-yellow-600 text-xs">Unsaved changes</span>}
-        <button onClick={() => setLayout(DEFAULT_LAYOUT)}
+        {lastSavedInfo?.at && (
+          <span className="text-[11px] text-ink-500">
+            Last saved {new Date(lastSavedInfo.at).toLocaleString()} {lastSavedInfo.by ? `by ${lastSavedInfo.by}` : ''}
+          </span>
+        )}
+        {saved && <span className="text-green-600 text-sm font-medium">✓ Saved to Firestore</span>}
+        {saveError && <span className="text-red-600 text-xs">{saveError}</span>}
+        {hasChanges && !saving && <span className="text-yellow-600 text-xs">Unsaved changes</span>}
+        <button onClick={() => { setLayout(DEFAULT_LAYOUT); setHasChanges(true); }}
           className="px-3 py-2 bg-white text-ink-600 text-sm rounded-lg border border-ink-200 hover:bg-ink-50">
           Reset to Default
         </button>
-        <button onClick={handleSave}
-          className={`px-4 py-2 text-sm font-medium rounded-lg ${hasChanges ? 'bg-brand-700 text-white hover:bg-brand-600' : 'bg-ink-200 text-ink-500'}`}>
-          Publish Layout
+        <button onClick={handleSave} disabled={saving}
+          className={`px-4 py-2 text-sm font-medium rounded-lg ${
+            saving ? 'bg-ink-200 text-ink-500' :
+            hasChanges ? 'bg-brand-700 text-white hover:bg-brand-600' : 'bg-ink-200 text-ink-500'
+          }`}>
+          {saving ? 'Saving…' : 'Save Layout'}
         </button>
       </div>
 
@@ -452,8 +607,11 @@ export default function LayoutBuilderPage() {
       <div className="bg-brand-50 rounded-lg p-3 border border-brand-100 flex items-center gap-3">
         <span className="text-lg">🧱</span>
         <div className="flex-1">
-          <div className="text-sm font-bold text-brand-800">Drag-and-Drop Layout Builder</div>
-          <div className="text-xs text-ink-600">Rearrange modules using the arrow buttons. Click any module to configure it. No HTML editing required — changes go live when you hit Publish.</div>
+          <div className="text-sm font-bold text-brand-800">Layout Builder</div>
+          <div className="text-xs text-ink-600">
+            Rearrange with the arrow buttons. Click any module to configure it. Save persists to Firestore for this site + template.
+            Public-page rendering still uses the hardcoded layout — full publish wiring is on the roadmap.
+          </div>
         </div>
       </div>
 
