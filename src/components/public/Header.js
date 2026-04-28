@@ -53,9 +53,9 @@ export default function PublicHeader({ publicationId = null }) {
         </div>
       </div>
 
-      {/* Main header */}
+      {/* Main header — taller to accommodate the larger masthead logo. */}
       <div className="max-w-7xl mx-auto px-4">
-        <div className="flex items-center justify-between h-16">
+        <div className="flex items-center justify-between h-20 md:h-24">
           {/* Mobile menu button */}
           <button
             onClick={() => setMenuOpen(!menuOpen)}
@@ -68,10 +68,13 @@ export default function PublicHeader({ publicationId = null }) {
           </button>
 
           {/* Logo — swaps to the publication's brand mark when on a
-              per-publication page (article tagged for that paper, /p/...). */}
+              per-publication page (article tagged for that paper, /p/...).
+              Sized large so the masthead reads like a real newspaper
+              flag, not a tiny brand bug. */}
           <Link href={currentPub ? `/p/${currentPub.slug}` : '/'} aria-label={`${currentPub?.name || 'WV News'} home`} className="flex items-center">
-            <Logo height={44} variant="full" publicationId={resolvedPubId} className="hidden sm:block" />
-            <Logo height={40} variant="icon" publicationId={resolvedPubId} className="sm:hidden rounded-full" />
+            <Logo height={64} variant="full" publicationId={resolvedPubId} className="hidden md:block" />
+            <Logo height={56} variant="full" publicationId={resolvedPubId} className="hidden sm:block md:hidden" />
+            <Logo height={48} variant="icon" publicationId={resolvedPubId} className="sm:hidden rounded-full" />
           </Link>
 
           {/* Desktop Nav — uppercase eyebrow style, current section underlined in gold */}

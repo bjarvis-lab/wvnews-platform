@@ -370,14 +370,14 @@ export function renderNewsletterHtml({
 
       <table role="presentation" class="email-shell" cellpadding="0" cellspacing="0" border="0" width="600" style="width:600px;max-width:600px;background:#ffffff;border:1px solid #e3e5ea;">
 
-        <!-- Masthead — logo if available, wordmark fallback. Logo URL is
-             absolutized against the platform site since email clients can't
-             resolve relative paths. -->
-        <tr><td class="padcol" style="padding:24px 32px 18px;border-bottom:3px solid ${accent};">
+        <!-- Masthead — logo if available, wordmark fallback. Big enough
+             to read like a real newspaper flag at the top of the email,
+             not a tiny brand bug. -->
+        <tr><td class="padcol" style="padding:28px 32px 22px;border-bottom:3px solid ${accent};">
           <table role="presentation" width="100%"><tr>
-            <td valign="middle" style="font-family:Georgia,serif;font-size:24px;font-weight:700;color:${accent};letter-spacing:-0.01em;">
+            <td valign="middle" style="font-family:Georgia,serif;font-size:30px;font-weight:700;color:${accent};letter-spacing:-0.01em;">
               ${publication?.logoFile
-                ? `<img src="${escapeAttr(absoluteAsset(siteBaseUrl, publication.logoFile))}" alt="${escapeAttr(editionName)}" height="40" style="display:block;height:40px;width:auto;border:0;">`
+                ? `<img src="${escapeAttr(absoluteAsset(siteBaseUrl, publication.logoFile))}" alt="${escapeAttr(editionName)}" height="72" style="display:block;height:72px;max-height:72px;width:auto;border:0;">`
                 : escapeHtml(editionName)}
             </td>
             <td valign="middle" align="right" style="font-family:Arial,Helvetica,sans-serif;font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:#6a6f76;">
@@ -459,8 +459,8 @@ function renderLeadImage(story, siteBaseUrl, accent) {
   }
   if (story.fallbackImage) {
     const logoUrl = absoluteAsset(siteBaseUrl, story.fallbackImage);
-    return `<table role="presentation" width="100%" style="margin-bottom:14px;border-collapse:collapse;"><tr><td align="center" style="padding:48px 24px;background:${accent};">
-      <img src="${escapeAttr(logoUrl)}" alt="" height="56" style="display:block;height:56px;width:auto;border:0;margin:0 auto;">
+    return `<table role="presentation" width="100%" style="margin-bottom:14px;border-collapse:collapse;"><tr><td align="center" style="padding:64px 24px;background:${accent};">
+      <img src="${escapeAttr(logoUrl)}" alt="" height="80" style="display:block;height:80px;width:auto;border:0;margin:0 auto;">
     </td></tr></table>`;
   }
   return `<div style="height:160px;background:${accent};margin-bottom:14px;"></div>`;
@@ -498,21 +498,21 @@ function renderSecondaryRow(story, siteBaseUrl, accent) {
   let thumbCell;
   if (story.image) {
     thumbCell = `
-              <td valign="top" align="right" width="120" style="width:120px;">
-                <img src="${escapeAttr(story.image)}" alt="" width="120" height="80" style="display:block;width:120px;height:80px;object-fit:cover;border:0;">
+              <td valign="top" align="right" width="160" style="width:160px;">
+                <img src="${escapeAttr(story.image)}" alt="" width="160" height="110" style="display:block;width:160px;height:110px;object-fit:cover;border:0;">
               </td>`;
   } else if (story.fallbackImage) {
     const logoUrl = absoluteAsset(siteBaseUrl, story.fallbackImage);
     thumbCell = `
-              <td valign="top" align="right" width="120" style="width:120px;">
-                <table role="presentation" width="120" height="80" style="width:120px;height:80px;border-collapse:collapse;"><tr><td align="center" valign="middle" style="background:${accent};width:120px;height:80px;">
-                  <img src="${escapeAttr(logoUrl)}" alt="" height="40" style="display:block;height:40px;width:auto;max-width:96px;border:0;margin:0 auto;">
+              <td valign="top" align="right" width="160" style="width:160px;">
+                <table role="presentation" width="160" height="110" style="width:160px;height:110px;border-collapse:collapse;"><tr><td align="center" valign="middle" style="background:${accent};width:160px;height:110px;">
+                  <img src="${escapeAttr(logoUrl)}" alt="" height="56" style="display:block;height:56px;width:auto;max-width:140px;border:0;margin:0 auto;">
                 </td></tr></table>
               </td>`;
   } else {
     thumbCell = `
-              <td valign="top" align="right" width="120" style="width:120px;">
-                <div style="width:120px;height:80px;background:${accent};"></div>
+              <td valign="top" align="right" width="160" style="width:160px;">
+                <div style="width:160px;height:110px;background:${accent};"></div>
               </td>`;
   }
   return `
