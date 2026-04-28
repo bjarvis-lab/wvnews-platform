@@ -318,24 +318,46 @@ function ReaderServices() {
   );
 }
 
-// Trending derivation — pull breaking + featured + most-recent, dedupe
-// to short topic labels for the strip in the header.
+// Trending derivation — surface tags from breaking + featured stories
+// as Globe-style trending topics. Each links to /topic/{slug} which
+// groups all stories sharing that tag.
+function slugify(s) {
+  return String(s || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+}
+
 function deriveTrending(all) {
-  const seen = new Set();
-  const out = [];
-  const candidates = [
-    ...all.filter(s => s.breaking),
-    ...all.filter(s => s.featured && !s.breaking).slice(0, 8),
-  ];
-  for (const s of candidates) {
-    const tag = (s.tags || [])[0];
-    const label = (tag || s.headline || '').slice(0, 28).trim();
-    if (!label || seen.has(label.toLowerCase())) continue;
-    seen.add(label.toLowerCase());
-    out.push({ label: label.toUpperCase(), href: `/article/${s.slug}` });
-    if (out.length >= 8) break;
+  const tagCounts = new Map();
+  // Score tags: breaking +3, featured +2, recent +1
+  for (const s of all) {
+    if (!Array.isArray(s.tags)) continue;
+    const weight = s.breaking ? 3 : s.featured ? 2 : 1;
+    for (const tag of s.tags.slice(0, 3)) {
+      const norm = String(tag || '').trim();
+      if (!norm || norm.length < 3 || norm.length > 30) continue;
+      tagCounts.set(norm, (tagCounts.get(norm) || 0) + weight);
+    }
   }
-  return out;
+  // Top 8 by score, ties broken alphabetically.
+  const ranked = [...tagCounts.entries()]
+    .sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]))
+    .slice(0, 8);
+
+  const fromTags = ranked.map(([tag]) => ({
+    label: tag.toUpperCase(),
+    href: `/topic/${slugify(tag)}`,
+  }));
+
+  // If there aren't enough tags, fall back to truncated breaking/featured
+  // headlines so the bar always has content.
+  if (fromTags.length >= 4) return fromTags;
+  const seen = new Set(fromTags.map(t => t.label));
+  const fallbacks = all.filter(s => s.breaking || s.featured)
+    .map(s => {
+      const label = (s.headline || '').slice(0, 28).trim().toUpperCase();
+      return { label, href: `/article/${s.slug}` };
+    })
+    .filter(t => t.label && !seen.has(t.label));
+  return [...fromTags, ...fallbacks].slice(0, 8);
 }
 
 // ─── Page ────────────────────────────────────────────────────────────────

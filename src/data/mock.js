@@ -42,6 +42,23 @@ export const sections = [
   { id: 'community', name: 'Community', slug: 'community', icon: '🤝' },
 ];
 
+// Sub-section mapping for the Globe-style section pages — these become
+// the pipe-separated sub-nav under the big section title. Keys link to
+// either another canonical section, a topic tag, or an external query
+// route. Editors will eventually be able to override these in /admin/site.
+export const sectionSubcategories = {
+  news:        ['Politics', 'Education', 'Crime & Courts', 'Health', 'Around WV'],
+  sports:      ['WVU', 'High School', 'College', 'Outdoors', 'Pro'],
+  opinion:     ['Editorials', 'Columns', 'Letters', 'Cartoons'],
+  business:    ['Energy', 'Real Estate', 'Tourism', 'Small Business'],
+  crime:       ['Court Reports', 'Police Logs', 'Trials', 'Investigations'],
+  education:   ['K-12', 'WVU', 'Marshall', 'Higher Ed', 'Schools'],
+  lifestyle:   ['Food', 'Outdoors', 'Music', 'Arts', 'Family'],
+  obituaries:  ['Recent', 'Death Notices', 'Submit Obituary'],
+  politics:    ['State Capitol', 'Manchin Watch', 'Local Races', 'Federal'],
+  community:   ['Events', 'Schools', 'Faith', 'Volunteer'],
+};
+
 export const stories = [
   {
     id: '1',
